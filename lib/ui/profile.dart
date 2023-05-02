@@ -2,6 +2,7 @@ import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -11,6 +12,7 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  var d1 = DateFormat('dd-MMM-yyyy');
   @override
   void initState() {
     BlocProvider.of<MainBloc>(context).add(GetProfile());
@@ -20,6 +22,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Profile"),
+        elevation: 0,
+      ),
       body: BlocConsumer<MainBloc, MainState>(
         buildWhen: (previous, current) =>
             current is Fetching ||
@@ -31,7 +37,7 @@ class _ProfileState extends State<Profile> {
             current is ProfileError,
         builder: (context, state) {
           if (state is Fetching) {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           } else if (state is ProfileSuccess) {
             return _profieview(state.profileModel);
           }
@@ -48,25 +54,20 @@ class _ProfileState extends State<Profile> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            color: Colors.white,
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SizedBox(
-                width: 400,
-                height: MediaQuery.of(context).size.height / 4,
-
-                // child: Image.asset(
-                //   'assets/title.png',
-                //   fit: BoxFit.contain,
-                // ),
-              ),
-            ),
+          const CircleAvatar(
+            radius: 25,
+            backgroundImage: AssetImage("assets/family.png"),
           ),
           _text(profileModel.data!.name.toString()),
           _text(profileModel.data!.phone.toString()),
           _text(profileModel.data!.address.toString()),
-          _text(profileModel.data!.dateOfBirth.toString()),
+          _text(profileModel.data!.gender.toString()),
+          _text(profileModel.data!.maritalStatus.toString()),
+          _text(
+            d1.format(DateTime.parse(
+              profileModel.data!.dateOfBirth.toString(),
+            )),
+          ),
         ],
       ),
     );

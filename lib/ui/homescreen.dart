@@ -1,5 +1,4 @@
-import 'package:family_tree_app/helper/helper.dart';
-import 'package:family_tree_app/ui/profile.dart';
+import 'package:family_tree_app/ui/navdrawer.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,23 +17,7 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: Colors.green,
         elevation: 0,
       ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            const DrawerHeader(
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Profile'),
-              onTap: () {
-                Helper.push(context, const Profile());
-                // Update the UI
-              },
-            ),
-          ],
-        ),
-      ),
+      drawer: const HomeDrawer(),
       body: Column(
         children: const [],
       ),

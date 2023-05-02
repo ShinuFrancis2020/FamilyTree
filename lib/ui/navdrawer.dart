@@ -1,0 +1,91 @@
+import 'package:family_tree_app/helper/helper.dart';
+import 'package:family_tree_app/ui/profile.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+class HomeDrawer extends StatefulWidget {
+  const HomeDrawer({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<HomeDrawer> createState() => _HomeDrawerState();
+}
+
+class _HomeDrawerState extends State<HomeDrawer> {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      backgroundColor: Colors.white,
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(
+                left: 25.0, right: 60.0, top: 30.0, bottom: 20.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/family.png',
+                  width: Helper.width(context) / 2.7,
+                ),
+              ],
+            ),
+          ),
+          const Divider(),
+
+          ListTile(
+            leading: const Icon(
+              CupertinoIcons.home,
+              color: Colors.black,
+            ),
+            title: const Text("Home"),
+            onTap: () async {
+              Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              CupertinoIcons.profile_circled,
+              color: Colors.black,
+            ),
+            title: const Text("Profile"),
+            onTap: () async {
+              Helper.push(context, const Profile());
+            },
+          ),
+
+          // BlocListener<MainBloc, MainState>(
+          //   listener: (context, state) {
+          //     if (state is SignningOff) {
+          //       Helper.loading(context);
+          //     }
+          //     if (state is LogoutCompleted) {
+          //       Helper.pop(context);
+          //       Navigator.pushAndRemoveUntil(
+          //           context,
+          //           MaterialPageRoute(
+          //               builder: (BuildContext context) => const LoginScreen()),
+          //           ModalRoute.withName('/'));
+          //     }
+          //     if (state is LogoutNotCompleted || state is LogoutError) {
+          //       Helper.pop(context);
+          //     }
+          //   },
+          //   child: ListTile(
+          //     title: const Text("Logout"),
+          //     leading: const Icon(
+          //       CupertinoIcons.power,
+          //       color: Colors.black,
+          //     ),
+          //     onTap: () async {
+          //       BlocProvider.of<MainBloc>(context).add(DoLogout());
+          //     },
+          //   ),
+          // ),
+        ],
+      ),
+    );
+  }
+}

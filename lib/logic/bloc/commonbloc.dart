@@ -12,14 +12,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class MainBloc extends Bloc<MainEvent, MainState> {
   CommonModel loginModel = CommonModel();
   ProfileModel profileModel = ProfileModel();
-
   UserModel userModel = UserModel();
-  // AttendanceStatusModel attendanceStatusModel = AttendanceStatusModel();
-  // AttendanceList attendanceList = AttendanceList();
   String? dsvm;
   MainBloc() : super(MainState()) {
     on<DoLogin>(doLogin);
     on<GetProfile>(_getProfile);
+    on<DoLogout>(doLogout);
   }
   Future<FutureOr<void>> doLogin(DoLogin event, Emitter<MainState> emit) async {
     try {
@@ -60,6 +58,24 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(ProfileError(error: e.toString()));
     }
   }
+
+  Future<FutureOr<void>> doLogout(
+      DoLogout event, Emitter<MainState> emit) async {
+    try {
+      emit(Fetching());
+
+      profileModel =
+          ProfileModel.fromJson(await ServerHelper.get('/user/profile'));
+      if (profileModel.status!) {
+        emit(ProfileSuccess(profileModel: profileModel));
+      } else {
+        Helper.showToast(msg: profileModel.msg);
+        emit(ProfileError(error: profileModel.msg.toString()));
+      }
+    } catch (e) {
+      emit(ProfileError(error: e.toString()));
+    }
+  }
 }
 
 class MainEvent {}
@@ -72,6 +88,8 @@ class DoLogin extends MainEvent {
   final String? password, username;
   DoLogin({required this.password, required this.username});
 }
+
+class DoLogout extends MainEvent {}
 
 class GetProfile extends MainEvent {
   // final String? password, username;

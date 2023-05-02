@@ -35,6 +35,7 @@ dependencies:
   vibration: ^1.7.6
   flutter_bloc: ^8.0.1
   equatable: ^2.0.3
+  intl: null
   connectivity_plus: ^3.0.1
   flutter:
     sdk: flutter

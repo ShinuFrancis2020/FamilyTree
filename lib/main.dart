@@ -1,5 +1,4 @@
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/ui/authentication/signin.dart';
 import 'package:family_tree_app/ui/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,8 +21,8 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
+            primarySwatch: Colors.blue,
+            appBarTheme: const AppBarTheme(backgroundColor: Colors.green)),
         home: const SplashScreen(),
       ),
     );
