@@ -13,7 +13,7 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
   Future _signup(Signup event, Emitter<SignupState> emit) async {
     emit(Signupin());
     Map data = {
-      "email":event.email, "password":event.password, "name":event.name, "familyName":event.familyName, "gender":event.gender, "address":event.address, "phone":event.phone, "dateOfBirth":event.dateOfBirth
+      "email":event.email, "password":event.password, "name":event.name, "familyName":event.familyName,"gender":event.gender, "address":event.address, "phone":event.phone, "dateOfBirth":event.dateOfBirth
     };
     CommonModel commonModel;
 
