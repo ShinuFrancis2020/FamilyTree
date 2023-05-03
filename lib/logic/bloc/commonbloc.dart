@@ -6,9 +6,11 @@ import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/models/commonmodel.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:family_tree_app/logic/models/usermodel.dart';
+import 'package:family_tree_app/logic/repositories.dart';
 import 'package:family_tree_app/server/serverhelper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
   CommonModel commonModel = CommonModel();
@@ -19,6 +21,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<DoLogin>(doLogin);
     on<GetProfile>(_getProfile);
     on<DoLogout>(doLogout);
+    on<Signup>(_signup);
+     on<GenderChanged>(
+      (event, emit) => emit(GenderChangedState()),
+    );
   }
   Future<FutureOr<void>> doLogin(DoLogin event, Emitter<MainState> emit) async {
     try {
@@ -39,6 +45,38 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       }
     } catch (e) {
       emit(LoginError(error: e.toString()));
+    }
+  }
+
+  Future<FutureOr<void>> _signup(Signup event, Emitter<MainState> emit) async {
+    emit(Signupin());
+    Map data = {
+      "email": event.email,
+      "password": event.password,
+      "name": event.name,
+      "familyName": event.familyName,
+      "gender": event.gender,
+      "address": event.address,
+      "phone": event.phone,
+      "dateOfBirth": event.dateOfBirth
+    };
+    CommonModel commonModel;
+
+    commonModel = await Repository().signup(url: '/user/signup', data: data);
+    if (commonModel.status == true) {
+      Fluttertoast.showToast(
+        msg: "Registered Successfully",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+      emit(SignupSuccess());
+    } else if (commonModel.status == false) {
+      Fluttertoast.showToast(
+        msg: commonModel.msg.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
+      emit(SignupFailed(error: commonModel.msg.toString()));
     }
   }
 
@@ -92,6 +130,28 @@ class DoLogin extends MainEvent {
   DoLogin({required this.password, required this.username});
 }
 
+class Signup extends MainEvent {
+  final String email;
+  final String password;
+  final String name;
+  final String familyName;
+  final String gender;
+  final String address;
+  final String phone;
+  final String dateOfBirth;
+
+  Signup({
+    required this.email,
+    required this.password,
+    required this.name,
+    required this.familyName,
+    required this.gender,
+    required this.address,
+    required this.phone,
+    required this.dateOfBirth,
+  });
+}
+
 class DoLogout extends MainEvent {}
 
 class GetProfile extends MainEvent {
@@ -107,6 +167,8 @@ class GetLogoutEvent extends MainEvent {
 
 class Requesting extends MainState {}
 
+class Signupin extends MainState {}
+
 class Fetching extends MainState {}
 
 class Loggingout extends MainState {}
@@ -119,6 +181,21 @@ class LoginSuccess extends MainState {
 class AdminLoginSuccess extends MainState {
   final CommonModel loginModel;
   AdminLoginSuccess({required this.loginModel});
+}
+
+
+class SignupFailed extends  MainState {
+  final String error;
+  SignupFailed({required this.error});
+  @override
+  List<Object> get props => [];
+}
+
+class SignupSuccess extends MainState {
+
+  SignupSuccess();
+  @override
+  List<Object> get props => [];
 }
 
 class LogoutSuccess extends MainState {
@@ -178,6 +255,7 @@ class AttendanceAlreadyMarked extends MainState {}
 class AttendanceStatusNotChecked extends MainState {}
 
 class CheckingAttendanceStatusError extends MainState {}
+class GenderChanged extends MainEvent {}
 
 //GetAttendanceHistory
 
@@ -223,3 +301,4 @@ class FamilySuccess extends MainState {}
 class FamilyFailed extends MainState {}
 
 class FamilyErorr extends MainState {}
+class GenderChangedState extends MainState {}
