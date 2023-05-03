@@ -513,10 +513,13 @@
 
 import 'dart:math';
 
+import 'package:family_tree_app/ui/circleavatardemo.dart';
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 
 class FamilyTree extends StatefulWidget {
+  const FamilyTree({super.key});
+
   @override
   _FamilyTreeState createState() => _FamilyTreeState();
 }
@@ -528,7 +531,17 @@ class _FamilyTreeState extends State<FamilyTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          leading: InkWell(
+            child: const Icon(Icons.abc),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const CircleAvatarLine()));
+            },
+          ),
+        ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
@@ -541,7 +554,7 @@ class _FamilyTreeState extends State<FamilyTree> {
                       _scale *= 1.5;
                     });
                   },
-                  icon: Icon(Icons.add),
+                  icon: const Icon(Icons.add),
                 ),
                 IconButton(
                   onPressed: () {
@@ -549,7 +562,7 @@ class _FamilyTreeState extends State<FamilyTree> {
                       _scale /= 1.5;
                     });
                   },
-                  icon: Icon(Icons.remove),
+                  icon: const Icon(Icons.remove),
                 ),
               ],
             ),
@@ -559,7 +572,7 @@ class _FamilyTreeState extends State<FamilyTree> {
                   transformationController: TransformationController()
                     ..value = Matrix4.diagonal3Values(_scale, _scale, 1),
                   constrained: false,
-                  boundaryMargin: EdgeInsets.all(100),
+                  boundaryMargin: const EdgeInsets.all(100),
                   minScale: 0.01,
                   maxScale: 5.6,
                   child: GraphView(
@@ -598,7 +611,7 @@ class _FamilyTreeState extends State<FamilyTree> {
         setState(() {});
       },
       child: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4),
           boxShadow: [
@@ -609,19 +622,16 @@ class _FamilyTreeState extends State<FamilyTree> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text('Node ${node.key!.value}'),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             ElevatedButton(
               onPressed: () {
-                // Create a new node with a unique ID
                 final newNode = Node.Id(graph.nodeCount() + 1);
 
-                // Add the new node as a child to the clicked node
                 graph.addEdge(node, newNode);
 
-                // Update the graph
                 setState(() {});
               },
-              child: Text('Add child'),
+              child: const Text('Add child'),
             ),
           ],
         ),
