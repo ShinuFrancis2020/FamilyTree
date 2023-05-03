@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/helper/initializer.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
+import 'package:family_tree_app/ui/authentication/signup.dart';
 import 'package:family_tree_app/ui/homescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +17,7 @@ class _AuthenticationState extends State<Authentication> {
   bool show = false;
   final username = TextEditingController();
   final password = TextEditingController();
+  static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,13 +28,13 @@ class _AuthenticationState extends State<Authentication> {
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
           if (state is LogoutSuccess) {
-            Helper.pushReplacement(context, const HomeScreen());
+            Helper.pushReplacement(context, FamilyTree());
           }
         },
         child: Padding(
           padding: const EdgeInsets.all(14.0),
           child: Form(
-            key: Initializer.formKey,
+            key: formKey,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -85,21 +87,43 @@ class _AuthenticationState extends State<Authentication> {
                   ),
                 ),
                 Helper.allowHeight(20),
-                SizedBox(
-                  width: Helper.width(context),
-                  child: MaterialButton(
-                      color: Colors.green,
-                      child: const Text(
-                        "Login",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                      onPressed: () {
-                        if (Initializer.formKey.currentState!.validate()) {
-                          context.read<MainBloc>().add(DoLogin(
-                              username: username.text,
-                              password: password.text));
-                        }
-                      }),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SizedBox(
+                      //width: Helper.width(context),
+                      child: MaterialButton(
+                          minWidth: MediaQuery.of(context).size.width / 4,
+                          color: Colors.green,
+                          child: const Text(
+                            "Create Account",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const SignUpPage()));
+                          }),
+                    ),
+                    SizedBox(
+                      //width: Helper.width(context),
+                      child: MaterialButton(
+                          minWidth: MediaQuery.of(context).size.width / 4,
+                          color: Colors.green,
+                          child: const Text(
+                            "Login",
+                            style: TextStyle(color: Colors.white),
+                          ),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              context.read<MainBloc>().add(DoLogin(
+                                  username: username.text,
+                                  password: password.text));
+                            }
+                          }),
+                    ),
+                  ],
                 )
               ],
             ),
