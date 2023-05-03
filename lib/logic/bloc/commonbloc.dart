@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
@@ -10,7 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainBloc extends Bloc<MainEvent, MainState> {
-  CommonModel loginModel = CommonModel();
+  CommonModel commonModel = CommonModel();
   ProfileModel profileModel = ProfileModel();
   UserModel userModel = UserModel();
   String? dsvm;
@@ -61,20 +62,22 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   Future<FutureOr<void>> doLogout(
       DoLogout event, Emitter<MainState> emit) async {
-    try {
-      emit(Fetching());
+    // try {
+ 
+    //   emit(Fetching());
 
-      profileModel =
-          ProfileModel.fromJson(await ServerHelper.get('/user/profile'));
-      if (profileModel.status!) {
-        emit(ProfileSuccess(profileModel: profileModel));
-      } else {
-        Helper.showToast(msg: profileModel.msg);
-        emit(ProfileError(error: profileModel.msg.toString()));
-      }
-    } catch (e) {
-      emit(ProfileError(error: e.toString()));
-    }
+    //   commonModel =
+    //       CommonModel.fromJson(await ServerHelper.get('/user/logout'));
+    //   if (commonModel.status!) {
+    //     emit(ProfileSuccess());
+    //     emit(ProfileSuccess());
+    //   } else {
+    //     Helper.showToast(msg: commonModel.msg);
+    //     emit(ProfileError(error: profileModel.msg.toString()));
+    //   }
+    // } catch (e) {
+    //   emit(ProfileError(error: e.toString()));
+    // }
   }
 }
 
@@ -148,6 +151,8 @@ class ProfileError extends MainState {
   ProfileError({required this.error});
 }
 
+class LogoutSucces extends MainState {}
+
 class LogoutError extends MainState {
   final String error;
   LogoutError({required this.error});
@@ -206,3 +211,15 @@ class AttendanceMarked extends MainState {}
 class MarkingFailed extends MainState {}
 
 class MarkingFailedError extends MainState {}
+
+//
+
+class GetFamily extends MainEvent {}
+
+class GettingFamily extends MainState {}
+
+class FamilySuccess extends MainState {}
+
+class FamilyFailed extends MainState {}
+
+class FamilyErorr extends MainState {}
