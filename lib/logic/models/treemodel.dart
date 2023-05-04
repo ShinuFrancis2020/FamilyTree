@@ -16,6 +16,8 @@ class Data {
   String? sId;
   MainFamilyId? mainFamilyId;
   MainFamilyId? familyId;
+  FatherId? fatherId;
+  MotherId? motherId;
   String? role;
   bool? isRoot;
   String? name;
@@ -38,6 +40,8 @@ class Data {
       {this.sId,
       this.mainFamilyId,
       this.familyId,
+      this.fatherId,
+      this.motherId,
       this.role,
       this.isRoot,
       this.name,
@@ -58,6 +62,12 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
+    fatherId = json['fatherId'] != null
+        ? new FatherId.fromJson(json['fatherId'])
+        : null;
+    motherId = json['motherId'] != null
+        ? new MotherId.fromJson(json['motherId'])
+        : null;
     mainFamilyId = json['mainFamilyId'] != null
         ? MainFamilyId.fromJson(json['mainFamilyId'])
         : null;
@@ -87,6 +97,136 @@ class Data {
         childrens!.add(Childrens.fromJson(v));
       });
     }
+  }
+}
+
+class FatherId {
+  String? sId;
+  String? mainFamilyId;
+  String? role;
+  bool? isRoot;
+  String? name;
+  String? email;
+  bool? isEmailVerified;
+  String? maritalStatus;
+  String? spouseId;
+  String? addedBy;
+  String? galleryVisibility;
+  String? status;
+  String? gender;
+  String? address;
+  String? phone;
+  String? createDate;
+  String? updateDate;
+  int? iV;
+  String? familyId;
+
+  FatherId(
+      {this.sId,
+      this.mainFamilyId,
+      this.role,
+      this.isRoot,
+      this.name,
+      this.email,
+      this.isEmailVerified,
+      this.maritalStatus,
+      this.spouseId,
+      this.addedBy,
+      this.galleryVisibility,
+      this.status,
+      this.gender,
+      this.address,
+      this.phone,
+      this.createDate,
+      this.updateDate,
+      this.iV,
+      this.familyId});
+
+  FatherId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    mainFamilyId = json['mainFamilyId'];
+    role = json['role'];
+    isRoot = json['isRoot'];
+    name = json['name'];
+    email = json['email'];
+    isEmailVerified = json['isEmailVerified'];
+    maritalStatus = json['maritalStatus'];
+    spouseId = json['spouseId'];
+    addedBy = json['addedBy'];
+    galleryVisibility = json['galleryVisibility'];
+    status = json['status'];
+    gender = json['gender'];
+    address = json['address'];
+    phone = json['phone'];
+    createDate = json['create_date'];
+    updateDate = json['update_date'];
+    iV = json['__v'];
+    familyId = json['familyId'];
+  }
+}
+
+class MotherId {
+  String? sId;
+  String? mainFamilyId;
+  String? familyId;
+  String? role;
+  bool? isRoot;
+  String? name;
+  String? email;
+  bool? isEmailVerified;
+  String? status;
+  String? gender;
+  String? address;
+  String? phone;
+  String? dateOfBirth;
+  String? createDate;
+  String? updateDate;
+  int? iV;
+  String? galleryVisibility;
+  String? maritalStatus;
+  String? spouseId;
+
+  MotherId(
+      {this.sId,
+      this.mainFamilyId,
+      this.familyId,
+      this.role,
+      this.isRoot,
+      this.name,
+      this.email,
+      this.isEmailVerified,
+      this.status,
+      this.gender,
+      this.address,
+      this.phone,
+      this.dateOfBirth,
+      this.createDate,
+      this.updateDate,
+      this.iV,
+      this.galleryVisibility,
+      this.maritalStatus,
+      this.spouseId});
+
+  MotherId.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    mainFamilyId = json['mainFamilyId'];
+    familyId = json['familyId'];
+    role = json['role'];
+    isRoot = json['isRoot'];
+    name = json['name'];
+    email = json['email'];
+    isEmailVerified = json['isEmailVerified'];
+    status = json['status'];
+    gender = json['gender'];
+    address = json['address'];
+    phone = json['phone'];
+    dateOfBirth = json['dateOfBirth'];
+    createDate = json['create_date'];
+    updateDate = json['update_date'];
+    iV = json['__v'];
+    galleryVisibility = json['galleryVisibility'];
+    maritalStatus = json['maritalStatus'];
+    spouseId = json['spouseId'];
   }
 }
 

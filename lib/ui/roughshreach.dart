@@ -108,11 +108,26 @@ class _RoughPageState extends State<RoughPage> {
   }
 
   buildRelation(TreeModel treeModel) {
-    if (treeModel.data!.spouseId != null) {
-      if (treeModel.data!.childrens!.isNotEmpty) {
-        return buildSpouseWithChildren(treeModel);
+    if (treeModel.data!.fatherId != null && treeModel.data!.motherId != null) {
+      if (treeModel.data!.spouseId != null) {
+        if (treeModel.data!.childrens!.isNotEmpty) {
+          // return buildSpouseWithChildren(treeModel);
+          return buildParentWithChildAndGrandChilds(treeModel);
+        } else {
+          // return buildSpouseOnly(treeModel);
+          return buildParentWithChild(treeModel);
+        }
       } else {
-        return buildSpouseOnly(treeModel);
+        // return buildSpouseWithChildren(treeModel);
+        return buildParentWithChild(treeModel);
+      }
+    } else {
+      if (treeModel.data!.spouseId != null) {
+        if (treeModel.data!.childrens!.isNotEmpty) {
+          return buildSpouseWithChildren(treeModel);
+        } else {
+          return buildSpouseOnly(treeModel);
+        }
       }
     } else {
       return const SizedBox.shrink();
@@ -258,6 +273,244 @@ class _RoughPageState extends State<RoughPage> {
                 ),
               ],
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildParentWithChildAndGrandChilds(TreeModel treeModel) {
+    return Column(
+      children: [
+        OuterContainer(
+          child: Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () => {},
+                    child: Container(
+                      padding: const EdgeInsets.all(14.0),
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(18.0),
+                          boxShadow: [
+                            BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                          ]),
+                      child: Text(
+                        treeModel.data!.fatherId!.name!,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Helper.hDivider(width: 120.0),
+                  Container(
+                    padding: const EdgeInsets.all(14.0),
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(18.0),
+                        boxShadow: [
+                          BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                        ]),
+                    child: Flexible(
+                      child: Text(
+                        treeModel.data!.motherId!.name!,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              Helper.allowHeight(10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  InkWell(
+                    onTap: () => {},
+                    child: Container(
+                      padding: const EdgeInsets.all(14.0),
+                      decoration: BoxDecoration(
+                          color: Colors.blueAccent,
+                          borderRadius: BorderRadius.circular(18.0),
+                          boxShadow: [
+                            BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                          ]),
+                      child: Text(
+                        treeModel.data!.name!,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                  Helper.hDivider(width: 120.0),
+                  Container(
+                    padding: const EdgeInsets.all(14.0),
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(18.0),
+                        boxShadow: [
+                          BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                        ]),
+                    child: Flexible(
+                      child: Text(
+                        treeModel.data!.spouseId!.name!,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Helper.vDivider(height: 120.0),
+        OuterContainer(
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.max,
+              children: List.generate(
+                treeModel.data!.childrens!.length,
+                (indexOne) => InkWell(
+                  onTap: () => treeModel
+                              .data!.childrens![indexOne].maritalStatus !=
+                          "Single"
+                      ? context.read<MainBloc>().add(GetUser(
+                          userID: treeModel.data!.childrens![indexOne].sId))
+                      : Helper.showToast(
+                          msg: treeModel
+                              .data!.childrens![indexOne].maritalStatus),
+                  child: Container(
+                    padding: const EdgeInsets.all(14.0),
+                    decoration: BoxDecoration(
+                        color: Colors.blueAccent,
+                        borderRadius: BorderRadius.circular(18.0),
+                        boxShadow: [
+                          BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                        ]),
+                    child: Text(
+                      treeModel.data!.childrens![indexOne].name!,
+                      style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16),
+                    ),
+                  ),
+                ),
+              )),
+        ),
+      ],
+    );
+  }
+
+  buildParentWithChild(TreeModel treeModel) {
+    return Column(
+      children: [
+        OuterContainer(
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(8.0))),
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        "Father - ${treeModel.data!.fatherId!.name}\nMother - ${treeModel.data!.motherId!.name}",
+                        style: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.bold),
+                      )),
+                  Helper.allowHeight(5),
+                  Helper.vDivider(height: 20.0),
+                  Helper.allowHeight(5),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      InkWell(
+                        onTap: () => {},
+                        child: Container(
+                          padding: const EdgeInsets.all(14.0),
+                          decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(18.0),
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                              ]),
+                          child: Text(
+                            treeModel.data!.name!,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      Helper.hDivider(width: 80.0),
+                      InkWell(
+                        onTap: () => {},
+                        child: Container(
+                          padding: const EdgeInsets.all(14.0),
+                          decoration: BoxDecoration(
+                              color: Colors.blueAccent,
+                              borderRadius: BorderRadius.circular(18.0),
+                              boxShadow: [
+                                BoxShadow(color: Colors.grey.withOpacity(0.5)),
+                              ]),
+                          child: Text(
+                            treeModel.data!.spouseId!.name!,
+                            style: const TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              // Container(
+              //   padding: const EdgeInsets.all(14.0),
+              //   decoration: BoxDecoration(
+              //       color: Colors.blueAccent,
+              //       borderRadius: BorderRadius.circular(18.0),
+              //       boxShadow: [
+              //         BoxShadow(color: Colors.grey.withOpacity(0.5)),
+              //       ]),
+              //   child: Flexible(
+              //     child: Text(
+              //       treeModel.data!.spouseId!.name!,
+              //       overflow: TextOverflow.ellipsis,
+              //       style: const TextStyle(
+              //           color: Colors.white,
+              //           fontWeight: FontWeight.bold,
+              //           fontSize: 16),
+              //     ),
+              //   ),
+              // ),
+            ],
           ),
         ),
       ],
