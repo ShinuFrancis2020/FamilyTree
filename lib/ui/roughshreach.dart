@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
+import 'package:family_tree_app/ui/navdrawer.dart';
 import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ class _RoughPageState extends State<RoughPage> {
           centerTitle: true,
           title: const Text("Family Tree"),
         ),
+        drawer: const HomeDrawer(),
         body: BlocBuilder<MainBloc, MainState>(builder: (context, state) {
           if (state is UserFetched) {
             return Padding(
@@ -44,7 +46,9 @@ class _RoughPageState extends State<RoughPage> {
                           (index) => Row(
                                 children: [
                                   InkWell(
-                                    onTap: ()=>context.read<MainBloc>().add(ShowGenerations(index: index)),
+                                    onTap: () => context
+                                        .read<MainBloc>()
+                                        .add(ShowGenerations(index: index)),
                                     child: Container(
                                       width: 100,
                                       padding: const EdgeInsets.all(14.0),
@@ -54,8 +58,8 @@ class _RoughPageState extends State<RoughPage> {
                                               BorderRadius.circular(8.0),
                                           boxShadow: [
                                             BoxShadow(
-                                                color:
-                                                    Colors.grey.withOpacity(0.5)),
+                                                color: Colors.grey
+                                                    .withOpacity(0.5)),
                                           ]),
                                       child: Row(
                                         mainAxisAlignment:

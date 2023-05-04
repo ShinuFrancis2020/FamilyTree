@@ -1,4 +1,5 @@
 import 'package:family_tree_app/helper/helper.dart';
+import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signin.dart';
 import 'package:family_tree_app/ui/profile.dart';
@@ -81,7 +82,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 CupertinoIcons.power,
                 color: Colors.black,
               ),
-              onTap: () async {
+              onTap: () {
+                LocalStorage.clearAll();
+
                 BlocProvider.of<MainBloc>(context).add(DoLogout());
               },
             ),
