@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
+import 'package:family_tree_app/ui/common/outercontainer.dart';
 import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,9 @@ class _RoughPageState extends State<RoughPage> {
                           (index) => Row(
                                 children: [
                                   InkWell(
-                                    onTap: ()=>context.read<MainBloc>().add(ShowGenerations(index: index)),
+                                    onTap: () => context
+                                        .read<MainBloc>()
+                                        .add(ShowGenerations(index: index)),
                                     child: Container(
                                       width: 100,
                                       padding: const EdgeInsets.all(14.0),
@@ -54,8 +57,8 @@ class _RoughPageState extends State<RoughPage> {
                                               BorderRadius.circular(8.0),
                                           boxShadow: [
                                             BoxShadow(
-                                                color:
-                                                    Colors.grey.withOpacity(0.5)),
+                                                color: Colors.grey
+                                                    .withOpacity(0.5)),
                                           ]),
                                       child: Row(
                                         mainAxisAlignment:
@@ -87,141 +90,7 @@ class _RoughPageState extends State<RoughPage> {
             );
           }
           return const LinearProgressIndicator();
-        })
-        // Column(
-        //   children: [
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 30.0),
-        //       child: Center(
-        //         child: Container(
-        //           height: 70,
-        //           width: 99,
-        //           color: Colors.green,
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(18.0),
-        //             child: Row(
-        //               children: [
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //                 const SizedBox(
-        //                   width: 20,
-        //                   child: Divider(
-        //                     height: 2,
-        //                     color: Colors.black,
-        //                   ),
-        //                 ),
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       height: 20,
-        //       width: 30,
-        //       child: VerticalDivider(
-        //         color: Colors.black,
-        //         thickness: 2,
-        //       ),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 0.0),
-        //       child: Center(
-        //         child: Container(
-        //           height: 70,
-        //           width: 99,
-        //           color: Colors.green,
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(18.0),
-        //             child: Row(
-        //               children: [
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //                 const SizedBox(
-        //                   width: 20,
-        //                   child: Divider(
-        //                     height: 2,
-        //                     color: Colors.black,
-        //                   ),
-        //                 ),
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //     const SizedBox(
-        //       height: 20,
-        //       width: 30,
-        //       child: VerticalDivider(
-        //         color: Colors.black,
-        //         thickness: 2,
-        //       ),
-        //     ),
-        //     Padding(
-        //       padding: const EdgeInsets.only(top: 0.0),
-        //       child: Center(
-        //         child: Container(
-        //           height: 70,
-        //           width: 120,
-        //           color: Colors.green,
-        //           child: Padding(
-        //             padding: const EdgeInsets.all(18.0),
-        //             child: Row(
-        //               children: [
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //                 const SizedBox(
-        //                   width: 8,
-        //                 ),
-        //                 // const SizedBox(
-        //                 //   width: 20,
-        //                 //   child: Divider(
-        //                 //     height: 2,
-        //                 //     color: Colors.black,
-        //                 //   ),
-        //                 // ),
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //                 const SizedBox(
-        //                   width: 8,
-        //                 ),
-        //                 Container(
-        //                   height: 20,
-        //                   width: 20,
-        //                   color: Colors.blue,
-        //                 ),
-        //               ],
-        //             ),
-        //           ),
-        //         ),
-        //       ),
-        //     ),
-        //   ],
-        // ),
-        );
+        }));
   }
 
   buildRelation(TreeModel treeModel) {
@@ -239,9 +108,7 @@ class _RoughPageState extends State<RoughPage> {
   Widget buildSpouseWithChildren(TreeModel treeModel) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(14.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        OuterContainer(
           child: Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -266,7 +133,7 @@ class _RoughPageState extends State<RoughPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 120, child: Divider(color: Colors.black)),
+                Helper.hDivider(width: 120.0),
                 Container(
                   padding: const EdgeInsets.all(14.0),
                   decoration: BoxDecoration(
@@ -290,17 +157,8 @@ class _RoughPageState extends State<RoughPage> {
             ),
           ),
         ),
-        // Helper.allowHeight(20),
-        const SizedBox(
-            height: 60,
-            child: VerticalDivider(
-              thickness: 2.5,
-              color: Colors.black,
-            )),
-
-        Container(
-          padding: const EdgeInsets.all(14.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        Helper.vDivider(height: 120.0),
+        OuterContainer(
           child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               mainAxisSize: MainAxisSize.max,
@@ -341,9 +199,7 @@ class _RoughPageState extends State<RoughPage> {
   Widget buildSpouseOnly(TreeModel treeModel) {
     return Column(
       children: [
-        Container(
-          padding: const EdgeInsets.all(14.0),
-          decoration: BoxDecoration(border: Border.all(color: Colors.red)),
+        OuterContainer(
           child: Expanded(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -354,11 +210,9 @@ class _RoughPageState extends State<RoughPage> {
                   child: Container(
                     padding: const EdgeInsets.all(14.0),
                     decoration: BoxDecoration(
-                        color: Colors.blueAccent,
-                        borderRadius: BorderRadius.circular(18.0),
-                        boxShadow: [
-                          BoxShadow(color: Colors.grey.withOpacity(0.5)),
-                        ]),
+                      color: Colors.blueAccent,
+                      borderRadius: BorderRadius.circular(18.0),
+                    ),
                     child: Text(
                       treeModel.data!.name!,
                       style: const TextStyle(
@@ -368,15 +222,13 @@ class _RoughPageState extends State<RoughPage> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 120, child: Divider(color: Colors.black)),
+                Helper.hDivider(width: 120.0),
                 Container(
                   padding: const EdgeInsets.all(14.0),
                   decoration: BoxDecoration(
-                      color: Colors.blueAccent,
-                      borderRadius: BorderRadius.circular(18.0),
-                      boxShadow: [
-                        BoxShadow(color: Colors.grey.withOpacity(0.5)),
-                      ]),
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(18.0),
+                  ),
                   child: Flexible(
                     child: Text(
                       treeModel.data!.spouseId!.name!,
