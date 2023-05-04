@@ -5,9 +5,11 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/models/commonmodel.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
+import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/logic/models/usermodel.dart';
 import 'package:family_tree_app/logic/repositories.dart';
 import 'package:family_tree_app/server/serverhelper.dart';
+import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -16,13 +18,22 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   CommonModel commonModel = CommonModel();
   ProfileModel profileModel = ProfileModel();
   UserModel userModel = UserModel();
+
   String? dsvm;
   MainBloc() : super(MainState()) {
     on<DoLogin>(doLogin);
+    on<ShowGenerations>(((event, emit) {
+      if (Initializer.generations.generations.length != event.index) {
+        emit(UserFetched(treeModel: Initializer.generations.generations[event.index]));
+      }
+    }));
     on<GetProfile>(_getProfile);
     on<DoLogout>(doLogout);
     on<Signup>(_signup);
-     on<GenderChanged>(
+    on<GetUser>(getUser);
+    // on<ShowNextGen>(showNextGen);
+
+    on<GenderChanged>(
       (event, emit) => emit(GenderChangedState()),
     );
   }
@@ -38,7 +49,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           UserModel.fromJson(await ServerHelper.post('/user/signin', data));
       if (userModel.status!) {
         await LocalStorage.setToken(userModel.token.toString());
-        emit(LogoutSuccess(userModel: userModel));
+        emit(LoginSucces(userModel: userModel));
       } else {
         Helper.showToast(msg: userModel.msg);
         emit(LoginError(error: userModel.msg.toString()));
@@ -100,21 +111,63 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   Future<FutureOr<void>> doLogout(
       DoLogout event, Emitter<MainState> emit) async {
-    try {
+    // try {
  
-      emit(Loggingout());
+    //   emit(Fetching());
 
-      commonModel =
-          CommonModel.fromJson(await ServerHelper.get('/user/logout'));
-      if (commonModel.status!) {
-        emit(LogoutSucces());
-     
+    //   commonModel =
+    //       CommonModel.fromJson(await ServerHelper.get('/user/logout'));
+    //   if (commonModel.status!) {
+    //     emit(ProfileSuccess());
+    //     emit(ProfileSuccess());
+    //   } else {
+    //     Helper.showToast(msg: commonModel.msg);
+    //     emit(ProfileError(error: profileModel.msg.toString()));
+    //   }
+    // } catch (e) {
+    //   emit(ProfileError(error: e.toString()));
+    // }
+  }
+
+  Future<FutureOr<void>> getUser(GetUser event, Emitter<MainState> emit) async {
+    try {
+      emit(GettingUser());
+      var uId = await LocalStorage.getUserId();
+      TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
+          '/user/family/members?userId=${event.userID}'));
+      if (treeModel.status!) {
+        Initializer.generations.generations.add(treeModel);
+        emit(UserFetched(treeModel: treeModel));
       } else {
-        Helper.showToast(msg: commonModel.msg);
-        emit(LogoutError(error: commonModel.msg.toString()));
+        log(treeModel.msg!);
+        Helper.showToast(msg: treeModel.msg!);
+        emit(UserNotFetched());
       }
     } catch (e) {
-      emit(LogoutError(error: e.toString()));
+      log('fetch data : $e');
+      Helper.showToast(msg: 'Unable fetch data, try again later');
+      emit(GettingUserError());
+    }
+  }
+
+  Future<FutureOr<void>> showNextGen(
+      ShowNextGen event, Emitter<MainState> emit) async {
+    try {
+      emit(ShowingNextGen());
+      var uId = await LocalStorage.getUserId();
+      TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
+          '/user/family/members?userId=6450b84dd476264984b74249'));
+      if (treeModel.status!) {
+        emit(NextGenVisible());
+      } else {
+        log(treeModel.msg!);
+        Helper.showToast(msg: treeModel.msg!);
+        emit(NextGenNotVisible());
+      }
+    } catch (e) {
+      log('fetch data : e');
+      Helper.showToast(msg: 'Unable fetch data, try again later');
+      emit(ShowingNextGenError());
     }
   }
 }
@@ -183,8 +236,7 @@ class AdminLoginSuccess extends MainState {
   AdminLoginSuccess({required this.loginModel});
 }
 
-
-class SignupFailed extends  MainState {
+class SignupFailed extends MainState {
   final String error;
   SignupFailed({required this.error});
   @override
@@ -192,15 +244,14 @@ class SignupFailed extends  MainState {
 }
 
 class SignupSuccess extends MainState {
-
   SignupSuccess();
   @override
   List<Object> get props => [];
 }
 
-class LogoutSuccess extends MainState {
+class LoginSucces extends MainState {
   final UserModel userModel;
-  LogoutSuccess({required this.userModel});
+  LoginSucces({required this.userModel});
 }
 
 class ProfileSuccess extends MainState {
@@ -255,6 +306,7 @@ class AttendanceAlreadyMarked extends MainState {}
 class AttendanceStatusNotChecked extends MainState {}
 
 class CheckingAttendanceStatusError extends MainState {}
+
 class GenderChanged extends MainEvent {}
 
 //GetAttendanceHistory
@@ -301,4 +353,42 @@ class FamilySuccess extends MainState {}
 class FamilyFailed extends MainState {}
 
 class FamilyErorr extends MainState {}
+
 class GenderChangedState extends MainState {}
+
+//
+
+class GetUser extends MainEvent {
+  final String? userID;
+  GetUser({required this.userID});
+}
+
+class GettingUser extends MainState {}
+
+class UserFetched extends MainState {
+  final TreeModel treeModel;
+  UserFetched({required this.treeModel});
+}
+
+class UserNotFetched extends MainState {}
+
+class GettingUserError extends MainState {}
+
+//to view next generation
+
+class ShowNextGen extends MainEvent {}
+
+class ShowingNextGen extends MainState {}
+
+class NextGenVisible extends MainState {}
+
+class NextGenNotVisible extends MainState {}
+
+class ShowingNextGenError extends MainState {}
+
+class ShowGenerations extends MainEvent {
+  final int index;
+  ShowGenerations({required this.index});
+}
+
+class ShowingGeneration extends MainState {}

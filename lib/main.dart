@@ -1,6 +1,5 @@
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/roughshreach.dart';
-import 'package:family_tree_app/ui/splashscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: Colors.blue,
             appBarTheme: const AppBarTheme(backgroundColor: Colors.green)),
-        home: const Rough(),
+        home: const RoughPage(),
       ),
     );
   }
