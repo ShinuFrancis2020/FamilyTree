@@ -128,7 +128,7 @@ class _RoughPageState extends State<RoughPage> {
           return buildSpouseOnly(treeModel);
         }
       }
-    } 
+    }
   }
 
   addMember() {}
@@ -138,6 +138,7 @@ class _RoughPageState extends State<RoughPage> {
       children: [
         OuterContainer(
           child: Expanded(
+          
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
