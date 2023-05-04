@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/models/commonmodel.dart';
-import 'package:family_tree_app/logic/models/generations.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/logic/models/usermodel.dart';
@@ -114,7 +113,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<FutureOr<void>> doLogout(
       DoLogout event, Emitter<MainState> emit) async {
     // try {
-
+ 
     //   emit(Fetching());
 
     //   commonModel =
