@@ -131,7 +131,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<FutureOr<void>> getUser(GetUser event, Emitter<MainState> emit) async {
     try {
       emit(GettingUser());
-      var uId = await LocalStorage.getUserId();
+      // var uId = await LocalStorage.getUserId();
+      log(event.userID.toString());
       TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
           '/user/family/members?userId=${event.userID}'));
       if (treeModel.status!) {
