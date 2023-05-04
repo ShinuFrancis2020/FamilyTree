@@ -1,7 +1,10 @@
 import 'package:family_tree_app/helper/helper.dart';
+import 'package:family_tree_app/logic/bloc/commonbloc.dart';
+import 'package:family_tree_app/ui/authentication/signin.dart';
 import 'package:family_tree_app/ui/profile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeDrawer extends StatefulWidget {
   const HomeDrawer({
@@ -34,7 +37,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
           ),
           const Divider(),
-
           ListTile(
             leading: const Icon(
               CupertinoIcons.home,
@@ -55,35 +57,35 @@ class _HomeDrawerState extends State<HomeDrawer> {
               Helper.push(context, const Profile());
             },
           ),
-
-          // BlocListener<MainBloc, MainState>(
-          //   listener: (context, state) {
-          //     if (state is SignningOff) {
-          //       Helper.loading(context);
-          //     }
-          //     if (state is LogoutCompleted) {
-          //       Helper.pop(context);
-          //       Navigator.pushAndRemoveUntil(
-          //           context,
-          //           MaterialPageRoute(
-          //               builder: (BuildContext context) => const LoginScreen()),
-          //           ModalRoute.withName('/'));
-          //     }
-          //     if (state is LogoutNotCompleted || state is LogoutError) {
-          //       Helper.pop(context);
-          //     }
-          //   },
-          //   child: ListTile(
-          //     title: const Text("Logout"),
-          //     leading: const Icon(
-          //       CupertinoIcons.power,
-          //       color: Colors.black,
-          //     ),
-          //     onTap: () async {
-          //       BlocProvider.of<MainBloc>(context).add(DoLogout());
-          //     },
-          //   ),
-          // ),
+          BlocListener<MainBloc, MainState>(
+            listener: (context, state) {
+              if (state is Loggingout) {
+                Helper.loading(context);
+              }
+              if (state is LogoutSucces) {
+                Helper.pop(context);
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const Authentication()),
+                    ModalRoute.withName('/'));
+              }
+              if (state is LogoutError || state is LogoutError) {
+                Helper.pop(context);
+              }
+            },
+            child: ListTile(
+              title: const Text("Logout"),
+              leading: const Icon(
+                CupertinoIcons.power,
+                color: Colors.black,
+              ),
+              onTap: () async {
+                BlocProvider.of<MainBloc>(context).add(DoLogout());
+              },
+            ),
+          ),
         ],
       ),
     );
