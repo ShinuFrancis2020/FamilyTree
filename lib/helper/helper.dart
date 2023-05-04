@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class Helper {
   // DONOT DELETE 👇
   // border: Border.all(color: Colors.red),
@@ -14,6 +13,24 @@ class Helper {
 
   static shrink() {
     return const SizedBox.shrink();
+  }
+
+  static hDivider({required width}) {
+    return SizedBox(
+        width: width,
+        child: const Divider(
+          color: Colors.black,
+          thickness: 2.0,
+        ));
+  }
+
+  static vDivider({required height}) {
+    return SizedBox(
+        height: height,
+        child: const VerticalDivider(
+          thickness: 2.5,
+          color: Colors.black,
+        ));
   }
 
   static loading(BuildContext context) {
