@@ -63,7 +63,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
               if (state is Loggingout) {
                 Helper.loading(context);
               }
-              if (state is LogouSuccess) {
+              if (state is LogoutSucces) {
+                LocalStorage.clearAll();
                 Helper.pop(context);
                 Navigator.pushAndRemoveUntil(
                     context,
@@ -82,9 +83,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                 CupertinoIcons.power,
                 color: Colors.black,
               ),
-              onTap: () {
-                LocalStorage.clearAll();
-
+              onTap: () async {
                 BlocProvider.of<MainBloc>(context).add(DoLogout());
               },
             ),
