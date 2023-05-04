@@ -41,7 +41,7 @@ class _SplashScreenState extends State<SplashScreen> {
     debugPrint(token);
     if (token != null) {
       debugPrint("token $token ${DateTime.now()}");
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed( Duration(seconds: 2));
       Helper.pushReplacement(context, const RoughPage());
     } else {
       await Future.delayed(const Duration(seconds: 2));

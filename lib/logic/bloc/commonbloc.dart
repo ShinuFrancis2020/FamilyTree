@@ -50,6 +50,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           UserModel.fromJson(await ServerHelper.post('/user/signin', data));
       if (userModel.status!) {
         await LocalStorage.setToken(userModel.token.toString());
+        print(userModel.token.toString());
+        await LocalStorage.setUserId(userModel.uid.toString());
         emit(LoginSucces(userModel: userModel));
       } else {
         Helper.showToast(msg: userModel.msg);
@@ -131,10 +133,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<FutureOr<void>> getUser(GetUser event, Emitter<MainState> emit) async {
     try {
       emit(GettingUser());
-      // var uId = await LocalStorage.getUserId();
-      log(event.userID.toString());
-      TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
-          '/user/family/members?userId=${event.userID}'));
+      var uId = await LocalStorage.getUserId();
+      TreeModel treeModel = TreeModel.fromJson(
+          await ServerHelper.get('/user/family/members?userId=$uId'));
       if (treeModel.status!) {
         Initializer.generations.generations.add(treeModel);
         emit(UserFetched(treeModel: treeModel));
@@ -362,7 +363,7 @@ class GenderChangedState extends MainState {}
 
 class GetUser extends MainEvent {
   final String? userID;
-  GetUser({required this.userID});
+  GetUser({this.userID});
 }
 
 class GettingUser extends MainState {}

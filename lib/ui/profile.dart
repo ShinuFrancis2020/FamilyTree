@@ -51,32 +51,47 @@ class _ProfileState extends State<Profile> {
   _profieview(ProfileModel profileModel) {
     return Center(
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          _sizedbox(35),
           const CircleAvatar(
-            radius: 25,
+            radius: 45,
             backgroundImage: AssetImage("assets/family.png"),
           ),
-          _text(profileModel.data!.name.toString()),
-          _text(profileModel.data!.phone.toString()),
-          _text(profileModel.data!.address.toString()),
-          _text(profileModel.data!.gender.toString()),
-          _text(profileModel.data!.maritalStatus.toString()),
+          _sizedbox(50),
           _text(
-            d1.format(DateTime.parse(
-              profileModel.data!.dateOfBirth.toString(),
-            )),
+            profileModel.data!.name.toString(),
+            18,
           ),
+          _text(profileModel.data!.phone.toString(), 18),
+          _text(profileModel.data!.address.toString(), 18),
+          _text(profileModel.data!.gender.toString(), 18),
+          _text(profileModel.data!.maritalStatus.toString(), 18),
+          _text(
+              d1.format(DateTime.parse(
+                profileModel.data!.dateOfBirth.toString(),
+              )),
+              12),
         ],
       ),
     );
   }
 
-  _text(name) {
+  _sizedbox(height) {
+    return SizedBox(
+      height: double.parse(height.toString()),
+    );
+  }
+
+  _text(name, size) {
     return Text(
       name,
-      style: const TextStyle(fontSize: 18),
+      style: TextStyle(
+          fontSize: double.parse(
+            size.toString(),
+          ),
+          fontWeight: FontWeight.bold),
     );
   }
 }
