@@ -63,7 +63,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
               if (state is Loggingout) {
                 Helper.loading(context);
               }
-              if (state is LogoutSucces) {
+              if (state is LogouSuccess) {
                 Helper.pop(context);
                 Navigator.pushAndRemoveUntil(
                     context,
