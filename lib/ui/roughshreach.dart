@@ -1,5 +1,4 @@
 import 'package:family_tree_app/helper/helper.dart';
-import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/ui/common/outercontainer.dart';
@@ -15,21 +14,10 @@ class RoughPage extends StatefulWidget {
 }
 
 class _RoughPageState extends State<RoughPage> {
-  String? uid;
   @override
   void initState() {
     super.initState();
-    fetcher();
-  }
-
-  fetcher() async {
-    uid = await LocalStorage.getUserId();
-    print(uid.toString());
-    initfunc();
-  }
-
-  initfunc() async {
-    context.read<MainBloc>().add(GetUser(userID: uid));
+    context.read<MainBloc>().add(GetUser(userID: '6450b84dd476264984b74249'));
   }
 
   @override
@@ -446,7 +434,7 @@ class _RoughPageState extends State<RoughPage> {
                       Helper.allowWidth(10),
                       InkWell(
                         onTap: () => context.read<MainBloc>().add(
-                            GetUser(userID: treeModel.data!.motherId!.sId)),
+                            GetUser(userID: treeModel.data!.fatherId!.sId)),
                         child: Container(
                           decoration: BoxDecoration(
                               color: Colors.grey[200],
