@@ -514,6 +514,7 @@
 import 'dart:math';
 
 import 'package:family_tree_app/ui/circleavatardemo.dart';
+import 'package:family_tree_app/ui/roughshreach.dart';
 import 'package:flutter/material.dart';
 import 'package:graphview/GraphView.dart';
 
@@ -541,6 +542,18 @@ class _FamilyTreeState extends State<FamilyTree> {
                       builder: (context) => const CircleAvatarLine()));
             },
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: InkWell(
+                child: const Icon(Icons.abc),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Rough()));
+                },
+              ),
+            ),
+          ],
         ),
         body: Column(
           mainAxisSize: MainAxisSize.max,
