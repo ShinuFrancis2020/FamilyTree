@@ -10,23 +10,33 @@ class CircleAvatarLine extends StatelessWidget {
         title: const Text('Circle Avatar Line'),
       ),
       body: Center(
-        child: CustomPaint(
-          painter: LinePainter(),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const <Widget>[
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.blue,
-                child: Text('A'),
-              ),
-              SizedBox(height: 50),
-              CircleAvatar(
-                radius: 50,
-                backgroundColor: Colors.red,
-                child: Text('B'),
-              ),
-            ],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            height: 100,
+            decoration: BoxDecoration(border: Border.all()),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.blue,
+                  child: Text('A'),
+                ),
+                Divider(
+                  color: Colors.redAccent, //color of divider
+                  height: 5, //height spacing of divider
+                  thickness: 3, //thickness of divier line
+                  indent: 25, //spacing at the start of divider
+                  endIndent: 25, //spacing at the end of divider
+                ),
+                CircleAvatar(
+                  radius: 50,
+                  backgroundColor: Colors.red,
+                  child: Text('B'),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -46,11 +56,11 @@ class LinePainter extends CustomPainter {
 
     canvas.drawLine(startPoint, endPoint, paint);
 
-    Offset avatarA = Offset(50, size.height / 2);
-    Offset avatarB = Offset(size.width - 50, size.height / 4);
+    // Offset avatarA = Offset(50, size.height / 2);
+    // Offset avatarB = Offset(size.width - 50, size.height / 4);
 
-    canvas.drawCircle(avatarA, 50, paint);
-    canvas.drawCircle(avatarB, 50, paint);
+    // canvas.drawCircle(avatarA, 50, paint);
+    // canvas.drawCircle(avatarB, 50, paint);
   }
 
   @override
