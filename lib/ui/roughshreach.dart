@@ -22,7 +22,7 @@ class _RoughState extends State<Rough> {
           //   padding: EdgeInsets.all(14.0),
           //   child: Text("Me"),
           //   decoration: BoxDecoration(
-          //     color: Colors.white,
+          //     color: Colors.white, 
           //     boxShadow: [
           //       BoxShadow(
           //         color: Colors.grey.withOpacity(05),
