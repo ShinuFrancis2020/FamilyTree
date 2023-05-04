@@ -2,6 +2,7 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/ui/common/outercontainer.dart';
+import 'package:family_tree_app/ui/navdrawer.dart';
 import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +28,7 @@ class _RoughPageState extends State<RoughPage> {
           centerTitle: true,
           title: const Text("Family Tree"),
         ),
+        drawer: const HomeDrawer(),
         body: BlocBuilder<MainBloc, MainState>(builder: (context, state) {
           if (state is UserFetched) {
             return Padding(

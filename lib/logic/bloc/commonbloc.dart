@@ -49,8 +49,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           UserModel.fromJson(await ServerHelper.post('/user/signin', data));
       if (userModel.status!) {
         await LocalStorage.setToken(userModel.token.toString());
-        await LocalStorage.setUserId(userModel.uid.toString());
-        emit(LogoutSuccess(userModel: userModel));
+        emit(LoginSucces(userModel: userModel));
       } else {
         Helper.showToast(msg: userModel.msg);
         emit(LoginError(error: userModel.msg.toString()));
@@ -250,9 +249,9 @@ class SignupSuccess extends MainState {
   List<Object> get props => [];
 }
 
-class LogoutSuccess extends MainState {
+class LoginSucces extends MainState {
   final UserModel userModel;
-  LogoutSuccess({required this.userModel});
+  LoginSucces({required this.userModel});
 }
 
 class ProfileSuccess extends MainState {

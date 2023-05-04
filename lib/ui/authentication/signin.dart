@@ -21,13 +21,13 @@ class _AuthenticationState extends State<Authentication> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
-          if (state is LogoutSuccess) {
-            Helper.pushReplacement(context, FamilyTree());
+          if (state is LoginSucces) {
+            Helper.pushReplacement(context, const FamilyTree());
           }
         },
         child: Padding(
@@ -38,6 +38,11 @@ class _AuthenticationState extends State<Authentication> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                SizedBox(
+                  height: 200,
+                  width: 300,
+                  child: Image.asset('assets/familyilogo.jpg'),
+                ),
                 TextFormField(
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (value) {
