@@ -1,12 +1,8 @@
-
-
-
-
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalStorage {
-   static setToken(var token) async {
+  static setToken(var token) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
   }
@@ -16,12 +12,20 @@ class LocalStorage {
     return prefs.getString('token');
   }
 
+  static setUserId(var uId) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('uId', uId);
+  }
+
+  static getUserId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('uId');
+  }
+
   static clearAll() async {
     final sharedPreferences = await Helper.locaStorageInst();
     for (String key in sharedPreferences.getKeys()) {
-    
-        sharedPreferences.remove(key);
-    
+      sharedPreferences.remove(key);
     }
   }
 

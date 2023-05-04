@@ -1,5 +1,4 @@
 import 'package:family_tree_app/helper/helper.dart';
-import 'package:family_tree_app/helper/initializer.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signup.dart';
 import 'package:family_tree_app/ui/homescreen.dart';
