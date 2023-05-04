@@ -24,7 +24,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<DoLogin>(doLogin);
     on<ShowGenerations>(((event, emit) {
       if (Initializer.generations.generations.length != event.index) {
-        emit(UserFetched(treeModel: Initializer.generations.generations[event.index]));
+        emit(UserFetched(
+            treeModel: Initializer.generations.generations[event.index]));
       }
     }));
     on<GetProfile>(_getProfile);
@@ -112,7 +113,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<FutureOr<void>> doLogout(
       DoLogout event, Emitter<MainState> emit) async {
     // try {
- 
+
     //   emit(Fetching());
 
     //   commonModel =
@@ -132,7 +133,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   Future<FutureOr<void>> getUser(GetUser event, Emitter<MainState> emit) async {
     try {
       emit(GettingUser());
-      var uId = await LocalStorage.getUserId();
+      // var uId = await LocalStorage.getUserId();
+      log(event.userID.toString());
       TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
           '/user/family/members?userId=${event.userID}'));
       if (treeModel.status!) {
