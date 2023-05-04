@@ -129,9 +129,7 @@ class _RoughPageState extends State<RoughPage> {
           return buildSpouseOnly(treeModel);
         }
       }
-    } else {
-      return const SizedBox.shrink();
-    }
+    } 
   }
 
   addMember() {}
