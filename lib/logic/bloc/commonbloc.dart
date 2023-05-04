@@ -112,22 +112,20 @@ class MainBloc extends Bloc<MainEvent, MainState> {
 
   Future<FutureOr<void>> doLogout(
       DoLogout event, Emitter<MainState> emit) async {
-    // try {
+    try {
+      emit(Loggingout());
 
-    //   emit(Fetching());
-
-    //   commonModel =
-    //       CommonModel.fromJson(await ServerHelper.get('/user/logout'));
-    //   if (commonModel.status!) {
-    //     emit(ProfileSuccess());
-    //     emit(ProfileSuccess());
-    //   } else {
-    //     Helper.showToast(msg: commonModel.msg);
-    //     emit(ProfileError(error: profileModel.msg.toString()));
-    //   }
-    // } catch (e) {
-    //   emit(ProfileError(error: e.toString()));
-    // }
+      commonModel =
+          CommonModel.fromJson(await ServerHelper.get('/user/logout'));
+      if (commonModel.status!) {
+        emit(LogouSuccess());
+      } else {
+        Helper.showToast(msg: commonModel.msg);
+        emit(LogoutError(error: profileModel.msg.toString()));
+      }
+    } catch (e) {
+      emit(LogoutError(error: e.toString()));
+    }
   }
 
   Future<FutureOr<void>> getUser(GetUser event, Emitter<MainState> emit) async {
@@ -287,6 +285,8 @@ class LogoutError extends MainState {
   final String error;
   LogoutError({required this.error});
 }
+
+class LogouSuccess extends MainState {}
 
 class AddUserContactMatchList extends MainState {
   final CommonModel loginModel;
