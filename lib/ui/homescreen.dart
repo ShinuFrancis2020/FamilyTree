@@ -35,8 +35,10 @@ class _FamilyTreeState extends State<FamilyTree> {
               child: InkWell(
                 child: const Icon(Icons.abc),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Rough()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const RoughPage()));
                 },
               ),
             ),
