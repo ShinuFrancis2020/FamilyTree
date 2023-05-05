@@ -1,7 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signup.dart';
-import 'package:family_tree_app/ui/roughshreach.dart';
+import 'package:family_tree_app/ui/familyhomescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -27,7 +27,7 @@ class _AuthenticationState extends State<Authentication> {
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
           if (state is LoginSucces) {
-            Helper.pushReplacement(context, const RoughPage());
+            Helper.pushReplacement(context, const FamilyHome());
           }
         },
         child: SingleChildScrollView(

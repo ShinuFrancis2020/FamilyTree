@@ -5,7 +5,6 @@ import 'package:family_tree_app/logic/models/usermodel.dart';
 import 'package:family_tree_app/logic/repositories.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(Authinitial()) {
     on<Login>(_login);
@@ -17,13 +16,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Map data = {
       "email":event.email.toString(),
       "password":event.password.toString()
-
     };
 
     userModel = await Repository().login(url: '/user/signin', data: data);
     if (userModel.status == true) {
       await LocalStorage.setToken(userModel.token.toString());
-
       emit(LoginSuccess(userModel: userModel));
     } else if (userModel.status == false) {
       Fluttertoast.showToast(

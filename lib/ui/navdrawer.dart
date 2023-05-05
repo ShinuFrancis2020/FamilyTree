@@ -63,15 +63,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
               if (state is Loggingout) {
                 Helper.loading(context);
               }
-              if (state is LogoutSucces) {
+              if (state is LogouSuccess) {
                 LocalStorage.clearAll();
-                Helper.pop(context);
+
                 Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             const Authentication()),
                     ModalRoute.withName('/'));
+                // Helper.pop(context);
               }
               if (state is LogoutError || state is LogoutError) {
                 Helper.pop(context);

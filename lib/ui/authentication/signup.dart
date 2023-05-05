@@ -3,6 +3,7 @@ import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signin.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -206,6 +207,9 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   Helper.allowHeight(20),
                   TextFormField(
+                    inputFormatters: [
+                      LengthLimitingTextInputFormatter(10),
+                    ],
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
                       if (value!.isEmpty) {

@@ -34,10 +34,13 @@ class Data {
   String? galleryVisibility;
   String? maritalStatus;
   SpouseId? spouseId;
+
+  bool? amI;
   List<Childrens>? childrens;
 
   Data(
       {this.sId,
+      this.amI,
       this.mainFamilyId,
       this.familyId,
       this.fatherId,
@@ -62,12 +65,10 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    fatherId = json['fatherId'] != null
-        ? FatherId.fromJson(json['fatherId'])
-        : null;
-    motherId = json['motherId'] != null
-        ? MotherId.fromJson(json['motherId'])
-        : null;
+    fatherId =
+        json['fatherId'] != null ? FatherId.fromJson(json['fatherId']) : null;
+    motherId =
+        json['motherId'] != null ? MotherId.fromJson(json['motherId']) : null;
     mainFamilyId = json['mainFamilyId'] != null
         ? MainFamilyId.fromJson(json['mainFamilyId'])
         : null;
@@ -77,6 +78,8 @@ class Data {
     role = json['role'];
     isRoot = json['isRoot'];
     name = json['name'];
+    amI = json['amI'];
+
     email = json['email'];
     isEmailVerified = json['isEmailVerified'];
     status = json['status'];
@@ -105,6 +108,7 @@ class FatherId {
   String? mainFamilyId;
   String? role;
   bool? isRoot;
+  bool? amI;
   String? name;
   String? email;
   bool? isEmailVerified;
@@ -126,6 +130,7 @@ class FatherId {
       this.mainFamilyId,
       this.role,
       this.isRoot,
+      this.amI,
       this.name,
       this.email,
       this.isEmailVerified,
@@ -147,6 +152,7 @@ class FatherId {
     mainFamilyId = json['mainFamilyId'];
     role = json['role'];
     isRoot = json['isRoot'];
+    amI = json['amI'];
     name = json['name'];
     email = json['email'];
     isEmailVerified = json['isEmailVerified'];
@@ -171,6 +177,7 @@ class MotherId {
   String? familyId;
   String? role;
   bool? isRoot;
+  bool? amI;
   String? name;
   String? email;
   bool? isEmailVerified;
@@ -191,6 +198,7 @@ class MotherId {
       this.mainFamilyId,
       this.familyId,
       this.role,
+      this.amI,
       this.isRoot,
       this.name,
       this.email,
@@ -212,6 +220,7 @@ class MotherId {
     mainFamilyId = json['mainFamilyId'];
     familyId = json['familyId'];
     role = json['role'];
+    amI = json['amI'];
     isRoot = json['isRoot'];
     name = json['name'];
     email = json['email'];
@@ -261,6 +270,7 @@ class SpouseId {
   String? mainFamilyId;
   String? role;
   bool? isRoot;
+  bool? amI;
   String? name;
   String? email;
   bool? isEmailVerified;
@@ -281,6 +291,7 @@ class SpouseId {
       this.mainFamilyId,
       this.role,
       this.isRoot,
+      this.amI,
       this.name,
       this.email,
       this.isEmailVerified,
@@ -301,6 +312,7 @@ class SpouseId {
     mainFamilyId = json['mainFamilyId'];
     role = json['role'];
     isRoot = json['isRoot'];
+    amI = json['amI'];
     name = json['name'];
     email = json['email'];
     isEmailVerified = json['isEmailVerified'];
@@ -324,6 +336,7 @@ class Childrens {
   String? familyId;
   String? role;
   bool? isRoot;
+  bool? amI;
   String? name;
   String? email;
   bool? isEmailVerified;
@@ -346,6 +359,7 @@ class Childrens {
       this.familyId,
       this.role,
       this.isRoot,
+      this.amI,
       this.name,
       this.email,
       this.isEmailVerified,
@@ -367,6 +381,7 @@ class Childrens {
     mainFamilyId = json['mainFamilyId'];
     familyId = json['familyId'];
     role = json['role'];
+    amI = json['amI'];
     isRoot = json['isRoot'];
     name = json['name'];
     email = json['email'];

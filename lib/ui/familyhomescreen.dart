@@ -6,18 +6,19 @@ import 'package:family_tree_app/ui/navdrawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RoughPage extends StatefulWidget {
-  const RoughPage({super.key});
+class FamilyHome extends StatefulWidget {
+  const FamilyHome({super.key});
 
   @override
-  State<RoughPage> createState() => _RoughPageState();
+  State<FamilyHome> createState() => _RoughPageState();
 }
 
-class _RoughPageState extends State<RoughPage> {
+class _RoughPageState extends State<FamilyHome> {
   @override
   void initState() {
     super.initState();
-    context.read<MainBloc>().add(GetUser(userID: '6450b84dd476264984b74249'));
+
+    context.read<MainBloc>().add(GetUser(userID: 'nill'));
   }
 
   @override
@@ -115,11 +116,36 @@ class _RoughPageState extends State<RoughPage> {
         } else {
           return buildSpouseOnly(treeModel);
         }
+      } else {
+        return addMember(treeModel);
       }
     }
   }
 
-  addMember() {}
+  addMember(TreeModel treeModel) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height / 3,
+        ),
+        Center(
+          child: CircleAvatar(
+            radius: 85,
+            backgroundColor: Colors.blue,
+            child: CircleAvatar(
+              radius: 55,
+              backgroundColor: Colors.orange,
+              child: Text(
+                treeModel.data!.name.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 
   Widget buildSpouseWithChildren(TreeModel treeModel) {
     return Column(

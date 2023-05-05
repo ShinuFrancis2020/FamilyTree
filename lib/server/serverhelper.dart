@@ -47,7 +47,7 @@ class ServerHelper {
   static Future<dynamic> get(url) async {
     try {
       var token = await LocalStorage.getToken();
-   print(token);
+      print(token);
       var response = await http.get(
         Uri.parse(ip + url),
         headers: {"Content-Type": "application/json", "token": token ?? ""},
