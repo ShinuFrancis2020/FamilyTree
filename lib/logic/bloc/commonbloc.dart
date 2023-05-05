@@ -50,7 +50,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           UserModel.fromJson(await ServerHelper.post('/user/signin', data));
       if (userModel.status!) {
         await LocalStorage.setToken(userModel.token.toString());
-        print(userModel.token.toString());
+    
         await LocalStorage.setUserId(userModel.uid.toString());
         emit(LoginSucces(userModel: userModel));
       } else {
@@ -240,7 +240,6 @@ class AdminLoginSuccess extends MainState {
 class SignupFailed extends MainState {
   final String error;
   SignupFailed({required this.error});
-  @override
   List<Object> get props => [];
 }
 

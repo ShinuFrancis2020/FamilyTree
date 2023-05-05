@@ -17,7 +17,7 @@ class CircleAvatarLine extends StatelessWidget {
             decoration: BoxDecoration(border: Border.all()),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
+              children: const <Widget>[
                 CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.blue,

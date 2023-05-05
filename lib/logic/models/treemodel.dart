@@ -63,10 +63,10 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     fatherId = json['fatherId'] != null
-        ? new FatherId.fromJson(json['fatherId'])
+        ? FatherId.fromJson(json['fatherId'])
         : null;
     motherId = json['motherId'] != null
-        ? new MotherId.fromJson(json['motherId'])
+        ? MotherId.fromJson(json['motherId'])
         : null;
     mainFamilyId = json['mainFamilyId'] != null
         ? MainFamilyId.fromJson(json['mainFamilyId'])

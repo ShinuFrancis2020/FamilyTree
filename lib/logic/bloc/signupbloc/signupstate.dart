@@ -1,6 +1,6 @@
 
 import 'package:equatable/equatable.dart';
-import 'package:family_tree_app/logic/models/commonmodel.dart';
+
 
 abstract class SignupState extends Equatable {
   @override
