@@ -62,17 +62,22 @@ class _ProfileState extends State<Profile> {
           _sizedbox(50),
           _text(
             profileModel.data!.name.toString(),
-            18,
+            22,
           ),
+          _sizedbox(20),
           _text(profileModel.data!.phone.toString(), 18),
+          _sizedbox(20),
           _text(profileModel.data!.address.toString(), 18),
+          _sizedbox(20),
           _text(profileModel.data!.gender.toString(), 18),
+          _sizedbox(20),
           _text(profileModel.data!.maritalStatus.toString(), 18),
+          _sizedbox(20),
           _text(
               d1.format(DateTime.parse(
                 profileModel.data!.dateOfBirth.toString(),
               )),
-              12),
+              16),
         ],
       ),
     );

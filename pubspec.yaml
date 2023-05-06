@@ -37,6 +37,7 @@ dependencies:
   equatable: ^2.0.3
   intl: null
   connectivity_plus: ^3.0.1
+  awesome_ripple_animation: ^1.0.1
   graphview: ^1.2.0
   flutter:
     sdk: flutter

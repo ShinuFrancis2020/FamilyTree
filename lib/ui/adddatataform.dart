@@ -1,27 +1,29 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/ui/authentication/signin.dart';
-
+import 'package:family_tree_app/ui/familyhomescreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class AddDataForm extends StatefulWidget {
+  final String? pagenavname;
+  final String? uid;
+  const AddDataForm({super.key, this.pagenavname, this.uid});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<AddDataForm> createState() => _AddDataFormState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _AddDataFormState extends State<AddDataForm> {
   static DateTime? date;
   bool show = false;
   static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
   static List<String> genderlist = ["Male", "Female", "Other"];
   static String? selectedGender = 'Male';
   final email = TextEditingController();
-  final password = TextEditingController();
+
+  // final password = TextEditingController();
   final name = TextEditingController();
   final familyName = TextEditingController();
 
@@ -33,12 +35,42 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
+        title: Text(widget.pagenavname.toString()),
         elevation: 0,
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SizedBox(
+          width: Helper.width(context),
+          child: MaterialButton(
+              color: Colors.green,
+              child: const Text(
+                "Register",
+                style: TextStyle(color: Colors.white),
+              ),
+              onPressed: () {
+                if (formKey1.currentState!.validate()) {
+                  context.read<MainBloc>().add(AddFormData(
+                        routename: widget.pagenavname.toString(),
+                        uid: widget.uid.toString(),
+                        gender: selectedGender.toString(),
+                        email: email.text,
+                        password: "",
+                        name: name.text,
+                        familyName: familyName.text,
+                        address: address.text,
+                        phone: phone.text,
+                        dateOfBirth: dateOfBirth.text,
+                      ));
+                }
+              }),
+        ),
       ),
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
-          if (state is SignupSuccess) {
-            Helper.pushReplacement(context, const Authentication());
+          if (state is DataAddedSuccefully) {
+            Navigator.push(context,
+                (MaterialPageRoute(builder: (context) => const FamilyHome())));
           }
         },
         child: SingleChildScrollView(
@@ -50,54 +82,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: email,
-                    // obscureText: !show,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      fillColor: Colors.grey[50],
-                      labelText: "Email",
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: password,
-                    obscureText: !show,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Password",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
-                  ),
-                  Helper.allowHeight(20),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
@@ -133,18 +117,69 @@ class _SignUpPageState extends State<SignUpPage> {
                     showCursor: true,
                     cursorColor: Colors.black,
                     autocorrect: true,
-                    controller: familyName,
+                    controller: email,
+                    // obscureText: !show,
                     textInputAction: TextInputAction.done,
                     keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                          borderRadius: BorderRadius.circular(10)),
                       fillColor: Colors.grey[50],
-                      labelText: "Family Name",
-                      // labelStyle: AppStyles.buttonloginText,
+                      labelText: "Email",
                     ),
                   ),
+                  // Helper.allowHeight(20),
+                  // TextFormField(
+                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //   validator: (value) {
+                  //     if (value!.isEmpty) {
+                  //       return "this field is required";
+                  //     }
+                  //     return null;
+                  //   },
+                  //   showCursor: true,
+                  //   cursorColor: Colors.black,
+                  //   autocorrect: true,
+                  //   controller: password,
+                  //   obscureText: !show,
+                  //   textInputAction: TextInputAction.done,
+                  //   keyboardType: TextInputType.text,
+                  //   decoration: InputDecoration(
+                  //     border: OutlineInputBorder(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //     ),
+                  //     fillColor: Colors.grey[50],
+                  //     labelText: "Password",
+                  //     // labelStyle: AppStyles.buttonloginText,
+                  //   ),
+                  // ),
+
+                  Helper.allowHeight(20),
+                  widget.pagenavname == "Children"
+                      ? const SizedBox.shrink()
+                      : TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return "this field is required";
+                            }
+                            return null;
+                          },
+                          showCursor: true,
+                          cursorColor: Colors.black,
+                          autocorrect: true,
+                          controller: familyName,
+                          textInputAction: TextInputAction.done,
+                          keyboardType: TextInputType.text,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            fillColor: Colors.grey[50],
+                            labelText: "Family Name",
+                            // labelStyle: AppStyles.buttonloginText,
+                          ),
+                        ),
                   Helper.allowHeight(20),
                   Container(
                     padding: const EdgeInsets.all(16.0),
@@ -182,6 +217,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   Helper.allowHeight(20),
+
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
@@ -275,37 +311,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     ),
                   ),
                   Helper.allowHeight(20),
-                  SizedBox(
-                    width: Helper.width(context),
-                    child: MaterialButton(
-                        color: Colors.green,
-                        child: const Text(
-                          "Register",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          if (formKey1.currentState!.validate()) {
-                            context.read<MainBloc>().add(Signup(
-                                  gender: selectedGender.toString(),
-                                  email: email.text,
-                                  password: password.text,
-                                  name: name.text,
-                                  familyName: familyName.text,
-                                  address: address.text,
-                                  phone: phone.text,
-                                  dateOfBirth: dateOfBirth.text,
-                                ));
-                          }
-                        }),
-                  )
                 ],
               ),
             ),
           ),
         ),
       ),
-   
-   
     );
   }
 }

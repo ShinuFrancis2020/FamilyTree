@@ -18,6 +18,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   CommonModel commonModel = CommonModel();
   ProfileModel profileModel = ProfileModel();
   UserModel userModel = UserModel();
+  bool? adddata = false;
 
   String? dsvm;
   MainBloc() : super(MainState()) {
@@ -28,9 +29,11 @@ class MainBloc extends Bloc<MainEvent, MainState> {
             treeModel: Initializer.generations.generations[event.index]));
       }
     }));
+
     on<GetProfile>(_getProfile);
     on<DoLogout>(doLogout);
     on<Signup>(_signup);
+    on<AddFormData>(_addFormData);
     on<GetUser>(getUser);
     // on<ShowNextGen>(showNextGen);
 
@@ -91,6 +94,67 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         gravity: ToastGravity.CENTER,
       );
       emit(SignupFailed(error: commonModel.msg.toString()));
+    }
+  }
+
+  Future<FutureOr<void>> _addFormData(
+      AddFormData event, Emitter<MainState> emit) async {
+    try {
+      emit(AddingData());
+      Map data = {
+        "userId": event.uid,
+        "email": event.email,
+        "name": event.name,
+        "familyName": event.familyName,
+        "gender": event.gender,
+        "address": event.address,
+        "phone": event.phone,
+        "dateOfBirth": event.dateOfBirth
+      };
+      CommonModel commonModel;
+      event.routename == "Spouse"
+          ? commonModel = CommonModel.fromJson(
+              await ServerHelper.post('/family/member/spouse/add', data))
+          : commonModel = CommonModel.fromJson(
+              await ServerHelper.post('/family/member/children/add', data));
+
+      if (commonModel.status == true) {
+        Fluttertoast.showToast(
+          msg: "${event.routename} Added Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+
+        emit(DataAddedSuccefully());
+        try {
+          emit(GettingUser());
+          var uId = await LocalStorage.getUserId();
+
+          TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
+              '/user/family/members?userId=${event.uid}'));
+          if (treeModel.status!) {
+            Initializer.generations.generations.add(treeModel);
+            emit(UserFetched(treeModel: treeModel));
+          } else {
+            log(treeModel.msg!);
+            Helper.showToast(msg: treeModel.msg!);
+            emit(UserNotFetched());
+          }
+        } catch (e) {
+          log('fetch data : $e');
+          Helper.showToast(msg: 'Unable fetch data, try again later');
+          emit(GettingUserError());
+        }
+      } else if (commonModel.status == false) {
+        Fluttertoast.showToast(
+          msg: commonModel.msg.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+        emit(DataAddedError(error: commonModel.msg.toString()));
+      }
+    } catch (e) {
+      emit(DataAddedError(error: e.toString()));
     }
   }
 
@@ -207,6 +271,30 @@ class Signup extends MainEvent {
   });
 }
 
+class AddFormData extends MainEvent {
+  final String email, uid, routename;
+  final String password;
+  final String name;
+  final String familyName;
+  final String gender;
+  final String address;
+  final String phone;
+  final String dateOfBirth;
+
+  AddFormData({
+    required this.email,
+    required this.routename,
+    required this.uid,
+    required this.password,
+    required this.name,
+    required this.familyName,
+    required this.gender,
+    required this.address,
+    required this.phone,
+    required this.dateOfBirth,
+  });
+}
+
 class DoLogout extends MainEvent {}
 
 class GetProfile extends MainEvent {
@@ -223,6 +311,8 @@ class GetLogoutEvent extends MainEvent {
 class Requesting extends MainState {}
 
 class Signupin extends MainState {}
+
+class AddingData extends MainState {}
 
 class Fetching extends MainState {}
 
@@ -244,8 +334,20 @@ class SignupFailed extends MainState {
   List<Object> get props => [];
 }
 
+class DataAddedError extends MainState {
+  final String error;
+  DataAddedError({required this.error});
+  List<Object> get props => [];
+}
+
 class SignupSuccess extends MainState {
   SignupSuccess();
+  @override
+  List<Object> get props => [];
+}
+
+class DataAddedSuccefully extends MainState {
+  DataAddedSuccefully();
   @override
   List<Object> get props => [];
 }

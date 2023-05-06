@@ -41,9 +41,11 @@ class _SplashScreenState extends State<SplashScreen> {
     if (token != null) {
       debugPrint("token $token ${DateTime.now()}");
       await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {}
       Helper.pushReplacement(context, const FamilyHome());
     } else {
       await Future.delayed(const Duration(seconds: 2));
+      if (mounted) {}
       Helper.pushReplacement(context, const Authentication());
     }
   }
