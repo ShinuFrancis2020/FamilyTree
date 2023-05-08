@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:family_tree_app/ui/adddatataform.dart';
 import 'package:family_tree_app/utils/showdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -136,6 +137,93 @@ class Helper {
           context, MaterialPageRoute(builder: ((context) => route)));
     });
   }
+
+  static  showAdd(BuildContext context, uid, spousepresent, childpresent) {
+    return showDialog(
+      barrierDismissible: true,
+      barrierColor: Colors.white70,
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          // title: const Text(
+          //     "Do you want to delete the site  "),
+          content: ClipRRect(
+            borderRadius: BorderRadius.circular(22),
+            child: CircleAvatar(
+              radius: 100,
+              backgroundColor: Colors.green,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 24.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                           Helper.generatecontainer(
+                              35, 60, "Spouse", spousepresent, uid, context),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                           Helper.generatecontainer(35, 60, "Parents", false, uid, context),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                           Helper.generatecontainer(
+                              35, 60, "Children", childpresent, uid,context),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Helper.generatecontainer(35, 60, "Photos", true, uid,context),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+   static Widget generatecontainer(
+      double height, double width, String? name, bool? enable, String? uid, BuildContext context) {
+    return InkWell(
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: enable == false ? Colors.grey : Colors.blue,
+        ),
+        height: height,
+        // width: width,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text(name.toString(),
+              style: const TextStyle(color: Colors.white)),
+        ),
+      ),
+      onTap: () {
+        enable == true
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => AddDataForm(
+                        pagenavname: name.toString(), uid: uid.toString())))
+            : "";
+      },
+    );
+  }
+
+
 
   // static void checkUpdate(BuildContext context) {
   //   InAppUpdate.checkForUpdate().then((value) {
