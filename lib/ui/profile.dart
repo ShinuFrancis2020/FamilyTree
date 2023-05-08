@@ -62,7 +62,7 @@ class _ProfileState extends State<Profile> {
           _sizedbox(50),
           _text(
             profileModel.data!.name.toString(),
-            22,
+            24,
           ),
           _sizedbox(20),
           _text(profileModel.data!.phone.toString(), 18),
