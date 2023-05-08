@@ -6,7 +6,7 @@ import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:http/http.dart' as http;
 
 class ServerHelper {
-  static const ip = 'http://192.168.52.201:5050';
+  static const ip = 'http://192.168.52.141:5050';
   // static const ip = 'http://192.168.166.9:5300';
   // static const ip = 'http://ole.leopardtechlabs.in';
   // static const ip = 'https://api.onlineole.com';

@@ -166,7 +166,7 @@ class _RoughPageState extends State<FamilyHome> {
 
                     context.read<MainBloc>().adddata == true
                         ? _showDialog(context, treeModel.data!.sId.toString(),
-                            false, false)
+                            true, false)
                         : "";
                   },
                 ),
@@ -312,9 +312,10 @@ class _RoughPageState extends State<FamilyHome> {
                   ),
                 ),
               ),
-              Helper.hDivider(width: 40.0),
+              Helper.hDivider(width: MediaQuery.of(context).size.width / 10),
               Container(
                 padding: const EdgeInsets.all(14.0),
+                width: MediaQuery.of(context).size.width / 3,
                 decoration: BoxDecoration(
                     color: treeModel.data!.spouseId!.amI == true
                         ? Colors.green
@@ -411,9 +412,10 @@ class _RoughPageState extends State<FamilyHome> {
                   ),
                 ),
               ),
-              Helper.hDivider(width: 55.0),
+              Helper.hDivider(width: MediaQuery.of(context).size.width / 10),
               Container(
                 padding: const EdgeInsets.all(14.0),
+                width: MediaQuery.of(context).size.width / 2.5,
                 decoration: BoxDecoration(
                   color: Colors.blueAccent,
                   borderRadius: BorderRadius.circular(18.0),

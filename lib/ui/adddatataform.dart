@@ -18,7 +18,7 @@ class AddDataForm extends StatefulWidget {
 class _AddDataFormState extends State<AddDataForm> {
   static DateTime? date;
   bool show = false;
-  static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
+  static GlobalKey<FormState> formKey2 = GlobalKey<FormState>();
   static List<String> genderlist = ["Male", "Female", "Other"];
   static String? selectedGender = 'Male';
   final email = TextEditingController();
@@ -49,7 +49,7 @@ class _AddDataFormState extends State<AddDataForm> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                if (formKey1.currentState!.validate()) {
+                if (formKey2.currentState!.validate()) {
                   context.read<MainBloc>().add(AddFormData(
                         routename: widget.pagenavname.toString(),
                         uid: widget.uid.toString(),
@@ -77,7 +77,7 @@ class _AddDataFormState extends State<AddDataForm> {
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Form(
-              key: formKey1,
+              key: formKey2,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
