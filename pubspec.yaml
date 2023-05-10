@@ -38,6 +38,7 @@ dependencies:
   intl: null
   connectivity_plus: ^3.0.1
   awesome_ripple_animation: ^1.0.1
+  lottie: ^1.4.3
   graphview: ^1.2.0
   flutter:
     sdk: flutter
@@ -74,6 +75,7 @@ flutter:
     - assets/family.png
     - assets/familyicon.png
     - assets/familyilogo.jpg
+    - assets/lotties/loading.json
   
    
 

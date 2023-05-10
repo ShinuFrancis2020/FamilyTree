@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/models/commonmodel.dart';
+import 'package:family_tree_app/logic/models/profiledetailed.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/logic/models/usermodel.dart';
@@ -18,6 +19,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   CommonModel commonModel = CommonModel();
   ProfileModel profileModel = ProfileModel();
   UserModel userModel = UserModel();
+
+  ProfileDetailedModel profileDetailedModel = ProfileDetailedModel();
   bool? adddata = false;
 
   String? dsvm;
@@ -35,6 +38,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<Signup>(_signup);
     on<AddFormData>(_addFormData);
     on<GetUser>(getUser);
+    on<GetProfileDetailed>(getProfileDetailed);
     // on<ShowNextGen>(showNextGen);
 
     on<GenderChanged>(
@@ -155,6 +159,26 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       }
     } catch (e) {
       emit(DataAddedError(error: e.toString()));
+    }
+  }
+
+  Future<FutureOr<void>> getProfileDetailed(
+      GetProfileDetailed event, Emitter<MainState> emit) async {
+    try {
+      emit(ProfileDetailedLoding());
+
+      profileDetailedModel = ProfileDetailedModel.fromJson(
+          await ServerHelper.get(
+              '/user/family/member/details?userId=${event.userID}'));
+      if (profileDetailedModel.status!) {
+        emit(
+            ProfileDetailedSuccess(profileDetailedModel: profileDetailedModel));
+      } else {
+        Helper.showToast(msg: profileModel.msg);
+        emit(ProfileDetailedError(error: profileDetailedModel.msg.toString()));
+      }
+    } catch (e) {
+      emit(ProfileDetailedError(error: e.toString()));
     }
   }
 
@@ -362,6 +386,11 @@ class ProfileSuccess extends MainState {
   ProfileSuccess({required this.profileModel});
 }
 
+class ProfileDetailedSuccess extends MainState {
+  final ProfileDetailedModel profileDetailedModel;
+  ProfileDetailedSuccess({required this.profileDetailedModel});
+}
+
 class EmployeeLoginSuccess extends MainState {
   final CommonModel loginModel;
   EmployeeLoginSuccess({required this.loginModel});
@@ -382,6 +411,11 @@ class ProfileError extends MainState {
   ProfileError({required this.error});
 }
 
+class ProfileDetailedError extends MainState {
+  final String error;
+  ProfileDetailedError({required this.error});
+}
+
 class LogoutSucces extends MainState {}
 
 class LogoutError extends MainState {
@@ -390,6 +424,8 @@ class LogoutError extends MainState {
 }
 
 class LogouSuccess extends MainState {}
+
+class ProfileDetailedLoding extends MainState {}
 
 class AddUserContactMatchList extends MainState {
   final CommonModel loginModel;
@@ -466,6 +502,11 @@ class GenderChangedState extends MainState {}
 class GetUser extends MainEvent {
   final String? userID;
   GetUser({this.userID});
+}
+
+class GetProfileDetailed extends MainEvent {
+  final String? userID;
+  GetProfileDetailed({this.userID});
 }
 
 class GettingUser extends MainState {}

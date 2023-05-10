@@ -3,6 +3,7 @@ import 'package:family_tree_app/ui/adddatataform.dart';
 import 'package:family_tree_app/utils/showdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Helper {
@@ -19,18 +20,18 @@ class Helper {
   static hDivider({required width}) {
     return SizedBox(
         width: width,
-        child: const Divider(
-          color: Colors.black,
-          thickness: 2.0,
+        child: Divider(
+          color: Colors.grey[500],
+          thickness: 8.0,
         ));
   }
 
   static vDivider({required height}) {
     return SizedBox(
         height: height,
-        child: const VerticalDivider(
-          thickness: 2.5,
-          color: Colors.black,
+        child: VerticalDivider(
+          thickness: 8.0,
+          color: Colors.grey[500],
         ));
   }
 
@@ -120,6 +121,14 @@ class Helper {
         context, MaterialPageRoute(builder: ((context) => route)));
   }
 
+  static loadingindicator(BuildContext context) {
+    return SizedBox(
+      height: 40,
+      width: 40,
+      child: Lottie.asset('assets/lotties/loading.json'),
+    );
+  }
+
   static pushReplacementRemove(BuildContext context, String namedRoute) {
     return Navigator.of(context)
         .pushNamedAndRemoveUntil(namedRoute, (Route<dynamic> route) => false);
@@ -138,7 +147,7 @@ class Helper {
     });
   }
 
-  static  showAdd(BuildContext context, uid, spousepresent, childpresent) {
+  static showAdd(BuildContext context, uid, spousepresent, childpresent) {
     return showDialog(
       barrierDismissible: true,
       barrierColor: Colors.white70,
@@ -163,12 +172,13 @@ class Helper {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                           Helper.generatecontainer(
+                          Helper.generatecontainer(
                               35, 60, "Spouse", spousepresent, uid, context),
                           const SizedBox(
                             width: 20,
                           ),
-                           Helper.generatecontainer(35, 60, "Parents", false, uid, context),
+                          Helper.generatecontainer(
+                              35, 60, "Parents", false, uid, context),
                         ],
                       ),
                     ),
@@ -176,12 +186,13 @@ class Helper {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                           Helper.generatecontainer(
-                              35, 60, "Children", childpresent, uid,context),
+                          Helper.generatecontainer(
+                              35, 60, "Children", childpresent, uid, context),
                           const SizedBox(
                             width: 20,
                           ),
-                          Helper.generatecontainer(35, 60, "Photos", true, uid,context),
+                          Helper.generatecontainer(
+                              35, 60, "Photos", true, uid, context),
                         ],
                       ),
                     ),
@@ -195,8 +206,8 @@ class Helper {
     );
   }
 
-   static Widget generatecontainer(
-      double height, double width, String? name, bool? enable, String? uid, BuildContext context) {
+  static Widget generatecontainer(double height, double width, String? name,
+      bool? enable, String? uid, BuildContext context) {
     return InkWell(
       child: Container(
         decoration: BoxDecoration(
@@ -222,8 +233,6 @@ class Helper {
       },
     );
   }
-
-
 
   // static void checkUpdate(BuildContext context) {
   //   InAppUpdate.checkForUpdate().then((value) {
