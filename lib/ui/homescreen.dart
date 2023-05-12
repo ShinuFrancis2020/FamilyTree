@@ -147,6 +147,7 @@ class _FamilyTreeState extends State<FamilyTree> {
 
   @override
   void initState() {
+    super.initState();
     final node1 = Node.Id(1);
 
     graph.addNode(node1);

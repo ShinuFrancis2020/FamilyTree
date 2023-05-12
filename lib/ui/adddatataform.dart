@@ -16,7 +16,7 @@ class AddDataForm extends StatefulWidget {
 }
 
 class _AddDataFormState extends State<AddDataForm> {
-  static DateTime? date;
+
   bool show = false;
   static GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
   static List<String> genderlist = ["Male", "Female", "Other"];

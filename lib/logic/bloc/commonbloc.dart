@@ -132,7 +132,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         emit(DataAddedSuccefully());
         try {
           emit(GettingUser());
-          var uId = await LocalStorage.getUserId();
+          // var uId = await LocalStorage.getUserId();
 
           TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
               '/user/family/members?userId=${event.uid}'));
@@ -244,7 +244,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       ShowNextGen event, Emitter<MainState> emit) async {
     try {
       emit(ShowingNextGen());
-      var uId = await LocalStorage.getUserId();
+      // var uId = await LocalStorage.getUserId();
       TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
           '/user/family/members?userId=6450b84dd476264984b74249'));
       if (treeModel.status!) {
@@ -260,6 +260,9 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       emit(ShowingNextGenError());
     }
   }
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
 class MainEvent {}
@@ -366,14 +369,14 @@ class DataAddedError extends MainState {
 
 class SignupSuccess extends MainState {
   SignupSuccess();
-  @override
-  List<Object> get props => [];
+  // @override
+  // List<Object> get props => [];
 }
 
 class DataAddedSuccefully extends MainState {
   DataAddedSuccefully();
-  @override
-  List<Object> get props => [];
+  // @override
+  // List<Object> get props => [];
 }
 
 class LoginSucces extends MainState {

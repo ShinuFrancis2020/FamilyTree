@@ -15,7 +15,7 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  static DateTime? date;
+
   bool show = false;
   static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
   static List<String> genderlist = ["Male", "Female", "Other"];

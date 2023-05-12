@@ -35,4 +35,6 @@ class SignupBloc extends Bloc<SignupEvent, SignupState> {
       emit(SignupFailed(error: commonModel.msg.toString()));
     }
   }
+
+
 }

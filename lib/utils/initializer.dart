@@ -1,5 +1,5 @@
 import 'package:family_tree_app/logic/models/generations.dart';
-import 'package:family_tree_app/logic/models/usermodel.dart';
+
 import 'package:flutter/widgets.dart';
 
 class Initializer {
