@@ -195,6 +195,17 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      _text("Gmail:", 16, true),
+                      _text(profileDetailedModel.data!.email.toString(), 15,
+                          false),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       _text("Address:", 16, true),
                       _text(profileDetailedModel.data!.address.toString(), 15,
                           false),

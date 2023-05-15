@@ -16,7 +16,6 @@ class AddDataForm extends StatefulWidget {
 }
 
 class _AddDataFormState extends State<AddDataForm> {
-
   bool show = false;
   static GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
   static List<String> genderlist = ["Male", "Female", "Other"];
@@ -275,7 +274,7 @@ class _AddDataFormState extends State<AddDataForm> {
                           context: context,
                           initialDate: DateTime(DateTime.now().year - 18),
                           firstDate: DateTime(DateTime.now().year - 100),
-                          lastDate: DateTime(DateTime.now().year - 18));
+                          lastDate: DateTime(DateTime.now().year));
                       date = date;
                       if (date != null) {
                         dateOfBirth.text =
