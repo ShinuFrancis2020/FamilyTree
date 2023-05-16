@@ -37,6 +37,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     on<DoLogout>(doLogout);
     on<Signup>(_signup);
     on<AddFormData>(_addFormData);
+    on<AddParentsData>(_addParentsData);
     on<GetUser>(getUser);
     on<GetProfileDetailed>(getProfileDetailed);
     // on<ShowNextGen>(showNextGen);
@@ -125,6 +126,77 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       if (commonModel.status == true) {
         Fluttertoast.showToast(
           msg: "${event.routename} Added Successfully",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+
+        emit(DataAddedSuccefully());
+        try {
+          emit(GettingUser());
+          // var uId = await LocalStorage.getUserId();
+
+          TreeModel treeModel = TreeModel.fromJson(await ServerHelper.get(
+              '/user/family/members?userId=${event.uid}'));
+          if (treeModel.status!) {
+            Initializer.generations.generations.add(treeModel);
+            emit(UserFetched(treeModel: treeModel));
+          } else {
+            log(treeModel.msg!);
+            Helper.showToast(msg: treeModel.msg!);
+            emit(UserNotFetched());
+          }
+        } catch (e) {
+          log('fetch data : $e');
+          Helper.showToast(msg: 'Unable fetch data, try again later');
+          emit(GettingUserError());
+        }
+      } else if (commonModel.status == false) {
+        Fluttertoast.showToast(
+          msg: commonModel.msg.toString(),
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+        );
+        emit(DataAddedError(error: commonModel.msg.toString()));
+      }
+    } catch (e) {
+      emit(DataAddedError(error: e.toString()));
+    }
+  }
+
+  ///addparents data
+  Future<FutureOr<void>> _addParentsData(
+      AddParentsData event, Emitter<MainState> emit) async {
+    try {
+      emit(AddingData());
+      Map data = {
+        "userId": event.uid,
+        "fatherEmail": event.fatherEmail,
+        "fatherName": event.fatherName,
+        "fatherAddress": event.fatherAddress,
+        "fatherPhone": event.fatherPhone,
+        "fatherEducationalQualification": event.fatherEducationalQualification,
+        "fatherCurrentStatus": event.fatherCurrentStatus,
+        "fatherHobbies": event.fatherHobbies,
+        "fatherDateOfBirth": event.fatherDateOfBirth,
+        "fatherDateOfDeath": event.fatherDateOfDeath,
+        "motherFamilyName": event.motherFamilyName,
+        "motherEmail": event.motherEmail,
+        "motherName": event.motherName,
+        "motherAddress": event.motherAddress,
+        "motherPhone": event.motherPhone,
+        "motherEducationalQualification": event.motherEducationalQualification,
+        "motherCurrentStatus": event.motherCurrentStatus,
+        "motherHobbies": event.motherHobbies,
+        "motherDateOfBirth": event.motherDateOfBirth,
+        "motherDateOfDeath": event.motherDateOfDeath,
+      };
+      CommonModel commonModel;
+      commonModel = CommonModel.fromJson(
+          await ServerHelper.post('/family/member/parents/add', data));
+
+      if (commonModel.status == true) {
+        Fluttertoast.showToast(
+          msg: " Added Successfully",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
@@ -319,6 +391,49 @@ class AddFormData extends MainEvent {
     required this.address,
     required this.phone,
     required this.dateOfBirth,
+  });
+}
+
+class AddParentsData extends MainEvent {
+  final String? fatherEmail, uid, fatherName;
+  final String? fatherAddress;
+  final String? fatherPhone;
+  final String? fatherCurrentStatus;
+  final String? fatherEducationalQualification;
+  final String? fatherHobbies;
+  final String? fatherDateOfBirth;
+  final String? fatherDateOfDeath;
+  final String? motherFamilyName,
+      motherEmail,
+      motherName,
+      motherAddress,
+      motherPhone,
+      motherEducationalQualification,
+      motherCurrentStatus,
+      motherHobbies,
+      motherDateOfBirth,
+      motherDateOfDeath;
+  AddParentsData({
+    this.fatherEmail,
+    this.fatherName,
+    this.uid,
+    this.fatherAddress,
+    this.fatherPhone,
+    this.fatherCurrentStatus,
+    this.fatherEducationalQualification,
+    this.fatherHobbies,
+    this.fatherDateOfBirth,
+    this.fatherDateOfDeath,
+    this.motherFamilyName,
+    this.motherEmail,
+    this.motherName,
+    this.motherAddress,
+    this.motherPhone,
+    this.motherEducationalQualification,
+    this.motherCurrentStatus,
+    this.motherHobbies,
+    this.motherDateOfBirth,
+    this.motherDateOfDeath,
   });
 }
 

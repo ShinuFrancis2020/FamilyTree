@@ -20,18 +20,41 @@ class Helper {
   static hDivider({required width}) {
     return SizedBox(
         width: width,
-        child: Divider(
-          color: Colors.grey[500],
-          thickness: 8.0,
+        child: Stack(
+          children: [
+            Divider(
+              color: Colors.grey[500],
+              thickness: 8.0,
+            ),
+            const Positioned(
+              left: 13,
+              child: CircleAvatar(
+                radius: 8,
+                backgroundImage: AssetImage('assets/wedding-rings.png'),
+              ),
+            )
+          ],
         ));
   }
 
   static vDivider({required height}) {
     return SizedBox(
         height: height,
-        child: VerticalDivider(
-          thickness: 8.0,
-          color: Colors.grey[500],
+        child: Stack(
+          children: [
+            VerticalDivider(
+              thickness: 8.0,
+              color: Colors.grey[500],
+            ),
+            // const Positioned(
+            //   top: 33,
+            //   left: 0,
+            //   child: CircleAvatar(
+            //     radius: 8,
+            //     backgroundImage: AssetImage('assets/children.png'),
+            //   ),
+            // )
+          ],
         ));
   }
 

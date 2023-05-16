@@ -75,6 +75,10 @@ flutter:
     - assets/family.png
     - assets/familyicon.png
     - assets/familyilogo.jpg
+    - assets/wedding.png
+    - assets/rings.png
+    - assets/wedding-rings.png 
+    - assets/children.png    
     - assets/lotties/loading.json
   
    
