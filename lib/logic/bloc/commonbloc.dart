@@ -190,8 +190,10 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         "motherDateOfBirth": event.motherDateOfBirth,
         "motherDateOfDeath": event.motherDateOfDeath,
       };
+      print(data);
       CommonModel commonModel;
       commonModel = CommonModel.fromJson(
+        
           await ServerHelper.post('/family/member/parents/add', data));
 
       if (commonModel.status == true) {

@@ -1,5 +1,3 @@
-
-
 import 'package:family_tree_app/logic/bloc/authbloc/authbloc/authbloc.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/bloc/signupbloc/signupbloc.dart';
@@ -20,12 +18,13 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<MainBloc>(create: (BuildContext context) => MainBloc()),
-                BlocProvider<SignupBloc>(create: (BuildContext context) => SignupBloc()),
-                     BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
+        BlocProvider<SignupBloc>(
+            create: (BuildContext context) => SignupBloc()),
+        BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'KinshipTree',
         theme: ThemeData(
             primarySwatch: Colors.blue,
             appBarTheme: AppBarTheme(backgroundColor: Colors.blueGrey[800])),

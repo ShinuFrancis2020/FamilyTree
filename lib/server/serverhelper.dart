@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ServerHelper {
   // static const ip = 'http://192.168.52.141:5050';
-   static const ip = 'http://192.168.52.100:5050';
+  static const ip = 'http://192.168.52.100:5050';
   // static const ip = 'http://ole.leopardtechlabs.in';
   // static const ip = 'https://api.onlineole.com';
   static const imageIp = '$ip/wp/';
@@ -47,7 +47,7 @@ class ServerHelper {
   static Future<dynamic> get(url) async {
     try {
       var token = await LocalStorage.getToken();
-      print(token);
+      // print(token);
       var response = await http.get(
         Uri.parse(ip + url),
         headers: {"Content-Type": "application/json", "token": token ?? ""},

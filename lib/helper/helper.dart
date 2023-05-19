@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:family_tree_app/ui/adddatataform.dart';
+import 'package:family_tree_app/ui/addparents.dart';
 import 'package:family_tree_app/utils/showdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -170,7 +171,36 @@ class Helper {
     });
   }
 
-  static showAdd(BuildContext context, uid, spousepresent, childpresent) {
+  static textformfiled(
+      hinttext, TextEditingController textcontroller, String keyboardtype) {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "this field is required";
+        }
+        return null;
+      },
+      showCursor: true,
+      cursorColor: Colors.black,
+      autocorrect: true,
+      controller: textcontroller,
+      textInputAction: TextInputAction.done,
+      keyboardType:
+          keyboardtype == "text" ? TextInputType.text : TextInputType.number,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        fillColor: Colors.grey[50],
+        labelText: hinttext,
+        // labelStyle: AppStyles.buttonloginText,
+      ),
+    );
+  }
+
+  static showAdd(
+      BuildContext context, uid, spousepresent, childpresent, parentspresent) {
     return showDialog(
       barrierDismissible: true,
       barrierColor: Colors.white70,
@@ -201,7 +231,7 @@ class Helper {
                             width: 20,
                           ),
                           Helper.generatecontainer(
-                              35, 60, "Parents", false, uid, context),
+                              35, 60, "Parents", parentspresent, uid, context),
                         ],
                       ),
                     ),
@@ -247,11 +277,17 @@ class Helper {
       ),
       onTap: () {
         enable == true
-            ? Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => AddDataForm(
-                        pagenavname: name.toString(), uid: uid.toString())))
+            ? name == "Parents"
+                ? Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddParentsForm(
+                            pagenavname: name.toString(), uid: uid.toString())))
+                : Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddDataForm(
+                            pagenavname: name.toString(), uid: uid.toString())))
             : "";
       },
     );

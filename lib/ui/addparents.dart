@@ -2,7 +2,6 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/familyhomescreen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
@@ -18,17 +17,31 @@ class AddParentsForm extends StatefulWidget {
 class _AddDataFormState extends State<AddParentsForm> {
   bool show = false;
   static GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
-  static List<String> genderlist = ["Male", "Female", "Other"];
-  static String? selectedGender = 'Male';
-  final email = TextEditingController();
-
+  final fatheremail = TextEditingController();
   // final password = TextEditingController();
-  final name = TextEditingController();
+  final fathername = TextEditingController();
   final familyName = TextEditingController();
-
-  final address = TextEditingController();
-  final phone = TextEditingController();
+  final fatherAddress = TextEditingController();
+  final fatherPhone = TextEditingController();
   final dateOfBirth = TextEditingController();
+  final fatherCurrentStatus = TextEditingController();
+  final fatherEducationalQualification = TextEditingController();
+  final fatherHobbies = TextEditingController();
+  final fatherDateOfBirth = TextEditingController();
+  final fatherDateOfDeath = TextEditingController();
+  final motherFamilyName = TextEditingController();
+  final motherEmail = TextEditingController();
+  final motherName = TextEditingController();
+  final motherAddress = TextEditingController();
+  final motherPhone = TextEditingController();
+  final motherEducationalQualification = TextEditingController();
+  final motherCurrentStatus = TextEditingController();
+  final motherHobbies = TextEditingController();
+  final motherDateOfBirth = TextEditingController();
+  // final password = TextEditingController();
+  final motherDateOfDeath = TextEditingController();
+
+  bool? fathercheck = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,17 +62,31 @@ class _AddDataFormState extends State<AddParentsForm> {
               ),
               onPressed: () {
                 if (formKey3.currentState!.validate()) {
-                  context.read<MainBloc>().add(AddFormData(
-                        routename: widget.pagenavname.toString(),
+                  context.read<MainBloc>().add(AddParentsData(
+                        fatherEmail: fatheremail.text.toString(),
                         uid: widget.uid.toString(),
-                        gender: selectedGender.toString(),
-                        email: email.text,
-                        password: "",
-                        name: name.text,
-                        familyName: familyName.text,
-                        address: address.text,
-                        phone: phone.text,
-                        dateOfBirth: dateOfBirth.text,
+                        fatherName: fathername.text.toString(),
+                        fatherAddress: fatherAddress.text.toString(),
+                        fatherPhone: fatherPhone.text.toString(),
+                        fatherCurrentStatus:
+                            fatherCurrentStatus.text.toString(),
+                        fatherEducationalQualification:
+                            fatherEducationalQualification.text.toString(),
+                        fatherHobbies: fatherHobbies.text.toString(),
+                        fatherDateOfBirth: fatherDateOfBirth.text.toString(),
+                        fatherDateOfDeath: fatherDateOfDeath.text.toString(),
+                        motherFamilyName: motherFamilyName.text.toString(),
+                        motherEmail: motherEmail.text.toString(),
+                        motherName: motherName.text.toString(),
+                        motherAddress: motherAddress.text,
+                        motherPhone: motherPhone.text.toString(),
+                        motherEducationalQualification:
+                            motherEducationalQualification.text.toString(),
+                        motherCurrentStatus:
+                            motherCurrentStatus.text.toString(),
+                        motherHobbies: motherHobbies.text.toString(),
+                        motherDateOfBirth: motherDateOfBirth.text.toString(),
+                        motherDateOfDeath: motherDateOfDeath.text.toString(),
                       ));
                 }
               }),
@@ -81,240 +108,374 @@ class _AddDataFormState extends State<AddParentsForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: name,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Name",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: email,
-                    // obscureText: !show,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      fillColor: Colors.grey[50],
-                      labelText: "Email",
-                    ),
-                  ),
-                  // Helper.allowHeight(20),
-                  // TextFormField(
-                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return "this field is required";
-                  //     }
-                  //     return null;
-                  //   },
-                  //   showCursor: true,
-                  //   cursorColor: Colors.black,
-                  //   autocorrect: true,
-                  //   controller: password,
-                  //   obscureText: !show,
-                  //   textInputAction: TextInputAction.done,
-                  //   keyboardType: TextInputType.text,
-                  //   decoration: InputDecoration(
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //     fillColor: Colors.grey[50],
-                  //     labelText: "Password",
-                  //     // labelStyle: AppStyles.buttonloginText,
-                  //   ),
-                  // ),
-
-                  Helper.allowHeight(20),
-                  widget.pagenavname == "Children"
-                      ? const SizedBox.shrink()
-                      : TextFormField(
-                          autovalidateMode: AutovalidateMode.onUserInteraction,
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return "this field is required";
-                            }
-                            return null;
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(9),
+                        child: InkWell(
+                          child: Container(
+                              height: fathercheck != true
+                                  ? MediaQuery.of(context).size.height / 6
+                                  : MediaQuery.of(context).size.height / 5,
+                              width: fathercheck != true
+                                  ? MediaQuery.of(context).size.width / 3
+                                  : MediaQuery.of(context).size.width / 2,
+                              color: Colors.green,
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: SizedBox(
+                                  height: 10,
+                                  width: 8,
+                                  child: CircleAvatar(
+                                      radius: 3,
+                                      backgroundColor: Colors.yellow,
+                                      child: Text(
+                                        "F",
+                                        style: TextStyle(fontSize: 25),
+                                      )),
+                                ),
+                              )),
+                          onTap: () {
+                            setState(() {
+                              fathercheck = true;
+                            });
                           },
-                          showCursor: true,
-                          cursorColor: Colors.black,
-                          autocorrect: true,
-                          controller: familyName,
-                          textInputAction: TextInputAction.done,
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            fillColor: Colors.grey[50],
-                            labelText: "Family Name",
-                            // labelStyle: AppStyles.buttonloginText,
-                          ),
                         ),
-                  Helper.allowHeight(20),
-                  Container(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      // border: Border.all()
-                      border: Border.all(color: Colors.grey, width: 1),
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.green[50],
-                    ),
-                    child: BlocBuilder<MainBloc, MainState>(
-                      buildWhen: (previous, current) =>
-                          current is GenderChangedState,
-                      builder: ((context, state) {
-                        return DropdownButton<String>(
-                          value: selectedGender,
-                          items: genderlist
-                              .map<DropdownMenuItem<String>>(
-                                  (e) => DropdownMenuItem(
-                                        value: e,
-                                        child: Text(e),
-                                      ))
-                              .toList(),
-                          onChanged: (value) {
-                            context.read<MainBloc>().add(GenderChanged());
-                            selectedGender = value;
-                          },
-                          hint: const Text('Select an option'),
-                          underline: const SizedBox.shrink(),
-                          isExpanded: true,
-                          itemHeight: 56.0,
-                          elevation: 0,
-                          isDense: true,
-                        );
-                      }),
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: address,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
                       ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Address",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-                  TextFormField(
-                    inputFormatters: [
-                      LengthLimitingTextInputFormatter(10),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(9),
+                        child: InkWell(
+                          child: Container(
+                              height: fathercheck == true
+                                  ? MediaQuery.of(context).size.height / 6
+                                  : MediaQuery.of(context).size.height / 5,
+                              width: fathercheck == true
+                                  ? MediaQuery.of(context).size.width / 3
+                                  : MediaQuery.of(context).size.width / 2,
+                              color: Colors.green,
+                              child: const Padding(
+                                padding: EdgeInsets.all(20.0),
+                                child: SizedBox(
+                                  height: 10,
+                                  width: 8,
+                                  child: CircleAvatar(
+                                      radius: 3,
+                                      backgroundColor: Colors.yellow,
+                                      child: Text(
+                                        "M",
+                                        style: TextStyle(fontSize: 25),
+                                      )),
+                                ),
+                              )
+
+                              //  Icon(
+                              //   Icons.person,
+                              // ),
+                              ),
+                          onTap: () {
+                            setState(() {
+                              fathercheck = false;
+                            });
+                          },
+                        ),
+                      ),
                     ],
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: phone,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Phone",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
                   ),
-                  Helper.allowHeight(20),
-                  InkWell(
-                    onTap: () async {
-                      DateTime? date = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime(DateTime.now().year - 18),
-                          firstDate: DateTime(DateTime.now().year - 100),
-                          lastDate: DateTime(DateTime.now().year));
-                      date = date;
-                      if (date != null) {
-                        dateOfBirth.text =
-                            DateFormat('yyyy-MM-dd').format(date.toLocal());
-                      }
-                    },
-                    child: IgnorePointer(
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        controller: dateOfBirth,
-                        readOnly: true,
-                        //focusNode: Initializer.focusNode[3],
-                        textCapitalization: TextCapitalization.words,
-                        textInputAction: TextInputAction.next,
+                  const SizedBox(
+                    height: 9,
+                  ),
+                  fathercheck != true
+                      ? const SizedBox.shrink()
+                      : Container(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Helper.textformfiled(
+                                    "Father Name", fathername, "text"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled(
+                                    "Family Email", fatheremail, "text"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled(
+                                    "Father Address", fatherAddress, "text"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled(
+                                    "Family Phone", fatherPhone, "number"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled("Status(Current)",
+                                    fatherCurrentStatus, "text"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled(
+                                    "Educational Qualification",
+                                    fatherEducationalQualification,
+                                    "text"),
+                                Helper.allowHeight(20),
+                                Helper.textformfiled(
+                                    "Father Hobbies", fatherHobbies, "text"),
+                                Helper.allowHeight(20),
+                                InkWell(
+                                  onTap: () async {
+                                    DateTime? date = await showDatePicker(
+                                        context: context,
+                                        initialDate:
+                                            DateTime(DateTime.now().year - 18),
+                                        firstDate:
+                                            DateTime(DateTime.now().year - 100),
+                                        lastDate:
+                                            DateTime(DateTime.now().year));
+                                    date = date;
+                                    if (date != null) {
+                                      fatherDateOfBirth.text =
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(date.toLocal());
+                                    }
+                                  },
+                                  child: IgnorePointer(
+                                    child: TextFormField(
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      controller: fatherDateOfBirth,
+                                      readOnly: true,
+                                      //focusNode: Initializer.focusNode[3],
+                                      textCapitalization:
+                                          TextCapitalization.words,
+                                      textInputAction: TextInputAction.next,
 
-                        // controller: controller,
-                        // validator: (value) {
-                        //   if (!value!.contains('@') || value.isEmpty) {
-                        //     return 'Please enter a valid email address.';
-                        //   }
-                        //   return null;
-                        // },
-                        decoration: InputDecoration(
-                          hintText: "YYYY-MM-DD",
-                          suffixIcon: const Icon(Icons.calendar_month),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                                      // controller: controller,
+                                      // validator: (value) {
+                                      //   if (!value!.contains('@') || value.isEmpty) {
+                                      //     return 'Please enter a valid email address.';
+                                      //   }
+                                      //   return null;
+                                      // },
+                                      decoration: InputDecoration(
+                                        hintText: "Date of Birth",
+                                        suffixIcon:
+                                            const Icon(Icons.calendar_month),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        fillColor: Colors.grey[50],
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Helper.allowHeight(20),
+                                InkWell(
+                                  onTap: () async {
+                                    DateTime? date = await showDatePicker(
+                                        context: context,
+                                        initialDate:
+                                            DateTime(DateTime.now().year - 18),
+                                        firstDate:
+                                            DateTime(DateTime.now().year - 100),
+                                        lastDate:
+                                            DateTime(DateTime.now().year));
+                                    date = date;
+                                    if (date != null) {
+                                      fatherDateOfDeath.text =
+                                          DateFormat('yyyy-MM-dd')
+                                              .format(date.toLocal());
+                                    }
+                                  },
+                                  child: IgnorePointer(
+                                    child: TextFormField(
+                                      autovalidateMode:
+                                          AutovalidateMode.onUserInteraction,
+                                      controller: fatherDateOfDeath,
+                                      readOnly: true,
+                                      //focusNode: Initializer.focusNode[3],
+                                      textCapitalization:
+                                          TextCapitalization.words,
+                                      textInputAction: TextInputAction.next,
+
+                                      // controller: controller,
+                                      // validator: (value) {
+                                      //   if (!value!.contains('@') || value.isEmpty) {
+                                      //     return 'Please enter a valid email address.';
+                                      //   }
+                                      //   return null;
+                                      // },
+                                      decoration: InputDecoration(
+                                        hintText: "Date of Death",
+                                        suffixIcon:
+                                            const Icon(Icons.calendar_month),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        fillColor: Colors.grey[50],
+                                        filled: true,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          fillColor: Colors.grey[50],
-                          filled: true,
                         ),
-                      ),
-                    ),
-                  ),
-                  Helper.allowHeight(20),
+                  fathercheck != false
+                      ? const SizedBox.shrink()
+                      : Column(
+                          children: [
+                            Helper.textformfiled(
+                                "Mother Name", motherName, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Mother Family Name", motherFamilyName, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Mother Email", motherEmail, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Mother Address", motherAddress, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Mother Phone", motherPhone, "number"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Status(Current)", motherCurrentStatus, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled("Educational Qualification",
+                                motherEducationalQualification, "text"),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled(
+                                "Mother Hobbies", motherHobbies, "text"),
+                            Helper.allowHeight(20),
+                            InkWell(
+                              onTap: () async {
+                                DateTime? date = await showDatePicker(
+                                    context: context,
+                                    initialDate:
+                                        DateTime(DateTime.now().year - 18),
+                                    firstDate:
+                                        DateTime(DateTime.now().year - 100),
+                                    lastDate: DateTime(DateTime.now().year));
+                                date = date;
+                                if (date != null) {
+                                  motherDateOfBirth.text =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(date.toLocal());
+                                }
+                              },
+                              child: IgnorePointer(
+                                child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  controller: motherDateOfBirth,
+                                  readOnly: true,
+                                  //focusNode: Initializer.focusNode[3],
+                                  textCapitalization: TextCapitalization.words,
+                                  textInputAction: TextInputAction.next,
+
+                                  // controller: controller,
+                                  // validator: (value) {
+                                  //   if (!value!.contains('@') || value.isEmpty) {
+                                  //     return 'Please enter a valid email address.';
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    hintText: "Date of Birth",
+                                    suffixIcon:
+                                        const Icon(Icons.calendar_month),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    fillColor: Colors.grey[50],
+                                    filled: true,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Helper.allowHeight(20),
+                            InkWell(
+                              onTap: () async {
+                                DateTime? date = await showDatePicker(
+                                    context: context,
+                                    initialDate:
+                                        DateTime(DateTime.now().year - 18),
+                                    firstDate:
+                                        DateTime(DateTime.now().year - 100),
+                                    lastDate: DateTime(DateTime.now().year));
+                                date = date;
+                                if (date != null) {
+                                  motherDateOfDeath.text =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(date.toLocal());
+                                }
+                              },
+                              child: IgnorePointer(
+                                child: TextFormField(
+                                  autovalidateMode:
+                                      AutovalidateMode.onUserInteraction,
+                                  controller: motherDateOfDeath,
+                                  readOnly: true,
+                                  //focusNode: Initializer.focusNode[3],
+                                  textCapitalization: TextCapitalization.words,
+                                  textInputAction: TextInputAction.next,
+
+                                  // controller: controller,
+                                  // validator: (value) {
+                                  //   if (!value!.contains('@') || value.isEmpty) {
+                                  //     return 'Please enter a valid email address.';
+                                  //   }
+                                  //   return null;
+                                  // },
+                                  decoration: InputDecoration(
+                                    hintText: "Date of Death",
+                                    suffixIcon:
+                                        const Icon(Icons.calendar_month),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    fillColor: Colors.grey[50],
+                                    filled: true,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                 ],
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  _textformfiled(hinttext, TextEditingController textcontroller) {
+    return TextFormField(
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      validator: (value) {
+        if (value!.isEmpty) {
+          return "this field is required";
+        }
+        return null;
+      },
+      showCursor: true,
+      cursorColor: Colors.black,
+      autocorrect: true,
+      controller: textcontroller,
+      textInputAction: TextInputAction.done,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        fillColor: Colors.grey[50],
+        labelText: hinttext,
+        // labelStyle: AppStyles.buttonloginText,
       ),
     );
   }
