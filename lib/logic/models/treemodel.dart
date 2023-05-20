@@ -271,6 +271,8 @@ class SpouseId {
   String? role;
   bool? isRoot;
   bool? amI;
+  // FatherId? fatherId;
+  // MotherId? motherId;
   String? name;
   String? email;
   bool? isEmailVerified;
@@ -290,6 +292,8 @@ class SpouseId {
       {this.sId,
       this.mainFamilyId,
       this.role,
+      // this.fatherId,
+      // this.motherId,
       this.isRoot,
       this.amI,
       this.name,
@@ -312,6 +316,10 @@ class SpouseId {
     mainFamilyId = json['mainFamilyId'];
     role = json['role'];
     isRoot = json['isRoot'];
+    // fatherId =
+    //     json['fatherId'] != null ? FatherId.fromJson(json['fatherId']) : null;
+    // motherId =
+    //     json['motherId'] != null ? MotherId.fromJson(json['motherId']) : null;
     amI = json['amI'];
     name = json['name'];
     email = json['email'];

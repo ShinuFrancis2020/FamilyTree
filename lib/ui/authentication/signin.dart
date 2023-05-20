@@ -2,6 +2,7 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signup.dart';
 import 'package:family_tree_app/ui/familyhomescreen.dart';
+import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,7 +17,6 @@ class _AuthenticationState extends State<Authentication> {
   bool show = false;
   final username = TextEditingController();
   final password = TextEditingController();
-  static GlobalKey<FormState> formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +34,7 @@ class _AuthenticationState extends State<Authentication> {
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Form(
-              key: formKey,
+              key: Initializer.loginKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -122,7 +122,8 @@ class _AuthenticationState extends State<Authentication> {
                               style: TextStyle(color: Colors.white),
                             ),
                             onPressed: () {
-                              if (formKey.currentState!.validate()) {
+                              if (Initializer.loginKey.currentState!
+                                  .validate()) {
                                 context.read<MainBloc>().add(DoLogin(
                                     username: username.text,
                                     password: password.text));

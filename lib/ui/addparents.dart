@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/familyhomescreen.dart';
+import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -16,7 +17,7 @@ class AddParentsForm extends StatefulWidget {
 
 class _AddDataFormState extends State<AddParentsForm> {
   bool show = false;
-  static GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
+  // static GlobalKey<FormState> formKey4 = GlobalKey<FormState>();
   final fatheremail = TextEditingController();
   // final password = TextEditingController();
   final fathername = TextEditingController();
@@ -42,6 +43,19 @@ class _AddDataFormState extends State<AddParentsForm> {
   final motherDateOfDeath = TextEditingController();
 
   bool? fathercheck = true;
+
+  @override
+  void initState() {
+    super.initState();
+    // dispose();
+  }
+
+  @override
+  // void dispose() {
+  //   formKey4.currentState?.dispose(); // Release resources
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,7 +75,7 @@ class _AddDataFormState extends State<AddParentsForm> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                if (formKey3.currentState!.validate()) {
+                if (Initializer.addparentsdatafromKey.currentState!.validate()) {
                   context.read<MainBloc>().add(AddParentsData(
                         fatherEmail: fatheremail.text.toString(),
                         uid: widget.uid.toString(),
@@ -97,13 +111,14 @@ class _AddDataFormState extends State<AddParentsForm> {
           if (state is DataAddedSuccefully) {
             Navigator.push(context,
                 (MaterialPageRoute(builder: (context) => const FamilyHome())));
+            dispose();
           }
         },
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Form(
-              key: formKey3,
+              key: Initializer.addparentsdatafromKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -197,27 +212,28 @@ class _AddDataFormState extends State<AddParentsForm> {
                             child: Column(
                               children: [
                                 Helper.textformfiled(
-                                    "Father Name", fathername, "text"),
+                                    "Father Name", fathername, "text", true),
                                 Helper.allowHeight(20),
                                 Helper.textformfiled(
-                                    "Family Email", fatheremail, "text"),
+                                    "Family Email", fatheremail, "text", true),
                                 Helper.allowHeight(20),
-                                Helper.textformfiled(
-                                    "Father Address", fatherAddress, "text"),
+                                Helper.textformfiled("Father Address",
+                                    fatherAddress, "text", true),
                                 Helper.allowHeight(20),
-                                Helper.textformfiled(
-                                    "Family Phone", fatherPhone, "number"),
+                                Helper.textformfiled("Father Phone",
+                                    fatherPhone, "number", true),
                                 Helper.allowHeight(20),
                                 Helper.textformfiled("Status(Current)",
-                                    fatherCurrentStatus, "text"),
+                                    fatherCurrentStatus, "text", false),
                                 Helper.allowHeight(20),
                                 Helper.textformfiled(
                                     "Educational Qualification",
                                     fatherEducationalQualification,
-                                    "text"),
+                                    "text",
+                                    false),
                                 Helper.allowHeight(20),
-                                Helper.textformfiled(
-                                    "Father Hobbies", fatherHobbies, "text"),
+                                Helper.textformfiled("Father Hobbies",
+                                    fatherHobbies, "text", false),
                                 Helper.allowHeight(20),
                                 InkWell(
                                   onTap: () async {
@@ -327,28 +343,28 @@ class _AddDataFormState extends State<AddParentsForm> {
                       : Column(
                           children: [
                             Helper.textformfiled(
-                                "Mother Name", motherName, "text"),
+                                "Mother Name", motherName, "text", true),
+                            Helper.allowHeight(20),
+                            Helper.textformfiled("Mother Family Name",
+                                motherFamilyName, "text", true),
                             Helper.allowHeight(20),
                             Helper.textformfiled(
-                                "Mother Family Name", motherFamilyName, "text"),
+                                "Mother Email", motherEmail, "text", true),
                             Helper.allowHeight(20),
                             Helper.textformfiled(
-                                "Mother Email", motherEmail, "text"),
+                                "Mother Address", motherAddress, "text", true),
                             Helper.allowHeight(20),
                             Helper.textformfiled(
-                                "Mother Address", motherAddress, "text"),
+                                "Mother Phone", motherPhone, "number", true),
                             Helper.allowHeight(20),
-                            Helper.textformfiled(
-                                "Mother Phone", motherPhone, "number"),
-                            Helper.allowHeight(20),
-                            Helper.textformfiled(
-                                "Status(Current)", motherCurrentStatus, "text"),
+                            Helper.textformfiled("Status(Current)",
+                                motherCurrentStatus, "text", false),
                             Helper.allowHeight(20),
                             Helper.textformfiled("Educational Qualification",
-                                motherEducationalQualification, "text"),
+                                motherEducationalQualification, "text", false),
                             Helper.allowHeight(20),
                             Helper.textformfiled(
-                                "Mother Hobbies", motherHobbies, "text"),
+                                "Mother Hobbies", motherHobbies, "text", false),
                             Helper.allowHeight(20),
                             InkWell(
                               onTap: () async {

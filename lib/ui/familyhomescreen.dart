@@ -49,6 +49,7 @@ class _RoughPageState extends State<FamilyHome> {
         ),
         drawer: const HomeDrawer(),
         body: Container(
+          height:MediaQuery.
           decoration: const BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -181,14 +182,16 @@ class _RoughPageState extends State<FamilyHome> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height / 3,
+          height: MediaQuery.of(context).size.height / 3.5,
         ),
-        Center(
-          child: Stack(
-            children: [
-              CircleAvatar(
-                radius: context.read<MainBloc>().adddata == false ? 55 : 65,
-                backgroundColor: Colors.blue,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            color: Colors.green,
+            child: Center(
+              child: CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.black,
                 child: InkWell(
                   child: RippleAnimation(
                     repeat: true,
@@ -205,20 +208,22 @@ class _RoughPageState extends State<FamilyHome> {
                     ),
                   ),
                   onTap: () {
-                    context.read<MainBloc>().adddata == true
-                        ? context.read<MainBloc>().adddata = false
-                        : context.read<MainBloc>().adddata = true;
+                    Helper.showAdd(context, treeModel.data!.sId.toString(),
+                        true, false, true);
+                    // context.read<MainBloc>().adddata == true
+                    //     ? context.read<MainBloc>().adddata = false
+                    //     : context.read<MainBloc>().adddata = true;
 
-                    context.read<MainBloc>().add(GetUser(userID: 'nill'));
+                    // context.read<MainBloc>().add(GetUser(userID: 'nill'));
 
-                    context.read<MainBloc>().adddata == true
-                        ? Helper.showAdd(context,
-                            treeModel.data!.sId.toString(), true, false, true)
-                        : "";
+                    // context.read<MainBloc>().adddata == true
+                    //     ? Helper.showAdd(context, treeModel.data!.sId.toString(),
+                    //         true, false, true)
+                    // //     : "";
                   },
                 ),
               ),
-            ],
+            ),
           ),
         ),
       ],
@@ -242,7 +247,7 @@ class _RoughPageState extends State<FamilyHome> {
                           treeModel.data!.sId.toString(),
                           treeModel.data!.spouseId == null ? true : false,
                           true,
-                          true)
+                          treeModel.data!.familyId == null ? true : false)
                       : context
                           .read<MainBloc>()
                           .add(GetUser(userID: treeModel.data!.sId)),
@@ -315,19 +320,19 @@ class _RoughPageState extends State<FamilyHome> {
                                         Helper.showAdd(
                                             context,
                                             treeModel.data!.sId,
-                                            treeModel.data!.spouseId != null
-                                                ? false
-                                                : true,
+                                            treeModel.data!.spouseId == null
+                                                ? true
+                                                : false,
                                             treeModel.data!.spouseId == null
                                                 ? false
                                                 : true,
-                                            treeModel.data!.spouseId == null
+                                            treeModel.data!.fatherId == null
                                                 ? true
                                                 : false);
                                       },
                                     )),
                             Positioned(
-                                left: 45,
+                                left: 32,
                                 child: treeModel.data!.gender == "Male"
                                     ? const Icon(
                                         Icons.male,
@@ -341,16 +346,18 @@ class _RoughPageState extends State<FamilyHome> {
                         ),
                       ),
                       onTap: () {
-                        treeModel.data!.amI == true
-                            ? Helper.showAdd(
-                                context,
-                                treeModel.data!.sId.toString(),
-                                treeModel.data!.spouseId == null ? true : false,
-                                true,
-                                true)
-                            : context
-                                .read<MainBloc>()
-                                .add(GetUser(userID: treeModel.data!.sId));
+                        // treeModel.data!.amI == true
+                        //     ? Helper.showAdd(
+                        //         context,
+                        //         treeModel.data!.sId.toString(),
+                        //         treeModel.data!.spouseId == null ? true : false,
+                        //         true,
+                        //         true)
+                        //     :
+
+                        context
+                            .read<MainBloc>()
+                            .add(GetUser(userID: treeModel.data!.sId));
                       },
                     ),
                     SizedBox(
@@ -448,19 +455,19 @@ class _RoughPageState extends State<FamilyHome> {
                                       Helper.showAdd(
                                           context,
                                           treeModel.data!.spouseId!.sId,
-                                          treeModel.data!.spouseId != null
-                                              ? false
-                                              : true,
+                                          treeModel.data!.spouseId == null
+                                              ? true
+                                              : false,
                                           treeModel.data!.spouseId == null
                                               ? false
                                               : true,
-                                          treeModel.data!.spouseId == null
+                                          treeModel.data!.fatherId == null
                                               ? true
                                               : false);
                                     },
                                   )),
                           Positioned(
-                              left: 45,
+                              left: 30,
                               child: treeModel.data!.spouseId!.gender == "Male"
                                   ? const Icon(
                                       Icons.male,
@@ -483,15 +490,18 @@ class _RoughPageState extends State<FamilyHome> {
                       // ),
                     ),
                     onTap: () {
-                      treeModel.data!.spouseId!.amI == true
-                          ? Helper.showAdd(
-                              context,
-                              treeModel.data!.sId.toString(),
-                              treeModel.data!.spouseId == null ? true : false,
-                              true,
-                              true)
-                          : context.read<MainBloc>().add(
-                              GetUser(userID: treeModel.data!.spouseId!.sId));
+                      // treeModel.data!.spouseId!.amI == true
+                      //     ? Helper.showAdd(
+                      //         context,
+                      //         treeModel.data!.sId.toString(),
+                      //         treeModel.data!.spouseId == null ? true : false,
+                      //         true,
+                      //         true)
+                      //     :
+
+                      context
+                          .read<MainBloc>()
+                          .add(GetUser(userID: treeModel.data!.spouseId!.sId));
                     },
                   ),
                   SizedBox(
@@ -540,7 +550,13 @@ class _RoughPageState extends State<FamilyHome> {
         Helper.vDivider(height: 120.0),
         OuterContainer(
           child: SizedBox(
-            height: 500,
+            height: treeModel.data!.childrens!.length < 3
+                ? 150
+                : treeModel.data!.childrens!.length < 5
+                    ? 300
+                    : treeModel.data!.childrens!.length < 7
+                        ? 450
+                        : 800,
             child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                     maxCrossAxisExtent: 200,
@@ -622,7 +638,7 @@ class _RoughPageState extends State<FamilyHome> {
                                             treeModel
                                                 .data!.childrens![indexOne].sId,
                                             treeModel.data!.childrens![indexOne]
-                                                        .maritalStatus !=
+                                                        .maritalStatus ==
                                                     "Single"
                                                 ? true
                                                 : false,
@@ -632,44 +648,15 @@ class _RoughPageState extends State<FamilyHome> {
                                                 ? true
                                                 : false,
                                             treeModel.data!.childrens![indexOne]
-                                                        .familyId ==
+                                                        .fatherId ==
                                                     null
                                                 ? true
                                                 : false,
                                           );
                                         },
                                       )),
-                              treeModel.data!.amI != true ||
-                                      treeModel.data!.isRoot != true
-                                  ? const SizedBox.shrink()
-                                  : Positioned(
-                                      left: 70,
-                                      child: InkWell(
-                                        child: const CircleAvatar(
-                                          backgroundColor: Colors.green,
-                                          radius: 11,
-                                          child: Icon(
-                                            Icons.add,
-                                            size: 16,
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          Helper.showAdd(
-                                              context,
-                                              treeModel.data!.sId,
-                                              treeModel.data!.spouseId != null
-                                                  ? false
-                                                  : true,
-                                              treeModel.data!.spouseId == null
-                                                  ? false
-                                                  : true,
-                                              treeModel.data!.familyId == null
-                                                  ? true
-                                                  : false);
-                                        },
-                                      )),
                               Positioned(
-                                  left: 45,
+                                  left: 55,
                                   child: treeModel.data!.gender == "Male"
                                       ? const Icon(
                                           Icons.male,
@@ -1268,51 +1255,145 @@ class _RoughPageState extends State<FamilyHome> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      InkWell(
-                        onTap: () => context.read<MainBloc>().add(
-                            GetUser(userID: treeModel.data!.fatherId!.sId)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8.0))),
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "${treeModel.data!.fatherId!.name}",
-                            style: TextStyle(
-                                color: treeModel.data!.fatherId!.amI == true
-                                    ? Colors.green
-                                    : Colors.black,
-                                fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          InkWell(
+                            onTap: () => context.read<MainBloc>().add(
+                                GetUser(userID: treeModel.data!.fatherId!.sId)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8.0))),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${treeModel.data!.fatherId!.name}",
+                                style: TextStyle(
+                                    color: treeModel.data!.fatherId!.amI == true
+                                        ? Colors.green
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
                           ),
+                          Helper.allowWidth(10),
+                          InkWell(
+                            onTap: () => context.read<MainBloc>().add(
+                                GetUser(userID: treeModel.data!.fatherId!.sId)),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.grey[200],
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(8.0))),
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "${treeModel.data!.motherId!.name}",
+                                style: TextStyle(
+                                    color: treeModel.data!.motherId!.amI == true
+                                        ? Colors.green
+                                        : Colors.black,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      Helper.allowWidth(55),
+                      // treeModel.data!.spouseId!.fatherId == null
+                      //     ? const SizedBox.shrink()
+                      //     : Column(
+                      //         children: [
+                      //           Row(
+                      //             children: [
+                      //               InkWell(
+                      //                 onTap: () => context.read<MainBloc>().add(
+                      //                     GetUser(
+                      //                         userID: treeModel.data!.spouseId!
+                      //                             .fatherId!.sId)),
+                      //                 child: Container(
+                      //                   decoration: BoxDecoration(
+                      //                       color: Colors.grey[200],
+                      //                       borderRadius:
+                      //                           const BorderRadius.all(
+                      //                               Radius.circular(8.0))),
+                      //                   padding: const EdgeInsets.all(8.0),
+                      //                   child: Text(
+                      //                     "${treeModel.data!.spouseId!.fatherId!.name}",
+                      //                     style: TextStyle(
+                      //                         color: treeModel.data!.spouseId!
+                      //                                     .fatherId!.amI ==
+                      //                                 true
+                      //                             ? Colors.green
+                      //                             : Colors.black,
+                      //                         fontWeight: FontWeight.bold),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //               Helper.allowWidth(10),
+                      //               InkWell(
+                      //                 onTap: () => context.read<MainBloc>().add(
+                      //                     GetUser(
+                      //                         userID: treeModel.data!.spouseId!
+                      //                             .fatherId!.sId)),
+                      //                 child: Container(
+                      //                   decoration: BoxDecoration(
+                      //                       color: Colors.grey[200],
+                      //                       borderRadius:
+                      //                           const BorderRadius.all(
+                      //                               Radius.circular(8.0))),
+                      //                   padding: const EdgeInsets.all(8.0),
+                      //                   child: Text(
+                      //                     "${treeModel.data!.spouseId!.motherId!.name}",
+                      //                     style: TextStyle(
+                      //                         color: treeModel.data!.spouseId!
+                      //                                     .motherId!.amI ==
+                      //                                 true
+                      //                             ? Colors.green
+                      //                             : Colors.black,
+                      //                         fontWeight: FontWeight.bold),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 5.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Helper.allowHeight(5),
+                            Helper.vDivider(height: 20.0),
+                            Helper.allowHeight(5),
+                          ],
                         ),
                       ),
-                      Helper.allowWidth(10),
-                      InkWell(
-                        onTap: () => context.read<MainBloc>().add(
-                            GetUser(userID: treeModel.data!.fatherId!.sId)),
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(8.0))),
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "${treeModel.data!.motherId!.name}",
-                            style: TextStyle(
-                                color: treeModel.data!.motherId!.amI == true
-                                    ? Colors.green
-                                    : Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
+                      // treeModel.data!.spouseId!.fatherId == null
+                      //     ? const SizedBox.shrink()
+                      //     : Padding(
+                      //         padding: const EdgeInsets.only(left: 225.0),
+                      //         child: Row(
+                      //           mainAxisAlignment: MainAxisAlignment.end,
+                      //           children: [
+                      //             Helper.allowHeight(5),
+                      //             Helper.vDivider(height: 22.0),
+                      //             Helper.allowHeight(5),
+                      //           ],
+                      //         ),
+                      //       ),
                     ],
                   ),
                   Helper.allowHeight(5),
-                  Helper.vDivider(height: 20.0),
-                  Helper.allowHeight(5),
+                  // Helper.vDivider(height: 20.0),
+                  // Helper.allowHeight(5),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -1390,7 +1471,7 @@ class _RoughPageState extends State<FamilyHome> {
                                             },
                                           )),
                                   Positioned(
-                                      left: 45,
+                                      left: 30,
                                       child: treeModel.data!.gender == "Male"
                                           ? const Icon(
                                               Icons.male,
@@ -1525,15 +1606,17 @@ class _RoughPageState extends State<FamilyHome> {
                                                           null
                                                       ? false
                                                       : true,
-                                                  treeModel.data!.familyId ==
+                                                  treeModel.data!.spouseId!
+                                                              .mainFamilyId ==
                                                           null
                                                       ? true
                                                       : false);
                                             },
                                           )),
                                   Positioned(
-                                      left: 45,
-                                      child: treeModel.data!.gender == "Male"
+                                      left: 30,
+                                      child: treeModel.data!.spouseId!.gender ==
+                                              "Male"
                                           ? const Icon(
                                               Icons.male,
                                               size: 16,
@@ -1626,7 +1709,13 @@ class _RoughPageState extends State<FamilyHome> {
         Helper.vDivider(height: 60.0),
         OuterContainer(
             child: SizedBox(
-                height: 500,
+                height: treeModel.data!.childrens!.length < 3
+                    ? 150
+                    : treeModel.data!.childrens!.length < 5
+                        ? 300
+                        : treeModel.data!.childrens!.length < 7
+                            ? 450
+                            : 800,
                 child: GridView.builder(
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -1735,7 +1824,7 @@ class _RoughPageState extends State<FamilyHome> {
                                             },
                                           )),
                                   Positioned(
-                                      left: 45,
+                                      left: 32,
                                       child: treeModel
                                                   .data!
                                                   .childrens![indextwo]

@@ -114,7 +114,11 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         "gender": event.gender,
         "address": event.address,
         "phone": event.phone,
-        "dateOfBirth": event.dateOfBirth
+        "dateOfBirth": event.dateOfBirth,
+        "educationalQualification": event.educationalQualification,
+        "currentStatus": event.currentStatus,
+        "hobbies": event.hobbies,
+        "dateOfDeath": event.dateOfDeath
       };
       CommonModel commonModel;
       event.routename == "Spouse"
@@ -193,7 +197,6 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       print(data);
       CommonModel commonModel;
       commonModel = CommonModel.fromJson(
-        
           await ServerHelper.post('/family/member/parents/add', data));
 
       if (commonModel.status == true) {
@@ -382,6 +385,11 @@ class AddFormData extends MainEvent {
   final String phone;
   final String dateOfBirth;
 
+  final String educationalQualification;
+  final String currentStatus;
+  final String hobbies;
+  final String dateOfDeath;
+
   AddFormData({
     required this.email,
     required this.routename,
@@ -393,6 +401,10 @@ class AddFormData extends MainEvent {
     required this.address,
     required this.phone,
     required this.dateOfBirth,
+    required this.educationalQualification,
+    required this.currentStatus,
+    required this.hobbies,
+    required this.dateOfDeath,
   });
 }
 

@@ -1,10 +1,12 @@
 import 'package:family_tree_app/logic/models/generations.dart';
-
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 class Initializer {
-  static GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
+   static GlobalKey<FormState> registerKey = GlobalKey<FormState>();
+    static GlobalKey<FormState> loginKey = GlobalKey<FormState>();
+
+       static GlobalKey<FormState> adddatafromKey = GlobalKey<FormState>();
+    static GlobalKey<FormState> addparentsdatafromKey = GlobalKey<FormState>();
   static Generations generations = Generations(generations: []);
 
   static List<FamilyModel> familydata = [

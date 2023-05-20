@@ -3,6 +3,7 @@ import 'package:family_tree_app/ui/adddatataform.dart';
 import 'package:family_tree_app/ui/addparents.dart';
 import 'package:family_tree_app/utils/showdialog.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -171,13 +172,22 @@ class Helper {
     });
   }
 
-  static textformfiled(
-      hinttext, TextEditingController textcontroller, String keyboardtype) {
+  static textformfiled(hinttext, TextEditingController textcontroller,
+      String keyboardtype, bool validation) {
     return TextFormField(
+      inputFormatters: [
+        keyboardtype == "text"
+            ? LengthLimitingTextInputFormatter(1000)
+            : LengthLimitingTextInputFormatter(10),
+      ],
       autovalidateMode: AutovalidateMode.onUserInteraction,
       validator: (value) {
         if (value!.isEmpty) {
-          return "this field is required";
+          if (validation == false) {
+            return null;
+          } else {
+            return "this field is required";
+          }
         }
         return null;
       },

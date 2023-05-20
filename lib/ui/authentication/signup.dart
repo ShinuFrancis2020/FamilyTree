@@ -1,6 +1,6 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/ui/authentication/signin.dart';
+import 'package:family_tree_app/utils/initializer.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,16 +15,13 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
   bool show = false;
-  static GlobalKey<FormState> formKey1 = GlobalKey<FormState>();
-  static List<String> genderlist = ["Male", "Female", "Other"];
+  static List<String> genderlist = ["Male", "Female"];
   static String? selectedGender = 'Male';
   final email = TextEditingController();
   final password = TextEditingController();
   final name = TextEditingController();
   final familyName = TextEditingController();
-
   final address = TextEditingController();
   final phone = TextEditingController();
   final dateOfBirth = TextEditingController();
@@ -38,14 +35,15 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
           if (state is SignupSuccess) {
-            Helper.pushReplacement(context, const Authentication());
+            // Helper.pushReplacement(context, const Authentication());
+            Helper.pop(context);
           }
         },
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Form(
-              key: formKey1,
+              key: Initializer.registerKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -284,7 +282,8 @@ class _SignUpPageState extends State<SignUpPage> {
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: () {
-                          if (formKey1.currentState!.validate()) {
+                          if (Initializer.registerKey.currentState!
+                              .validate()) {
                             context.read<MainBloc>().add(Signup(
                                   gender: selectedGender.toString(),
                                   email: email.text,
@@ -304,8 +303,6 @@ class _SignUpPageState extends State<SignUpPage> {
           ),
         ),
       ),
-   
-   
     );
   }
 }

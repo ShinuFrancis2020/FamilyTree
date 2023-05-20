@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/familyhomescreen.dart';
+import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,8 +18,8 @@ class AddDataForm extends StatefulWidget {
 
 class _AddDataFormState extends State<AddDataForm> {
   bool show = false;
-  static GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
-  static List<String> genderlist = ["Male", "Female", "Other"];
+  // GlobalKey<FormState> formKey3 = GlobalKey<FormState>();
+  static List<String> genderlist = ["Male", "Female"];
   static String? selectedGender = 'Male';
   final email = TextEditingController();
 
@@ -29,6 +30,27 @@ class _AddDataFormState extends State<AddDataForm> {
   final address = TextEditingController();
   final phone = TextEditingController();
   final dateOfBirth = TextEditingController();
+
+  final currentStatus = TextEditingController();
+  final educationalQualification = TextEditingController();
+  final hobbies = TextEditingController();
+
+  final dateOfDeath = TextEditingController();
+  @override
+  @override
+  void initState() {
+    super.initState();
+    // dispose();
+  }
+
+  @override
+  void dispose() {
+    // formKey3.currentState?.dispose();
+    // setState(() {});
+// Release resources
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,7 +70,7 @@ class _AddDataFormState extends State<AddDataForm> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                if (formKey3.currentState!.validate()) {
+                if (Initializer.adddatafromKey.currentState!.validate()) {
                   context.read<MainBloc>().add(AddFormData(
                         routename: widget.pagenavname.toString(),
                         uid: widget.uid.toString(),
@@ -60,13 +82,18 @@ class _AddDataFormState extends State<AddDataForm> {
                         address: address.text,
                         phone: phone.text,
                         dateOfBirth: dateOfBirth.text,
+                        educationalQualification:
+                            educationalQualification.text.toString(),
+                        currentStatus: currentStatus.text.toString(),
+                        hobbies: hobbies.text.toString(),
+                        dateOfDeath: dateOfDeath.text.toString(),
                       ));
                 }
               }),
         ),
       ),
       body: BlocListener<MainBloc, MainState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is DataAddedSuccefully) {
             Navigator.push(context,
                 (MaterialPageRoute(builder: (context) => const FamilyHome())));
@@ -76,7 +103,7 @@ class _AddDataFormState extends State<AddDataForm> {
           child: Padding(
             padding: const EdgeInsets.all(14.0),
             child: Form(
-              key: formKey3,
+              key: Initializer.adddatafromKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,33 +154,9 @@ class _AddDataFormState extends State<AddDataForm> {
                       labelText: "Email",
                     ),
                   ),
-                  // Helper.allowHeight(20),
-                  // TextFormField(
-                  //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  //   validator: (value) {
-                  //     if (value!.isEmpty) {
-                  //       return "this field is required";
-                  //     }
-                  //     return null;
-                  //   },
-                  //   showCursor: true,
-                  //   cursorColor: Colors.black,
-                  //   autocorrect: true,
-                  //   controller: password,
-                  //   obscureText: !show,
-                  //   textInputAction: TextInputAction.done,
-                  //   keyboardType: TextInputType.text,
-                  //   decoration: InputDecoration(
-                  //     border: OutlineInputBorder(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //     ),
-                  //     fillColor: Colors.grey[50],
-                  //     labelText: "Password",
-                  //     // labelStyle: AppStyles.buttonloginText,
-                  //   ),
-                  // ),
-
-                  Helper.allowHeight(20),
+                  widget.pagenavname == "Children"
+                      ? const SizedBox.shrink()
+                      : Helper.allowHeight(20),
                   widget.pagenavname == "Children"
                       ? const SizedBox.shrink()
                       : TextFormField(
@@ -216,7 +219,6 @@ class _AddDataFormState extends State<AddDataForm> {
                     ),
                   ),
                   Helper.allowHeight(20),
-
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
@@ -268,6 +270,15 @@ class _AddDataFormState extends State<AddDataForm> {
                     ),
                   ),
                   Helper.allowHeight(20),
+                  Helper.textformfiled(
+                      "Status(Current)", currentStatus, "text", false),
+                  Helper.allowHeight(20),
+                  Helper.textformfiled("Educational Qualification",
+                      educationalQualification, "text", false),
+                  Helper.allowHeight(20),
+                  Helper.textformfiled(
+                      "Father Hobbies", hobbies, "text", false),
+                  Helper.allowHeight(20),
                   InkWell(
                     onTap: () async {
                       DateTime? date = await showDatePicker(
@@ -298,7 +309,7 @@ class _AddDataFormState extends State<AddDataForm> {
                         //   return null;
                         // },
                         decoration: InputDecoration(
-                          hintText: "YYYY-MM-DD",
+                          hintText: "Date of Birth",
                           suffixIcon: const Icon(Icons.calendar_month),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -310,6 +321,47 @@ class _AddDataFormState extends State<AddDataForm> {
                     ),
                   ),
                   Helper.allowHeight(20),
+                  InkWell(
+                    onTap: () async {
+                      DateTime? date = await showDatePicker(
+                          context: context,
+                          initialDate: DateTime(DateTime.now().year - 18),
+                          firstDate: DateTime(DateTime.now().year - 100),
+                          lastDate: DateTime(DateTime.now().year));
+                      date = date;
+                      if (date != null) {
+                        dateOfDeath.text =
+                            DateFormat('yyyy-MM-dd').format(date.toLocal());
+                      }
+                    },
+                    child: IgnorePointer(
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        controller: dateOfDeath,
+                        readOnly: true,
+                        //focusNode: Initializer.focusNode[3],
+                        textCapitalization: TextCapitalization.words,
+                        textInputAction: TextInputAction.next,
+
+                        // controller: controller,
+                        // validator: (value) {
+                        //   if (!value!.contains('@') || value.isEmpty) {
+                        //     return 'Please enter a valid email address.';
+                        //   }
+                        //   return null;
+                        // },
+                        decoration: InputDecoration(
+                          hintText: "Date of Death",
+                          suffixIcon: const Icon(Icons.calendar_month),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          fillColor: Colors.grey[50],
+                          filled: true,
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
