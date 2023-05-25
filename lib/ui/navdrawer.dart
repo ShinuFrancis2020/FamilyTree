@@ -2,7 +2,7 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signin.dart';
-import 'package:family_tree_app/ui/profile.dart';
+import 'package:family_tree_app/ui/myprofile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -55,7 +55,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
             ),
             title: const Text("Profile"),
             onTap: () async {
-              Helper.push(context, const Profile());
+              Helper.push(context, const MyProfile());
             },
           ),
           BlocListener<MainBloc, MainState>(

@@ -1,6 +1,5 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/ui/familyhomescreen.dart';
 import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -75,7 +74,8 @@ class _AddDataFormState extends State<AddParentsForm> {
                 style: TextStyle(color: Colors.white),
               ),
               onPressed: () {
-                if (Initializer.addparentsdatafromKey.currentState!.validate()) {
+                if (Initializer.addparentsdatafromKey.currentState!
+                    .validate()) {
                   context.read<MainBloc>().add(AddParentsData(
                         fatherEmail: fatheremail.text.toString(),
                         uid: widget.uid.toString(),
@@ -109,9 +109,7 @@ class _AddDataFormState extends State<AddParentsForm> {
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) {
           if (state is DataAddedSuccefully) {
-            Navigator.push(context,
-                (MaterialPageRoute(builder: (context) => const FamilyHome())));
-            dispose();
+            Navigator.pop(context);
           }
         },
         child: SingleChildScrollView(

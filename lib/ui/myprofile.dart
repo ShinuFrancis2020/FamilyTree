@@ -1,25 +1,26 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/logic/models/profiledetailedmodel.dart';
+import 'package:family_tree_app/logic/models/profilemodel.dart';
+import 'package:family_tree_app/ui/adddatataform.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class ProfileDetailed extends StatefulWidget {
+class MyProfile extends StatefulWidget {
   final String? userId;
-  const ProfileDetailed({super.key, this.userId});
+  const MyProfile({super.key, this.userId});
 
   @override
-  State<ProfileDetailed> createState() => _ProfileDetailedState();
+  State<MyProfile> createState() => _MyProfileState();
 }
 
-class _ProfileDetailedState extends State<ProfileDetailed> {
+class _MyProfileState extends State<MyProfile> {
   var d1 = DateFormat('dd-MMM-yyyy');
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<MainBloc>(context)
-        .add(GetProfileDetailed(userID: widget.userId));
+    BlocProvider.of<MainBloc>(context).add(GetProfile());
   }
 
   @override
@@ -27,6 +28,29 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green[100],
+        actions: [
+          BlocBuilder<MainBloc, MainState>(
+            builder: ((context, state) {
+              if (state is ProfileSuccess) {
+                return Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: InkWell(
+                    child: const Icon(Icons.edit),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AddDataForm(
+                                  profileModel: state.profileModel)));
+                    },
+                  ),
+                );
+              } else {
+                return const SizedBox.shrink();
+              }
+            }),
+          )
+        ],
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -34,11 +58,11 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
           children: [
             BlocConsumer<MainBloc, MainState>(
                 buildWhen: (previous, current) =>
-                    current is ProfileDetailedSuccess ||
-                    current is ProfileDetailedLoding ||
-                    current is ProfileDetailedError,
+                    current is Fetching ||
+                    current is ProfileSuccess ||
+                    current is ProfileError,
                 builder: (context, state) {
-                  if (state is ProfileDetailedLoding) {
+                  if (state is Fetching) {
                     return SizedBox(
                       height: MediaQuery.of(context).size.height / 1,
                       width: MediaQuery.of(context).size.width / 1,
@@ -53,11 +77,11 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                         ),
                       ),
                     );
-                  } else if (state is ProfileDetailedSuccess) {
-                    return _profieview(state.profileDetailedModel);
+                  } else if (state is ProfileSuccess) {
+                    return _profieview(state.profileModel);
                     // Column(
                     //   children: [
-                    //     Text(state.profileDetailedModel.data!.name.toString())
+                    //     Text(state.MyProfileModel.data!.name.toString())
                     //   ],
                     // );
                   }
@@ -70,7 +94,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
     );
   }
 
-  _profieview(ProfileDetailedModel profileDetailedModel) {
+  _profieview(ProfileModel profileModel) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -96,7 +120,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                 const SizedBox(
                   height: 5,
                 ),
-                _text(profileDetailedModel.data!.name.toString(), 20, true),
+                _text(profileModel.data!.name.toString(), 20, true),
                 const SizedBox(
                   height: 5,
                 ),
@@ -171,11 +195,8 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("House Name:", 16, true),
-                      _text(
-                          profileDetailedModel.data!.familyId!.familyName
-                              .toString(),
-                          15,
-                          false),
+                      _text(profileModel.data!.familyId!.familyName.toString(),
+                          15, false),
                     ],
                   ),
                 ),
@@ -185,8 +206,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("Phone:", 16, true),
-                      _text(profileDetailedModel.data!.phone.toString(), 15,
-                          false),
+                      _text(profileModel.data!.phone.toString(), 15, false),
                     ],
                   ),
                 ),
@@ -196,8 +216,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("Gmail:", 16, true),
-                      _text(profileDetailedModel.data!.email.toString(), 15,
-                          false),
+                      _text(profileModel.data!.email.toString(), 15, false),
                     ],
                   ),
                 ),
@@ -207,8 +226,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("Address:", 16, true),
-                      _text(profileDetailedModel.data!.address.toString(), 15,
-                          false),
+                      _text(profileModel.data!.address.toString(), 15, false),
                     ],
                   ),
                 ),
@@ -218,8 +236,7 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("Gender:", 16, true),
-                      _text(profileDetailedModel.data!.gender.toString(), 15,
-                          false),
+                      _text(profileModel.data!.gender.toString(), 15, false),
                     ],
                   ),
                 ),
@@ -229,8 +246,8 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       _text("Marital Status:", 16, true),
-                      _text(profileDetailedModel.data!.maritalStatus.toString(),
-                          15, false),
+                      _text(profileModel.data!.maritalStatus.toString(), 15,
+                          false),
                     ],
                   ),
                 ),

@@ -1,6 +1,7 @@
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
-import 'package:family_tree_app/ui/familyhomescreen.dart';
+import 'package:family_tree_app/logic/models/profilemodel.dart';
+
 import 'package:family_tree_app/utils/initializer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,8 +10,9 @@ import 'package:intl/intl.dart';
 
 class AddDataForm extends StatefulWidget {
   final String? pagenavname;
+  final ProfileModel? profileModel;
   final String? uid;
-  const AddDataForm({super.key, this.pagenavname, this.uid});
+  const AddDataForm({super.key, this.pagenavname, this.uid, this.profileModel});
 
   @override
   State<AddDataForm> createState() => _AddDataFormState();
@@ -39,8 +41,28 @@ class _AddDataFormState extends State<AddDataForm> {
   @override
   @override
   void initState() {
+    _editprofile();
     super.initState();
     // dispose();
+  }
+
+  _editprofile() {
+    email.text = widget.profileModel!.data!.email.toString();
+
+    name.text = widget.profileModel!.data!.name.toString();
+
+    familyName.text = "";
+
+    address.text = widget.profileModel!.data!.address.toString();
+    phone.text = widget.profileModel!.data!.phone.toString();
+
+    dateOfBirth.text = widget.profileModel!.data!.dateOfBirth.toString();
+    currentStatus.text = "";
+
+    educationalQualification.text = "";
+    hobbies.text = "";
+
+    dateOfDeath.text = "";
   }
 
   @override
@@ -56,7 +78,9 @@ class _AddDataFormState extends State<AddDataForm> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: Text(widget.pagenavname.toString()),
+        title: widget.profileModel == null
+            ? Text(widget.pagenavname.toString())
+            : const Text("Edit Profile"),
         elevation: 0,
       ),
       bottomNavigationBar: Padding(
@@ -95,8 +119,9 @@ class _AddDataFormState extends State<AddDataForm> {
       body: BlocListener<MainBloc, MainState>(
         listener: (context, state) async {
           if (state is DataAddedSuccefully) {
-            Navigator.push(context,
-                (MaterialPageRoute(builder: (context) => const FamilyHome())));
+            Navigator.pop(context);
+            // Navigator.push(context,
+            //     (MaterialPageRoute(builder: (context) => const FamilyHome())));
           }
         },
         child: SingleChildScrollView(

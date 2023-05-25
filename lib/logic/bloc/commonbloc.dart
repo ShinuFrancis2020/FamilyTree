@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/models/commonmodel.dart';
-import 'package:family_tree_app/logic/models/profiledetailed.dart';
+import 'package:family_tree_app/logic/models/profiledetailedmodel.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/logic/models/usermodel.dart';

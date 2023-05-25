@@ -1,3 +1,4 @@
+import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
 import 'package:flutter/material.dart';
@@ -56,23 +57,31 @@ class _ProfileState extends State<Profile> {
         children: [
           _sizedbox(35),
           const CircleAvatar(
+            // backgroundColor: Colors.blueGrey[800],
             radius: 45,
             backgroundImage: AssetImage("assets/family.png"),
+            child: Icon(Icons.person),
           ),
           _sizedbox(50),
+          // const SizedBox(
+          //   width: 180,
+          //   child: Divider(
+          //     color: Colors.black,
+          //   ),
+          // ),
           _text(
             profileModel.data!.name.toString(),
             24,
           ),
-          _sizedbox(20),
+          Helper.allowHeight(20),
           _text(profileModel.data!.phone.toString(), 18),
-          _sizedbox(20),
+          Helper.allowHeight(20),
           _text(profileModel.data!.address.toString(), 18),
-          _sizedbox(20),
+          Helper.allowHeight(20),
           _text(profileModel.data!.gender.toString(), 18),
-          _sizedbox(20),
+          Helper.allowHeight(20),
           _text(profileModel.data!.maritalStatus.toString(), 18),
-          _sizedbox(20),
+          Helper.allowHeight(20),
           _text(
               d1.format(DateTime.parse(
                 profileModel.data!.dateOfBirth.toString(),

@@ -3,8 +3,8 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/ui/common/outercontainer.dart';
+import 'package:family_tree_app/ui/myprofile.dart';
 import 'package:family_tree_app/ui/navdrawer.dart';
-import 'package:family_tree_app/ui/profile.dart';
 import 'package:family_tree_app/ui/profiledetailed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,27 +40,29 @@ class _RoughPageState extends State<FamilyHome> {
               child: InkWell(
                 child: const Icon(Icons.person),
                 onTap: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const Profile()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const MyProfile()));
                 },
               ),
             )
           ],
         ),
         drawer: const HomeDrawer(),
-        body: Container(
-          height:MediaQuery.
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Colors.white,
-                Colors.green,
-                Colors.green,
-              ],
-            ),
-          ),
+        body: SizedBox(
+          // height: MediaQuery.of(context).size.height / 1,
+          // decoration: const BoxDecoration(
+          //   gradient: LinearGradient(
+          //     begin: Alignment.topCenter,
+          //     end: Alignment.bottomCenter,
+          //     colors: [
+          //       Colors.white,
+          //       Colors.green,
+          //       Colors.green,
+          //     ],
+          //   ),
+          // ),
           child: BlocBuilder<MainBloc, MainState>(
               buildWhen: ((previous, current) => current is UserFetched),
               builder: (context, state) {
@@ -182,12 +184,12 @@ class _RoughPageState extends State<FamilyHome> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(
-          height: MediaQuery.of(context).size.height / 3.5,
+          height: MediaQuery.of(context).size.height / 3.9,
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            color: Colors.green,
+            // color: Colors.green,
             child: Center(
               child: CircleAvatar(
                 radius: 45,
@@ -241,16 +243,18 @@ class _RoughPageState extends State<FamilyHome> {
               InkWell(
                 // onTap: () => {},
                 onTap: () => {
-                  treeModel.data!.amI == true
-                      ? Helper.showAdd(
-                          context,
-                          treeModel.data!.sId.toString(),
-                          treeModel.data!.spouseId == null ? true : false,
-                          true,
-                          treeModel.data!.familyId == null ? true : false)
-                      : context
-                          .read<MainBloc>()
-                          .add(GetUser(userID: treeModel.data!.sId)),
+                  // treeModel.data!.amI == true
+                  //     ? Helper.showAdd(
+                  //         context,
+                  //         treeModel.data!.sId.toString(),
+                  //         treeModel.data!.spouseId == null ? true : false,
+                  //         true,
+                  //         treeModel.data!.familyId == null ? true : false)
+                  //     :
+
+                  context
+                      .read<MainBloc>()
+                      .add(GetUser(userID: treeModel.data!.sId)),
                   // Helper.showDialog(context, treeModel.data!.sId.toString(),
                   //         treeModel.data!.spouseId == null ? true : false, true)
                   // context.read<MainBloc>().adddata == true
@@ -332,7 +336,7 @@ class _RoughPageState extends State<FamilyHome> {
                                       },
                                     )),
                             Positioned(
-                                left: 32,
+                                left: 76,
                                 child: treeModel.data!.gender == "Male"
                                     ? const Icon(
                                         Icons.male,
@@ -2082,7 +2086,7 @@ class _RoughPageState extends State<FamilyHome> {
                                     },
                                   )),
                           Positioned(
-                              left: 45,
+                              left: 30,
                               child: treeModel.data!.fatherId!.gender == "Male"
                                   ? const Icon(
                                       Icons.male,
@@ -2178,8 +2182,37 @@ class _RoughPageState extends State<FamilyHome> {
                               ),
                             ],
                           ),
+                          treeModel.data!.motherId!.amI != true ||
+                                  treeModel.data!.motherId!.isRoot != true
+                              ? const SizedBox.shrink()
+                              : Positioned(
+                                  left: 70,
+                                  child: InkWell(
+                                    child: const CircleAvatar(
+                                      backgroundColor: Colors.green,
+                                      radius: 11,
+                                      child: Icon(
+                                        Icons.add,
+                                        size: 16,
+                                      ),
+                                    ),
+                                    onTap: () {
+                                      Helper.showAdd(
+                                          context,
+                                          treeModel.data!.motherId!.sId,
+                                          treeModel.data!.motherId == null
+                                              ? true
+                                              : false,
+                                          treeModel.data!.motherId == null
+                                              ? false
+                                              : true,
+                                          treeModel.data!.motherId == null
+                                              ? true
+                                              : false);
+                                    },
+                                  )),
                           Positioned(
-                              left: 76,
+                              left: 30,
                               child: treeModel.data!.motherId!.gender! == "Male"
                                   ? const Icon(
                                       Icons.male,
@@ -2283,8 +2316,37 @@ class _RoughPageState extends State<FamilyHome> {
                           ),
                         ],
                       ),
+                      treeModel.data!.amI != true ||
+                              treeModel.data!.isRoot != true
+                          ? const SizedBox.shrink()
+                          : Positioned(
+                              left: 70,
+                              child: InkWell(
+                                child: const CircleAvatar(
+                                  backgroundColor: Colors.green,
+                                  radius: 11,
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 16,
+                                  ),
+                                ),
+                                onTap: () {
+                                  Helper.showAdd(
+                                      context,
+                                      treeModel.data!.sId,
+                                      treeModel.data!.spouseId != null
+                                          ? false
+                                          : true,
+                                      treeModel.data!.spouseId == null
+                                          ? false
+                                          : true,
+                                      treeModel.data!.familyId == null
+                                          ? true
+                                          : false);
+                                },
+                              )),
                       Positioned(
-                          left: 76,
+                          left: 36,
                           child: treeModel.data!.gender! == "Male"
                               ? const Icon(
                                   Icons.male,
