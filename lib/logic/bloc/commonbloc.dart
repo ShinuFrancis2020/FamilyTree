@@ -111,7 +111,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         "email": event.email,
         "name": event.name,
         "familyName": event.familyName,
-        "gender": event.gender,
+        "gender": event.gender == "nill" ? null : event.gender,
         "address": event.address,
         "phone": event.phone,
         "dateOfBirth": event.dateOfBirth,
@@ -124,12 +124,15 @@ class MainBloc extends Bloc<MainEvent, MainState> {
       event.routename == "Spouse"
           ? commonModel = CommonModel.fromJson(
               await ServerHelper.post('/family/member/spouse/add', data))
-          : commonModel = CommonModel.fromJson(
-              await ServerHelper.post('/family/member/children/add', data));
+          : event.editboolean == true
+              ? commonModel = CommonModel.fromJson(
+                  await ServerHelper.post('/user/profile/edit', data))
+              : commonModel = CommonModel.fromJson(
+                  await ServerHelper.post('/family/member/children/add', data));
 
       if (commonModel.status == true) {
         Fluttertoast.showToast(
-          msg: "${event.routename} Added Successfully",
+          msg: " Added Successfully",
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.CENTER,
         );
@@ -153,6 +156,21 @@ class MainBloc extends Bloc<MainEvent, MainState> {
           log('fetch data : $e');
           Helper.showToast(msg: 'Unable fetch data, try again later');
           emit(GettingUserError());
+        }
+
+        try {
+          emit(Fetching());
+
+          profileModel =
+              ProfileModel.fromJson(await ServerHelper.get('/user/profile'));
+          if (profileModel.status!) {
+            emit(ProfileSuccess(profileModel: profileModel));
+          } else {
+            Helper.showToast(msg: profileModel.msg);
+            emit(ProfileError(error: profileModel.msg.toString()));
+          }
+        } catch (e) {
+          emit(ProfileError(error: e.toString()));
         }
       } else if (commonModel.status == false) {
         Fluttertoast.showToast(
@@ -207,6 +225,7 @@ class MainBloc extends Bloc<MainEvent, MainState> {
         );
 
         emit(DataAddedSuccefully());
+
         try {
           emit(GettingUser());
           // var uId = await LocalStorage.getUserId();
@@ -378,6 +397,7 @@ class Signup extends MainEvent {
 class AddFormData extends MainEvent {
   final String email, uid, routename;
   final String password;
+  final bool? editboolean;
   final String name;
   final String familyName;
   final String gender;
@@ -392,6 +412,7 @@ class AddFormData extends MainEvent {
 
   AddFormData({
     required this.email,
+    required this.editboolean,
     required this.routename,
     required this.uid,
     required this.password,

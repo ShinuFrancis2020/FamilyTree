@@ -30,6 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
+        title: const Text("Add Account"),
         elevation: 0,
       ),
       body: BlocListener<MainBloc, MainState>(
@@ -48,6 +49,30 @@ class _SignUpPageState extends State<SignUpPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
+                  TextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "this field is required";
+                      }
+                      return null;
+                    },
+                    showCursor: true,
+                    cursorColor: Colors.black,
+                    autocorrect: true,
+                    controller: name,
+                    textInputAction: TextInputAction.done,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      fillColor: Colors.grey[50],
+                      labelText: "Name",
+                      // labelStyle: AppStyles.buttonloginText,
+                    ),
+                  ),
+                  Helper.allowHeight(20),
                   TextFormField(
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     validator: (value) {
@@ -92,30 +117,6 @@ class _SignUpPageState extends State<SignUpPage> {
                       ),
                       fillColor: Colors.grey[50],
                       labelText: "Password",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: name,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Name",
                       // labelStyle: AppStyles.buttonloginText,
                     ),
                   ),
@@ -261,7 +262,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         //   return null;
                         // },
                         decoration: InputDecoration(
-                          hintText: "YYYY-MM-DD",
+                          hintText: "Date of Birth",
                           suffixIcon: const Icon(Icons.calendar_month),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),

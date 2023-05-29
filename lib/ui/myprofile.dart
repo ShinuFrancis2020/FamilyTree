@@ -235,6 +235,21 @@ class _MyProfileState extends State<MyProfile> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      _text("Date of Birth:", 16, true),
+                      _text(
+                          d1.format(DateTime.parse(
+                            profileModel.data!.dateOfBirth.toString(),
+                          )),
+                          15,
+                          false),
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
                       _text("Gender:", 16, true),
                       _text(profileModel.data!.gender.toString(), 15, false),
                     ],
@@ -251,6 +266,65 @@ class _MyProfileState extends State<MyProfile> {
                     ],
                   ),
                 ),
+                profileModel.data!.educationalQualification == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Educational Qualification:", 16, true),
+                            _text(
+                                profileModel.data!.educationalQualification
+                                    .toString(),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
+                profileModel.data!.hobbies == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Hobbies:", 16, true),
+                            _text(profileModel.data!.hobbies.toString(), 15,
+                                false),
+                          ],
+                        ),
+                      ),
+                profileModel.data!.currentStatus == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Current Status:", 16, true),
+                            _text(profileModel.data!.currentStatus.toString(),
+                                15, false),
+                          ],
+                        ),
+                      ),
+                profileModel.data!.dateOfDeath == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Date of Death:", 16, true),
+                            _text(
+                                d1.format(DateTime.parse(
+                                  profileModel.data!.dateOfBirth.toString(),
+                                )),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
               ],
             ),
           ),

@@ -212,6 +212,24 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     ],
                   ),
                 ),
+                profileDetailedModel.data!.dateOfBirth == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Date of Birth:", 16, true),
+                            _text(
+                                d1.format(DateTime.parse(
+                                  profileDetailedModel.data!.dateOfBirth
+                                      .toString(),
+                                )),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Row(
@@ -234,6 +252,70 @@ class _ProfileDetailedState extends State<ProfileDetailed> {
                     ],
                   ),
                 ),
+                profileDetailedModel.data!.educationalQualification == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Educational Qualification:", 16, true),
+                            _text(
+                                profileDetailedModel
+                                    .data!.educationalQualification
+                                    .toString(),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
+                profileDetailedModel.data!.hobbies == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Hobbies:", 16, true),
+                            _text(profileDetailedModel.data!.hobbies.toString(),
+                                15, false),
+                          ],
+                        ),
+                      ),
+                profileDetailedModel.data!.currentStatus == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Current Status:", 16, true),
+                            _text(
+                                profileDetailedModel.data!.currentStatus
+                                    .toString(),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
+                profileDetailedModel.data!.dateOfDeath == null
+                    ? const SizedBox.shrink()
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            _text("Date of Death:", 16, true),
+                            _text(
+                                d1.format(DateTime.parse(
+                                  profileDetailedModel.data!.dateOfBirth
+                                      .toString(),
+                                )),
+                                15,
+                                false),
+                          ],
+                        ),
+                      ),
               ],
             ),
           ),

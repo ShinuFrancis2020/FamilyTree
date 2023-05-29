@@ -285,7 +285,8 @@ class Helper {
               style: const TextStyle(color: Colors.white)),
         ),
       ),
-      onTap: () {
+      onTap: () async {
+        Navigator.pop(context);
         enable == true
             ? name == "Parents"
                 ? Navigator.push(
@@ -293,12 +294,16 @@ class Helper {
                     MaterialPageRoute(
                         builder: (context) => AddParentsForm(
                             pagenavname: name.toString(), uid: uid.toString())))
-                : Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AddDataForm(
-                            pagenavname: name.toString(), uid: uid.toString())))
+                : name == "Photos"
+                    ? ""
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => AddDataForm(
+                                pagenavname: name.toString(),
+                                uid: uid.toString())))
             : "";
+        // await Future.delayed(const Duration(seconds: 1));
       },
     );
   }

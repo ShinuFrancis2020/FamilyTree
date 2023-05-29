@@ -34,6 +34,10 @@ class Data {
   bool? isEmailVerified;
   String? status;
   String? gender;
+    String? educationalQualification;
+  String? currentStatus;
+  String? hobbies;
+  String? dateOfDeath;
   String? address;
   String? phone;
   String? dateOfBirth;
@@ -48,6 +52,10 @@ class Data {
       this.familyId,
       this.role,
       this.isRoot,
+        this.educationalQualification,
+      this.currentStatus,
+      this.hobbies,
+      this.dateOfDeath,
       this.name,
       this.email,
       this.isEmailVerified,
@@ -71,6 +79,10 @@ class Data {
         : null;
     role = json['role'];
     isRoot = json['isRoot'];
+        educationalQualification = json['educationalQualification'];
+    currentStatus = json['currentStatus'];
+    hobbies = json['hobbies'];
+    dateOfDeath = json['dateOfDeath'];
     name = json['name'];
     email = json['email'];
     isEmailVerified = json['isEmailVerified'];
@@ -95,6 +107,10 @@ class Data {
       data['familyId'] = familyId!.toJson();
     }
     data['role'] = role;
+        data['educationalQualification'] = educationalQualification;
+    data['currentStatus'] = currentStatus;
+    data['hobbies'] = hobbies;
+    data['dateOfDeath'] = dateOfDeath;
     data['isRoot'] = isRoot;
     data['name'] = name;
     data['email'] = email;

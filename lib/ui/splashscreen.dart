@@ -23,10 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          width: 200,
-          height: 200,
+          width: 300,
+          height: 400,
           child: Image.asset(
-            'assets/family.png',
+            'assets/familyfinallogo.png',
             fit: BoxFit.contain,
           ),
         ),

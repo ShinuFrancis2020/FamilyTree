@@ -31,7 +31,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                  'assets/family.png',
+                  'assets/familyfinallogo.png',
                   width: Helper.width(context) / 2.7,
                 ),
               ],

@@ -213,7 +213,7 @@ class _AddDataFormState extends State<AddParentsForm> {
                                     "Father Name", fathername, "text", true),
                                 Helper.allowHeight(20),
                                 Helper.textformfiled(
-                                    "Family Email", fatheremail, "text", true),
+                                    "Father Email", fatheremail, "text", true),
                                 Helper.allowHeight(20),
                                 Helper.textformfiled("Father Address",
                                     fatherAddress, "text", true),

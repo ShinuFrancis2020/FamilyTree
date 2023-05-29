@@ -336,7 +336,7 @@ class _RoughPageState extends State<FamilyHome> {
                                       },
                                     )),
                             Positioned(
-                                left: 76,
+                                left: 45,
                                 child: treeModel.data!.gender == "Male"
                                     ? const Icon(
                                         Icons.male,
@@ -471,7 +471,7 @@ class _RoughPageState extends State<FamilyHome> {
                                     },
                                   )),
                           Positioned(
-                              left: 30,
+                              left: 45,
                               child: treeModel.data!.spouseId!.gender == "Male"
                                   ? const Icon(
                                       Icons.male,
@@ -895,7 +895,7 @@ class _RoughPageState extends State<FamilyHome> {
                                           treeModel.data!.spouseId == null
                                               ? false
                                               : true,
-                                          treeModel.data!.familyId == null
+                                          treeModel.data!.fatherId == null
                                               ? true
                                               : false);
                                     },
@@ -1821,8 +1821,8 @@ class _RoughPageState extends State<FamilyHome> {
                                                               .data!
                                                               .childrens![
                                                                   indextwo]
-                                                              .maritalStatus !=
-                                                          "Single"
+                                                              .fatherId ==
+                                                          null
                                                       ? true
                                                       : false);
                                             },
