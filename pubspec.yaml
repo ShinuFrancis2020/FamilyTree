@@ -85,7 +85,16 @@ flutter:
     - assets/images/calendar.png  
     - assets/images/profile.png
     - assets/images/g10.png
-    - assets/images/g11.png       
+    - assets/images/leftarrow.png
+    - assets/images/g11.png
+    - assets/images/profiles/profile1.png
+    - assets/images/profiles/profile2.png
+    - assets/images/profiles/profile3.png
+    - assets/images/profiles/profile4.png
+    - assets/images/profiles/profile5.png
+    - assets/images/profiles/profile6.png 
+    - assets/images/profiles/profile7.png
+    - assets/images/profiles/profile8.png         
     - assets/children.png    
     - assets/lotties/loading.json
   

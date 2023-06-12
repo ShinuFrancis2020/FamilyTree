@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:family_tree_app/ui/adddatataform.dart';
 import 'package:family_tree_app/ui/addparents.dart';
+import 'package:family_tree_app/ui/myprofile.dart';
 import 'package:family_tree_app/utils/showdialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,16 +35,105 @@ class Helper {
     );
   }
 
+  static myprofilecard(
+      BuildContext context,
+      String? image,
+      String? userid,
+      String name,
+      String? sex,
+      bool? single,
+      bool? amI,
+      bool? root,
+      String? headtext) {
+    return Stack(
+      children: [
+        Container(
+          height: 120,
+          width: MediaQuery.of(context).size.width / 3,
+          padding: const EdgeInsets.all(14.0),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8),
+              boxShadow: [
+                BoxShadow(color: Colors.grey.withOpacity(0.5)),
+              ]),
+          child: const Column(
+            children: [],
+          ),
+        ),
+        Positioned(
+          top: 34,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(18),
+            child: Container(
+              color: const Color(0xff42b0ff),
+              height: 85,
+              width: MediaQuery.of(context).size.width / 3,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 0,
+          right: MediaQuery.of(context).size.width / 14,
+          child: Column(
+            children: [
+              CircleAvatar(
+                backgroundImage: AssetImage(image.toString()),
+                radius: 35,
+                backgroundColor: Colors.grey,
+              ),
+              const SizedBox(
+                height: 3,
+              ),
+              Text(
+                headtext.toString(),
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 8),
+              ),
+              InkWell(
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width / 6,
+                      child: Text(
+                        name,
+                        style: const TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 12),
+                      ),
+                    ),
+                    Image.asset("assets/images/leftarrow.png"),
+                  ],
+                ),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => MyProfile(
+                                userId: userid.toString(),
+                              )));
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
   static hDivider({required width}) {
     return SizedBox(
         width: width,
-        child: Stack(
+        child: const Stack(
           children: [
             Divider(
-              color: Colors.grey[500],
-              thickness: 8.0,
+              color: Colors.black,
+              thickness: 5.0,
             ),
-            const Positioned(
+            Positioned(
               left: 13,
               child: CircleAvatar(
                 radius: 8,
@@ -57,11 +147,11 @@ class Helper {
   static vDivider({required height}) {
     return SizedBox(
         height: height,
-        child: Stack(
+        child: const Stack(
           children: [
             VerticalDivider(
-              thickness: 8.0,
-              color: Colors.grey[500],
+              thickness: 5.0,
+              color: Colors.black,
             ),
             // const Positioned(
             //   top: 33,

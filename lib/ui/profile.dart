@@ -55,6 +55,8 @@ class _ProfileState extends State<Profile> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          // Helper.myprofilecard(
+          //     context, "assets/images/profiles/profile1.png", "Vimal", "Male"),
           _sizedbox(35),
           const CircleAvatar(
             // backgroundColor: Colors.blueGrey[800],

@@ -56,6 +56,7 @@ class _MyProfileState extends State<MyProfile> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            
             BlocConsumer<MainBloc, MainState>(
                 buildWhen: (previous, current) =>
                     current is Fetching ||
