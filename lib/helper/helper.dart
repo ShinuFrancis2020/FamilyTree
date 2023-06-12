@@ -19,6 +19,21 @@ class Helper {
     return const SizedBox.shrink();
   }
 
+  static text(
+      String text, size, Color? color, FontWeight? fontWeight, double padding) {
+    return Padding(
+      padding: EdgeInsets.all(padding),
+      child: Text(text,
+          style: TextStyle(
+            color: color,
+            fontWeight: FontWeight.bold,
+            fontSize: double.parse(
+              size.toString(),
+            ),
+          )),
+    );
+  }
+
   static hDivider({required width}) {
     return SizedBox(
         width: width,

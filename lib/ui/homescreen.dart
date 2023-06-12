@@ -19,6 +19,7 @@ class _FamilyTreeState extends State<FamilyTree> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xfff2b8dd4),
         appBar: AppBar(
           // leading: InkWell(
           //   child: const Icon(Icons.abc),

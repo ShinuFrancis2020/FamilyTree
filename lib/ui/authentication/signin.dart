@@ -20,6 +20,7 @@ class _AuthenticationState extends State<Authentication> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xfffffffff),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
@@ -32,158 +33,189 @@ class _AuthenticationState extends State<Authentication> {
         },
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(14.0),
+            padding: const EdgeInsets.all(12.0),
             child: Form(
               key: Initializer.loginKey,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // const SizedBox(
-                  //   height: 120,
-                  //   width: 230,
-                  //   child: CircleAvatar(
-                  //     backgroundImage: AssetImage("assets/familyilogo.jpg"),
-                  //     radius: 100,
-                  //   ),
-                  // ),
                   SizedBox(
-                    height: 300,
-                    width: 300,
-                    child: Image.asset('assets/familyilogo.jpg'),
+                    height: 250,
+                    width: 350,
+                    child: Image.asset('assets/images/Family.png'),
                   ),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: username,
-                    // obscureText: !show,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10)),
-                      fillColor: Colors.grey[50],
-                      labelText: "Email",
-                    ),
-                  ),
-                  Helper.allowHeight(20),
-                  TextFormField(
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return "this field is required";
-                      }
-                      return null;
-                    },
-                    showCursor: true,
-                    cursorColor: Colors.black,
-                    autocorrect: true,
-                    controller: password,
-                    obscureText: !show,
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.text,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      fillColor: Colors.grey[50],
-                      labelText: "Password",
-                      // labelStyle: AppStyles.buttonloginText,
-                    ),
-                  ),
-                  Helper.allowHeight(20),
+
                   SizedBox(
-                    //width: Helper.width(context),
-                    child: MaterialButton(
-                        minWidth: MediaQuery.of(context).size.width / 1,
-                        color: Colors.green,
-                        child: const Text(
-                          "Login",
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        onPressed: () {
-                          if (Initializer.loginKey.currentState!.validate()) {
-                            context.read<MainBloc>().add(DoLogin(
-                                username: username.text,
-                                password: password.text));
+                    height: Helper.height(context) / 50,
+                  ),
+                  Helper.text("Connect Generations with KinshipTree", 20,
+                      Colors.black, FontWeight.bold, 8),
+
+                  ///5height
+                  SizedBox(
+                    height: Helper.height(context) / 100,
+                  ),
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Helper.text(
+                        "Email", 16, Colors.black, FontWeight.w500, 8),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      // height: 58,
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "this field is required";
                           }
-                        }),
+                          return null;
+                        },
+                        showCursor: true,
+                        cursorColor: Colors.black,
+                        autocorrect: true,
+                        controller: username,
+                        // obscureText: !show,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10),
+                          suffixIcon: Image.asset(
+                            'assets/images/Message.png',
+                            width: 20,
+                            height: 20,
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xfff4d74be),
+                              width: 1.5,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          fillColor: Colors.grey[50],
+                          labelText: "",
+                        ),
+                      ),
+                    ),
                   ),
-                  Helper.allowHeight(20),
+                  // SizedBox(
+                  //   height: Helper.height(context) / 180,
+                  // ),
+
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Helper.text(
+                        "Password", 16, Colors.black, FontWeight.w500, 8),
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      // height: 48,
+                      child: TextFormField(
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "this field is required";
+                          }
+                          return null;
+                        },
+                        showCursor: true,
+                        cursorColor: Colors.black,
+                        autocorrect: true,
+                        controller: password,
+                        obscureText: !show,
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.text,
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 10),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: Color(0xfff4d74be),
+                              width: 1.5,
+                            ),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          fillColor: Colors.grey[50],
+                          labelText: "",
+                          // labelStyle: AppStyles.buttonloginText,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Helper.allowHeight(10),
+                  Padding(
+                    padding: const EdgeInsets.all(7.0),
+                    child: SizedBox(
+                      //width: Helper.width(context),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: MaterialButton(
+                            height: 48,
+                            minWidth: MediaQuery.of(context).size.width / 1,
+                            color: const Color(0xff2B8DD4),
+                            child: const Text(
+                              "Login",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 16),
+                            ),
+                            onPressed: () {
+                              if (Initializer.loginKey.currentState!
+                                  .validate()) {
+                                context.read<MainBloc>().add(DoLogin(
+                                    username: username.text,
+                                    password: password.text));
+                              }
+                            }),
+                      ),
+                    ),
+                  ),
+                  Helper.allowHeight(8),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(
                         height: 10,
                       ),
-                      const Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          "Don't Have  an Account..?",
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 6,
-                      ),
                       Align(
-                        alignment: Alignment.bottomCenter,
-                        child: InkWell(
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const SignUpPage()));
-                          },
-                        ),
-                      ),
-                      // SizedBox(
-                      //   //width: Helper.width(context),
-                      //   child: MaterialButton(
-                      //       minWidth: MediaQuery.of(context).size.width / 4,
-                      //       color: Colors.green,
-                      //       child: const Text(
-                      //         "Create Account",
-                      //         style: TextStyle(color: Colors.white),
-                      //       ),
-                      //       onPressed: () {
-                      //         Navigator.push(
-                      //             context,
-                      //             MaterialPageRoute(
-                      //                 builder: (context) =>
-                      //                     const SignUpPage()));
-                      //       }),
-                      // ),
-                      // const Text(
-                      //   "Create Account",
-                      //   style: TextStyle(color: Colors.white),
-                      // ),
+                          alignment: Alignment.bottomCenter,
+                          child: Row(
+                            children: [
+                              Helper.text("Don't Have  an Account..?", 12,
+                                  Colors.black, FontWeight.w100, 0),
+                              InkWell(
+                                child: Helper.text("Sign Up", 12, Colors.blue,
+                                    FontWeight.bold, 0),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignUpPage()));
+                                },
+                              ),
+                            ],
+                          )),
                     ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: 37.0,
+                  const Padding(
+                    padding: EdgeInsets.only(
+                      top: 10.0,
                     ),
                     child: Text(
-                      "Kinship Tree",
+                      "By clicking Register You Agree to our \nTerms of services and Privacy Policy",
                       style: TextStyle(
-                          fontSize: 24,
+                          fontSize: 13,
                           fontWeight: FontWeight.bold,
-                          color: Colors.blueGrey[800]),
+                          color: Color(0xff8C8888)),
                     ),
                   ),
                 ],

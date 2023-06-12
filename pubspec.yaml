@@ -40,6 +40,7 @@ dependencies:
   awesome_ripple_animation: ^1.0.1
   lottie: ^1.4.3
   graphview: ^1.2.0
+  # zoomable_image: ^1.2.0
   flutter:
     sdk: flutter
 
@@ -78,7 +79,13 @@ flutter:
     - assets/wedding.png
     - assets/rings.png
     - assets/wedding-rings.png 
-    - assets/familyfinallogo.png    
+    - assets/familyfinallogo.png
+    - assets/images/Family.png
+    - assets/images/Message.png   
+    - assets/images/calendar.png  
+    - assets/images/profile.png
+    - assets/images/g10.png
+    - assets/images/g11.png       
     - assets/children.png    
     - assets/lotties/loading.json
   

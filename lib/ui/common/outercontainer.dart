@@ -8,9 +8,11 @@ class OuterContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(14.0),
-      decoration: BoxDecoration(color: Colors.white, boxShadow: [
+      ////color to transperent from white
+      ///grey opacity to white opacity
+      decoration: BoxDecoration(color: Colors.transparent, boxShadow: [
         BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
+            color: Colors.white.withOpacity(0.5),
             blurRadius: 1.0,
             spreadRadius: 1.0),
       ]),

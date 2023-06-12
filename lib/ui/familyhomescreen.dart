@@ -28,122 +28,153 @@ class _RoughPageState extends State<FamilyHome> {
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          // automaticallyImplyLeading: false,
-          centerTitle: true,
-          title: const Text("Kinship Tree"),
-          elevation: 0,
-          backgroundColor: Colors.blueGrey[800],
-          actions: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: InkWell(
-                child: const Icon(Icons.person),
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const MyProfile()));
-                },
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(65.0),
+          child: AppBar(
+            backgroundColor: const Color(0xff2b8dd4),
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            title: Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: Helper.text(
+                  "Kinship Tree", 20, Colors.white, FontWeight.w100, 0),
+            ),
+            actions: [
+              Padding(
+                padding: const EdgeInsets.only(top: 13.0, right: 30),
+                child: Row(
+                  children: [
+                    InkWell(
+                      child: Image.asset("assets/images/profile.png"),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyProfile()));
+                      },
+                    ),
+                    const SizedBox(
+                      width: 15,
+                    ),
+                    InkWell(
+                      child: Image.asset("assets/images/calendar.png"),
+                      onTap: () {
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => const MyProfile()));
+                      },
+                    ),
+                  ],
+                ),
               ),
-            )
-          ],
+            ],
+            elevation: 0,
+          ),
         ),
         drawer: const HomeDrawer(),
-        body: SizedBox(
-          // height: MediaQuery.of(context).size.height / 1,
-          // decoration: const BoxDecoration(
-          //   gradient: LinearGradient(
-          //     begin: Alignment.topCenter,
-          //     end: Alignment.bottomCenter,
-          //     colors: [
-          //       Colors.white,
-          //       Colors.green,
-          //       Colors.green,
-          //     ],
-          //   ),
-          // ),
-          child: BlocBuilder<MainBloc, MainState>(
-              buildWhen: ((previous, current) => current is UserFetched),
-              builder: (context, state) {
-                if (state is UserFetched) {
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(14.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          Align(
-                              alignment: Alignment.bottomRight,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  child: const Icon(Icons.refresh),
-                                  onTap: () {
-                                    context
-                                        .read<MainBloc>()
-                                        .add(GetUser(userID: 'nill'));
-                                  },
-                                ),
-                              )),
-                          // SingleChildScrollView(
-                          //   scrollDirection: Axis.horizontal,
-                          //   child: Row(
-                          //     mainAxisAlignment: MainAxisAlignment.start,
-                          //     children: List.generate(
-                          //         Initializer.generations.generations.length,
-                          //         (index) => Row(
-                          //               children: [
-                          //                 InkWell(
-                          //                   onTap: () => context
-                          //                       .read<MainBloc>()
-                          //                       .add(ShowGenerations(index: index)),
-                          //                   child: Container(
-                          //                     width: 100,
-                          //                     padding: const EdgeInsets.all(14.0),
-                          //                     decoration: BoxDecoration(
-                          //                         color: Colors.white,
-                          //                         borderRadius:
-                          //                             BorderRadius.circular(8.0),
-                          //                         boxShadow: [
-                          //                           BoxShadow(
-                          //                               color: Colors.grey
-                          //                                   .withOpacity(0.5)),
-                          //                         ]),
-                          //                     child: Row(
-                          //                       mainAxisAlignment:
-                          //                           MainAxisAlignment.center,
-                          //                       mainAxisSize: MainAxisSize.min,
-                          //                       children: [
-                          //                         Text(
-                          //                           "G${index + 1}",
-                          //                           style: const TextStyle(
-                          //                               color: Colors.black,
-                          //                               fontWeight: FontWeight.bold,
-                          //                               fontSize: 18),
-                          //                         ),
-                          //                         Helper.allowWidth(10),
-                          //                         const Icon(Icons.arrow_right)
-                          //                       ],
-                          //                     ),
-                          //                   ),
-                          //                 ),
-                          //                 Helper.allowWidth(10),
-                          //               ],
-                          //             )),
-                          //   ),
-                          // ),
-                          // Helper.allowHeight(20),
-                          buildRelation(state.treeModel)
-                        ],
+        body: Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/g11.png'),
+              fit: BoxFit.contain,
+            ),
+          ),
+          child: SizedBox(
+            // height: MediaQuery.of(context).size.height / 1,
+            // decoration: const BoxDecoration(
+            //   gradient: LinearGradient(
+            //     begin: Alignment.topCenter,
+            //     end: Alignment.bottomCenter,
+            //     colors: [
+            //       Colors.white,
+            //       Colors.green,
+            //       Colors.green,
+            //     ],
+            //   ),
+            // ),
+            child: BlocBuilder<MainBloc, MainState>(
+                buildWhen: ((previous, current) => current is UserFetched),
+                builder: (context, state) {
+                  if (state is UserFetched) {
+                    return SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(14.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Align(
+                                alignment: Alignment.bottomRight,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    child: const Icon(Icons.refresh),
+                                    onTap: () {
+                                      context
+                                          .read<MainBloc>()
+                                          .add(GetUser(userID: 'nill'));
+                                    },
+                                  ),
+                                )),
+                            // SingleChildScrollView(
+                            //   scrollDirection: Axis.horizontal,
+                            //   child: Row(
+                            //     mainAxisAlignment: MainAxisAlignment.start,
+                            //     children: List.generate(
+                            //         Initializer.generations.generations.length,
+                            //         (index) => Row(
+                            //               children: [
+                            //                 InkWell(
+                            //                   onTap: () => context
+                            //                       .read<MainBloc>()
+                            //                       .add(ShowGenerations(index: index)),
+                            //                   child: Container(
+                            //                     width: 100,
+                            //                     padding: const EdgeInsets.all(14.0),
+                            //                     decoration: BoxDecoration(
+                            //                         color: Colors.white,
+                            //                         borderRadius:
+                            //                             BorderRadius.circular(8.0),
+                            //                         boxShadow: [
+                            //                           BoxShadow(
+                            //                               color: Colors.grey
+                            //                                   .withOpacity(0.5)),
+                            //                         ]),
+                            //                     child: Row(
+                            //                       mainAxisAlignment:
+                            //                           MainAxisAlignment.center,
+                            //                       mainAxisSize: MainAxisSize.min,
+                            //                       children: [
+                            //                         Text(
+                            //                           "G${index + 1}",
+                            //                           style: const TextStyle(
+                            //                               color: Colors.black,
+                            //                               fontWeight: FontWeight.bold,
+                            //                               fontSize: 18),
+                            //                         ),
+                            //                         Helper.allowWidth(10),
+                            //                         const Icon(Icons.arrow_right)
+                            //                       ],
+                            //                     ),
+                            //                   ),
+                            //                 ),
+                            //                 Helper.allowWidth(10),
+                            //               ],
+                            //             )),
+                            //   ),
+                            // ),
+                            // Helper.allowHeight(20),
+                            buildRelation(state.treeModel)
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }
-                return const LinearProgressIndicator();
-              }),
+                    );
+                  }
+                  return const LinearProgressIndicator();
+                }),
+          ),
         ));
   }
 
@@ -2680,15 +2711,17 @@ class _RoughPageState extends State<FamilyHome> {
                 children: [
                   InkWell(
                     onTap: () {
-                      treeModel.data!.amI == true
-                          ? Helper.showAdd(
-                              context,
-                              treeModel.data!.sId,
-                              treeModel.data!.spouseId != null ? false : true,
-                              treeModel.data!.spouseId != null ? true : false,
-                              true)
-                          : BlocProvider.of<MainBloc>(context)
-                              .add(GetUser(userID: treeModel.data!.sId));
+                      // treeModel.data!.amI == true
+                      //     ? Helper.showAdd(
+                      //         context,
+                      //         treeModel.data!.sId,
+                      //         treeModel.data!.spouseId != null ? false : true,
+                      //         treeModel.data!.spouseId != null ? true : false,
+                      //         true)
+                      //     :
+
+                      BlocProvider.of<MainBloc>(context)
+                          .add(GetUser(userID: treeModel.data!.sId));
 // BlocProvider
 //                     .of<MainBloc>(contex)
 //                     .add(GetUser(userID: treeModel.data!.sId)),
@@ -2729,8 +2762,37 @@ class _RoughPageState extends State<FamilyHome> {
                                   ),
                                 ],
                               ),
+                              treeModel.data!.amI != true ||
+                                      treeModel.data!.isRoot == true
+                                  ? const SizedBox.shrink()
+                                  : Positioned(
+                                      left: 70,
+                                      child: InkWell(
+                                        child: const CircleAvatar(
+                                          backgroundColor: Colors.green,
+                                          radius: 11,
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 16,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Helper.showAdd(
+                                              context,
+                                              treeModel.data!.sId,
+                                              treeModel.data!.spouseId == null
+                                                  ? true
+                                                  : false,
+                                              treeModel.data!.spouseId == null
+                                                  ? false
+                                                  : true,
+                                              treeModel.data!.fatherId == null
+                                                  ? true
+                                                  : false);
+                                        },
+                                      )),
                               Positioned(
-                                  left: 76,
+                                  left: 45,
                                   child: treeModel.data!.gender! == "Male"
                                       ? const Icon(
                                           Icons.male,
@@ -2835,8 +2897,39 @@ class _RoughPageState extends State<FamilyHome> {
                                   ),
                                 ],
                               ),
+                              treeModel.data!.spouseId!.amI != true ||
+                                      treeModel.data!.spouseId!.isRoot == true
+                                  ? const SizedBox.shrink()
+                                  : Positioned(
+                                      left: 70,
+                                      child: InkWell(
+                                        child: const CircleAvatar(
+                                          backgroundColor: Colors.green,
+                                          radius: 11,
+                                          child: Icon(
+                                            Icons.add,
+                                            size: 16,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          Helper.showAdd(
+                                              context,
+                                              treeModel.data!.sId,
+                                              treeModel.data!.spouseId == null
+                                                  ? true
+                                                  : false,
+                                              treeModel.data!.spouseId == null
+                                                  ? false
+                                                  : true,
+                                              treeModel.data!.spouseId!
+                                                          .mainFamilyId ==
+                                                      null
+                                                  ? true
+                                                  : false);
+                                        },
+                                      )),
                               Positioned(
-                                  left: 76,
+                                  left: 48,
                                   child: treeModel.data!.spouseId!.gender! ==
                                           "Male"
                                       ? const Icon(
