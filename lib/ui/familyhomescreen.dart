@@ -3,8 +3,8 @@ import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/treemodel.dart';
 import 'package:family_tree_app/ui/common/outercontainer.dart';
+import 'package:family_tree_app/ui/myprofile.dart';
 import 'package:family_tree_app/ui/navdrawer.dart';
-import 'package:family_tree_app/ui/profile.dart';
 import 'package:family_tree_app/ui/profiledetailed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,14 +26,28 @@ class _RoughPageState extends State<FamilyHome> {
 
   @override
   Widget build(BuildContext context) {
+    GlobalKey<ScaffoldState>? scaffoldKey = GlobalKey<ScaffoldState>();
+    void _openDrawer() {
+      scaffoldKey.currentState!.openDrawer();
+    }
+
     return Scaffold(
+        key: scaffoldKey,
         backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(65.0),
           child: AppBar(
             backgroundColor: const Color(0xff2b8dd4),
-            automaticallyImplyLeading: true,
+            automaticallyImplyLeading: false,
             centerTitle: true,
+            leading: Padding(
+              padding: const EdgeInsets.only(top: 13.0),
+              child: InkWell(
+                  onTap: _openDrawer,
+                  child: const Icon(
+                    Icons.menu,
+                  )),
+            ),
             title: Padding(
               padding: const EdgeInsets.only(top: 13.0),
               child: Helper.text(
@@ -45,19 +59,26 @@ class _RoughPageState extends State<FamilyHome> {
                 child: Row(
                   children: [
                     InkWell(
-                      child: Image.asset("assets/images/profile.png"),
+                      child:
+                          Image.asset("assets/images/profile.png", height: 18),
                       onTap: () {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Profile()));
+                                builder: (context) => const MyProfile(
+                                    userId: "2123",
+                                    name: "acs",
+                                    image:
+                                        "assets/images/profiles/profile1.png",
+                                    familyname: "Kottaram")));
                       },
                     ),
                     const SizedBox(
                       width: 15,
                     ),
                     InkWell(
-                      child: Image.asset("assets/images/calendar.png"),
+                      child:
+                          Image.asset("assets/images/calendar.png", height: 18),
                       onTap: () {
                         // Navigator.push(
                         //     context,
@@ -1313,7 +1334,11 @@ class _RoughPageState extends State<FamilyHome> {
                                       : false,
                                   treeModel.data!.fatherId!.amI,
                                   treeModel.data!.fatherId!.isRoot,
-                                  "Father"),
+                                  "Father",
+                                  treeModel.data!.fatherId!.familyId != null
+                                      ? true
+                                      : false,
+                                  treeModel.data!.mainFamilyId!.familyName),
                               // Container(
                               //   decoration: BoxDecoration(
                               //       color: Colors.grey[200],
@@ -1348,7 +1373,11 @@ class _RoughPageState extends State<FamilyHome> {
                                       : false,
                                   treeModel.data!.motherId!.amI,
                                   treeModel.data!.motherId!.isRoot,
-                                  "Mother"),
+                                  "Mother",
+                                  treeModel.data!.motherId!.familyId != null
+                                      ? true
+                                      : false,
+                                  "Family Name"),
 
                               //  Container(
                               //   decoration: BoxDecoration(
@@ -1484,7 +1513,9 @@ class _RoughPageState extends State<FamilyHome> {
                                   : false,
                               treeModel.data!.amI,
                               treeModel.data!.isRoot,
-                              "You"),
+                              "You",
+                              treeModel.data!.fatherId != null ? true : false,
+                              treeModel.data!.mainFamilyId!.familyName),
                           // Column(
                           //   children: [
                           //     Container(
@@ -1635,7 +1666,11 @@ class _RoughPageState extends State<FamilyHome> {
                                   : false,
                               treeModel.data!.spouseId!.amI,
                               treeModel.data!.spouseId!.isRoot,
-                              "Spouse"),
+                              "Spouse",
+                              treeModel.data!.spouseId!.mainFamilyId != null
+                                  ? true
+                                  : false,
+                              "Family Name"),
                           // Flexible(
                           //   child: Column(
                           //     children: [
@@ -1853,7 +1888,13 @@ class _RoughPageState extends State<FamilyHome> {
                                                 .gender ==
                                             "Male"
                                         ? "Son"
-                                        : "Daughter"),
+                                        : "Daughter",
+                                    treeModel.data!.childrens![indextwo]
+                                                .fatherId !=
+                                            null
+                                        ? true
+                                        : false,
+                                    treeModel.data!.mainFamilyId!.familyName),
                               )
 
                               // Flexible(

@@ -40,6 +40,7 @@ dependencies:
   awesome_ripple_animation: ^1.0.1
   lottie: ^1.4.3
   graphview: ^1.2.0
+  
   # zoomable_image: ^1.2.0
   flutter:
     sdk: flutter
@@ -87,6 +88,26 @@ flutter:
     - assets/images/g10.png
     - assets/images/leftarrow.png
     - assets/images/g11.png
+    - assets/images/pluscircle.png
+    - assets/images/addchildrens.png
+    - assets/images/addparents.png
+    - assets/images/addphotos.png
+    - assets/images/addspouse.png
+    - assets/images/rectanglebg.png
+    - assets/images/penciledit.png
+    - assets/images/drawer.png
+    - assets/images/gallery.png
+    - assets/images/usercicle.png
+    - assets/images/gallery/g1.png
+    - assets/images/gallery/g2.png
+    - assets/images/gallery/g3.png
+    - assets/images/gallery/g4.png
+    - assets/images/gallery/g5.png
+    - assets/images/gallery/g6.png
+    - assets/images/gallery/g7.png
+    - assets/images/gallery/g8.png
+    - assets/images/gallery/g9.png
+    
     - assets/images/profiles/profile1.png
     - assets/images/profiles/profile2.png
     - assets/images/profiles/profile3.png
@@ -94,7 +115,8 @@ flutter:
     - assets/images/profiles/profile5.png
     - assets/images/profiles/profile6.png 
     - assets/images/profiles/profile7.png
-    - assets/images/profiles/profile8.png         
+    - assets/images/profiles/profile8.png
+    - assets/images/profiles/fatherprofile.png         
     - assets/children.png    
     - assets/lotties/loading.json
   

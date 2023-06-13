@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
       ],
       child: MaterialApp(
+        navigatorKey: NavigationService.navigatorKey,
         debugShowCheckedModeBanner: false,
         title: 'KinshipTree',
         theme: ThemeData(
@@ -32,4 +33,8 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class NavigationService {
+  static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 }

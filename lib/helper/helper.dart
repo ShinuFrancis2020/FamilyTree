@@ -44,7 +44,9 @@ class Helper {
       bool? single,
       bool? amI,
       bool? root,
-      String? headtext) {
+      String? headtext,
+      bool? parentspresent,
+      String? familyname) {
     return Stack(
       children: [
         Container(
@@ -66,7 +68,9 @@ class Helper {
           child: ClipRRect(
             borderRadius: BorderRadius.circular(18),
             child: Container(
-              color: const Color(0xff42b0ff),
+              color: amI == true
+                  ? const Color(0xff005D9A)
+                  : const Color(0xff42b0ff),
               height: 85,
               width: MediaQuery.of(context).size.width / 3,
             ),
@@ -77,10 +81,31 @@ class Helper {
           right: MediaQuery.of(context).size.width / 14,
           child: Column(
             children: [
-              CircleAvatar(
-                backgroundImage: AssetImage(image.toString()),
-                radius: 35,
-                backgroundColor: Colors.grey,
+              Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage(image.toString()),
+                    radius: 35,
+                    backgroundColor: Colors.grey,
+                  ),
+                  amI != true
+                      ? const SizedBox.shrink()
+                      : Positioned(
+                          top: 48,
+                          left: 50,
+                          child: InkWell(
+                            child: Image.asset("assets/images/pluscircle.png"),
+                            onTap: () {
+                              Helper.showAdd(
+                                  context,
+                                  userid,
+                                  single == true ? true : false,
+                                  single == false ? true : false,
+                                  parentspresent == true ? false : true);
+                            },
+                          ),
+                        )
+                ],
               ),
               const SizedBox(
                 height: 3,
@@ -113,6 +138,9 @@ class Helper {
                       context,
                       MaterialPageRoute(
                           builder: (context) => MyProfile(
+                                familyname: familyname,
+                                name: name,
+                                image: image.toString(),
                                 userId: userid.toString(),
                               )));
                 },
@@ -327,26 +355,76 @@ class Helper {
           // title: const Text(
           //     "Do you want to delete the site  "),
           content: ClipRRect(
-            borderRadius: BorderRadius.circular(22),
-            child: CircleAvatar(
-              radius: 100,
-              backgroundColor: Colors.green,
+            borderRadius: BorderRadius.circular(8),
+            child: Container(
+              height: 235,
+              width: 269,
+              color: Colors.white,
               child: Padding(
                 padding: const EdgeInsets.only(left: 24.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    const Padding(
+                      padding: EdgeInsets.only(right: 15.0, top: 10),
+                      child: Text(
+                        "Choose Who to Add",
+                        style: TextStyle(
+                            fontSize: 13, fontWeight: FontWeight.w500),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Helper.generatecontainer(
-                              35, 60, "Spouse", spousepresent, uid, context),
+                          Column(
+                            children: [
+                              InkWell(
+                                child:
+                                    Image.asset("assets/images/addspouse.png"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  spousepresent == true
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => AddDataForm(
+                                                  pagenavname: "Spouse",
+                                                  uid: uid.toString())))
+                                      : "";
+                                },
+                              ),
+                              // Helper.generatecontainer(35, 60, "Spouse",
+
+                              //     spousepresent, uid, context),
+                            ],
+                          ),
                           const SizedBox(
                             width: 20,
                           ),
-                          Helper.generatecontainer(
-                              35, 60, "Parents", parentspresent, uid, context),
+                          Column(
+                            children: [
+                              InkWell(
+                                child:
+                                    Image.asset("assets/images/addparents.png"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  parentspresent == true
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  AddParentsForm(
+                                                      pagenavname: "Parents",
+                                                      uid: uid.toString())))
+                                      : "";
+                                },
+                              ),
+
+                              //  Helper.generatecontainer(
+                              // 35, 60, "Parents", parentspresent, uid, context),
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -354,13 +432,37 @@ class Helper {
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
                         children: [
-                          Helper.generatecontainer(
-                              35, 60, "Children", childpresent, uid, context),
+                          Column(
+                            children: [
+                              InkWell(
+                                child: Image.asset(
+                                    "assets/images/addchildrens.png"),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  childpresent == true
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => AddDataForm(
+                                                  pagenavname: "Child",
+                                                  uid: uid.toString())))
+                                      : "";
+                                },
+                              ),
+                              //  Helper.generatecontainer(
+                              //         35, 60, "Children", childpresent, uid, context),
+                            ],
+                          ),
                           const SizedBox(
                             width: 20,
                           ),
-                          Helper.generatecontainer(
-                              35, 60, "Photos", true, uid, context),
+                          Column(
+                            children: [
+                              Image.asset("assets/images/addphotos.png"),
+                              //     Helper.generatecontainer(
+                              // 35, 60, "Photos", true, uid, context),
+                            ],
+                          ),
                         ],
                       ),
                     ),

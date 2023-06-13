@@ -1,225 +1,62 @@
+import 'package:family_tree_app/helper/helper.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/models/profilemodel.dart';
-import 'package:family_tree_app/ui/adddatataform.dart';
-import 'package:family_tree_app/ui/profile_ui/profilegallery.dart';
-import 'package:family_tree_app/ui/profile_ui/profileinfo.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 
-class MyProfile extends StatefulWidget {
-  final String? userId, name, image, familyname;
-  const MyProfile(
-      {super.key, this.userId, this.name, this.image, this.familyname});
+class ProfileInfo extends StatefulWidget {
+  const ProfileInfo({super.key});
 
   @override
-  State<MyProfile> createState() => _MyProfileState();
+  State<ProfileInfo> createState() => _ProfileInfoState();
 }
 
-class _MyProfileState extends State<MyProfile> {
-  var d1 = DateFormat('dd-MMM-yyyy');
-  @override
+class _ProfileInfoState extends State<ProfileInfo> {
+    var d1 = DateFormat('dd-MMM-yyyy');
+   @override
   void initState() {
     super.initState();
     BlocProvider.of<MainBloc>(context).add(GetProfile());
   }
-
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(390.0),
-          child: Column(
-            children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 300,
-                    width: MediaQuery.of(context).size.width,
-                    decoration: const BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/rectanglebg.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Positioned(
-                    top: 5,
-                    child: SizedBox(
-                      height: 300,
-                      width: MediaQuery.of(context).size.width,
-                      child: AppBar(
-                        backgroundColor: Colors.transparent,
-                        actions: [
-                          BlocBuilder<MainBloc, MainState>(
-                            builder: ((context, state) {
-                              if (state is ProfileSuccess) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(18.0),
-                                  child: InkWell(
-                                    child: Image.asset(
-                                        "assets/images/penciledit.png"),
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) => AddDataForm(
-                                                  profileModel:
-                                                      state.profileModel)));
-                                    },
-                                  ),
-                                );
-                              } else {
-                                return const SizedBox.shrink();
-                              }
-                            }),
-                          )
-                        ],
-                        flexibleSpace: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: MediaQuery.of(context).size.height / 3,
-                          // color: Colors.green[100],
-                          decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/rectanglebg.png'),
-                              fit: BoxFit.cover,
+    return    BlocConsumer<MainBloc, MainState>(
+                  buildWhen: (previous, current) =>
+                      current is Fetching ||
+                      current is ProfileSuccess ||
+                      current is ProfileError,
+                  builder: (context, state) {
+                    if (state is Fetching) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height / 1,
+                        width: MediaQuery.of(context).size.width / 1,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [Helper.loadingindicator(context)],
                             ),
                           ),
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                  height:
-                                      MediaQuery.of(context).size.height / 8.1),
-                              CircleAvatar(
-                                // backgroundColor: Colors.blue[200],
-                                radius: 55,
-                                backgroundImage:
-                                    AssetImage(widget.image.toString()),
-                              ),
-                              const SizedBox(
-                                height: 12,
-                              ),
-                              _text(widget.name, 22, true, Colors.white),
-                              const SizedBox(
-                                height: 8,
-                              ),
-                              _text(widget.familyname, 12, true, Colors.white),
-                              const SizedBox(
-                                height: 5,
-                              ),
-                            ],
-                          ),
                         ),
-                        elevation: 0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 8.0, top: 5),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 15.0, vertical: 10),
-                  child: TabBar(
-                    indicatorWeight: 3,
-                    tabs: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Tab(
-                          icon: Row(children: [
-                            Image.asset("assets/images/usercicle.png",
-                                height: 28),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              "Info",
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            )
-                          ]),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Tab(
-                          icon: Row(children: [
-                            Image.asset("assets/images/gallery.png",
-                                height: 28),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Text(
-                              "Gallery",
-                              style: TextStyle(color: Colors.black),
-                            )
-                          ]),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            const ProfileInfo(),
-            // SingleChildScrollView(
-            //   child: Column(
-            //     children: [
-            //       BlocConsumer<MainBloc, MainState>(
-            //           buildWhen: (previous, current) =>
-            //               current is Fetching ||
-            //               current is ProfileSuccess ||
-            //               current is ProfileError,
-            //           builder: (context, state) {
-            //             if (state is Fetching) {
-            //               return SizedBox(
-            //                 height: MediaQuery.of(context).size.height / 1,
-            //                 width: MediaQuery.of(context).size.width / 1,
-            //                 child: Center(
-            //                   child: Padding(
-            //                     padding: const EdgeInsets.all(8.0),
-            //                     child: Column(
-            //                       mainAxisAlignment: MainAxisAlignment.center,
-            //                       crossAxisAlignment: CrossAxisAlignment.center,
-            //                       children: [Helper.loadingindicator(context)],
-            //                     ),
-            //                   ),
-            //                 ),
-            //               );
-            //             } else if (state is ProfileSuccess) {
-            //               return _profieview(state.profileModel);
-            //               // Column(
-            //               //   children: [
-            //               //     Text(state.MyProfileModel.data!.name.toString())
-            //               //   ],
-            //               // );
-            //             }
-            //             return const SizedBox.shrink();
-            //           },
-            //           listener: (context, state) {})
-            //     ],
-            //   ),
-            // ),
-
-            GalleryPage()
-          ],
-        ),
-      ),
-    );
+                      );
+                    } else if (state is ProfileSuccess) {
+                      return _profieview(state.profileModel);
+                      // Column(
+                      //   children: [
+                      //     Text(state.MyProfileModel.data!.name.toString())
+                      //   ],
+                      // );
+                    }
+                    return const SizedBox.shrink();
+                  },
+                  listener: (context, state) {})
+          ;
   }
 
-  _profieview(ProfileModel profileModel) {
+    _profieview(ProfileModel profileModel) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
