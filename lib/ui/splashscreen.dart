@@ -21,10 +21,18 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height / 3.2,
+        child: Image.asset(
+          'assets/images/splashimg.png',
+          fit: BoxFit.contain,
+        ),
+      ),
       body: Center(
         child: SizedBox(
-          width: 300,
-          height: 400,
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height / 2,
           child: Image.asset(
             'assets/familyfinallogo.png',
             fit: BoxFit.contain,

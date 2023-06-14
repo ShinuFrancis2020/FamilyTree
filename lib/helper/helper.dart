@@ -46,7 +46,8 @@ class Helper {
       bool? root,
       String? headtext,
       bool? parentspresent,
-      String? familyname) {
+      String? familyname,
+      bool? showring) {
     return Stack(
       children: [
         Container(
@@ -70,7 +71,9 @@ class Helper {
             child: Container(
               color: amI == true
                   ? const Color(0xff005D9A)
-                  : const Color(0xff42b0ff),
+                  : headtext == "You"
+                      ? const Color(0xff0094FF)
+                      : const Color(0xff42b0ff),
               height: 85,
               width: MediaQuery.of(context).size.width / 3,
             ),
@@ -110,12 +113,34 @@ class Helper {
               const SizedBox(
                 height: 3,
               ),
-              Text(
-                headtext.toString(),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 8),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    width: 23,
+                  ),
+                  Text(
+                    headtext.toString(),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 8),
+                  ),
+                  const SizedBox(
+                    width: 15,
+                  ),
+                  single == true
+                      ? const SizedBox.shrink()
+                      : showring == false
+                          ? const SizedBox.shrink()
+                          : Image.asset(
+                              "assets/images/couplering.png",
+                              height: 12,
+                            ),
+                ],
+              ),
+              const SizedBox(
+                height: 2,
               ),
               InkWell(
                 child: Row(
@@ -383,8 +408,10 @@ class Helper {
                           Column(
                             children: [
                               InkWell(
-                                child:
-                                    Image.asset("assets/images/addspouse.png"),
+                                child: Image.asset(
+                                  "assets/images/addspouse.png",
+                                  height: 80,
+                                ),
                                 onTap: () {
                                   Navigator.pop(context);
                                   spousepresent == true
@@ -408,8 +435,9 @@ class Helper {
                           Column(
                             children: [
                               InkWell(
-                                child:
-                                    Image.asset("assets/images/addparents.png"),
+                                child: Image.asset(
+                                    "assets/images/addparents.png",
+                                    height: 80),
                                 onTap: () {
                                   Navigator.pop(context);
                                   parentspresent == true
@@ -439,7 +467,8 @@ class Helper {
                             children: [
                               InkWell(
                                 child: Image.asset(
-                                    "assets/images/addchildrens.png"),
+                                    "assets/images/addchildrens.png",
+                                    height: 80),
                                 onTap: () {
                                   Navigator.pop(context);
                                   childpresent == true
@@ -461,7 +490,8 @@ class Helper {
                           ),
                           Column(
                             children: [
-                              Image.asset("assets/images/addphotos.png"),
+                              Image.asset("assets/images/addphotos.png",
+                                  height: 80),
                               //     Helper.generatecontainer(
                               // 35, 60, "Photos", true, uid, context),
                             ],
