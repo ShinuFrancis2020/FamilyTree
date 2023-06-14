@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "391093450536",
+    "project_id": "kinship-tree",
+    "storage_bucket": "kinship-tree.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391093450536:android:c9ed84a075c36cdadf021d",
+        "android_client_info": {
+          "package_name": "com.example.family_tree_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391093450536-gf34d931jbl60q073mfthmpi6ej5glf9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAmCY8d3zlFkdq4QLeCXEfs3CXQhLL_WKc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391093450536-gf34d931jbl60q073mfthmpi6ej5glf9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

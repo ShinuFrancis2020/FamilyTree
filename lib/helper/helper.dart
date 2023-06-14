@@ -101,7 +101,7 @@ class Helper {
                                   userid,
                                   single == true ? true : false,
                                   single == false ? true : false,
-                                  parentspresent == true ? false : true);
+                                  true);
                             },
                           ),
                         )
@@ -130,7 +130,10 @@ class Helper {
                             fontSize: 12),
                       ),
                     ),
-                    Image.asset("assets/images/leftarrow.png"),
+                    Image.asset(
+                      "assets/images/leftarrow.png",
+                      height: 16,
+                    ),
                   ],
                 ),
                 onTap: () {

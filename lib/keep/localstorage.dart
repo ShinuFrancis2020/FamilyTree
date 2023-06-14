@@ -28,7 +28,15 @@ class LocalStorage {
       sharedPreferences.remove(key);
     }
   }
+  static setDeviceToken(var fcmtoken) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('fcmtoken', fcmtoken);
+  }
 
+  static getDeviceToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getString('fcmtoken');
+  }
   // static setLevel(var level) async {
   //    final sharedPreferences = await Helper.locaStorageInst();
   //   sharedPreferences.setString(LoginScreen.LOGIN_PAGE, level);

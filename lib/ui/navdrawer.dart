@@ -3,6 +3,7 @@ import 'package:family_tree_app/keep/localstorage.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/ui/authentication/signin.dart';
 import 'package:family_tree_app/ui/myprofile.dart';
+import 'package:family_tree_app/ui/profile_ui/whatsappcall.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -56,6 +57,16 @@ class _HomeDrawerState extends State<HomeDrawer> {
             title: const Text("Profile"),
             onTap: () async {
               Helper.push(context, const MyProfile());
+            },
+          ),
+          ListTile(
+            leading: const Icon(
+              CupertinoIcons.profile_circled,
+              color: Colors.black,
+            ),
+            title: const Text("whatsapp"),
+            onTap: () async {
+              Helper.push(context, const Home());
             },
           ),
           BlocListener<MainBloc, MainState>(

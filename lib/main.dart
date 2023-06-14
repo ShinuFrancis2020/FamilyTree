@@ -2,12 +2,46 @@ import 'package:family_tree_app/logic/bloc/authbloc/authbloc/authbloc.dart';
 import 'package:family_tree_app/logic/bloc/commonbloc.dart';
 import 'package:family_tree_app/logic/bloc/signupbloc/signupbloc.dart';
 import 'package:family_tree_app/ui/splashscreen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  try {
+    await Firebase.initializeApp();
+
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel',
+      'High Importance Notifications',
+      importance: Importance.max,
+      enableLights: true,
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin!
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel!);
+  } catch (e) {}
   runApp(const MyApp());
 }
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+}
+
+bool fcmInitCheck = true;
+FirebaseMessaging? messaging;
+AndroidNotificationChannel? channel;
+String? fcmToken;
+FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
