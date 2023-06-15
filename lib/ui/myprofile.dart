@@ -7,6 +7,7 @@ import 'package:family_tree_app/ui/profile_ui/profileinfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyProfile extends StatefulWidget {
   final String? userId, name, image, familyname;
@@ -19,6 +20,11 @@ class MyProfile extends StatefulWidget {
 
 class _MyProfileState extends State<MyProfile> {
   var d1 = DateFormat('dd-MMM-yyyy');
+
+  final Uri phoneNumber = Uri.parse('tel:9539871760');
+
+  // https://wa.me/9539871760?text=Hello
+  final Uri whatsApp = Uri.parse('https://wa.me/9539871760?text=Hello');
   @override
   void initState() {
     super.initState();
@@ -37,7 +43,7 @@ class _MyProfileState extends State<MyProfile> {
               Stack(
                 children: [
                   Container(
-                    height: 300,
+                    height: 310,
                     width: MediaQuery.of(context).size.width,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
@@ -49,7 +55,7 @@ class _MyProfileState extends State<MyProfile> {
                   Positioned(
                     top: 5,
                     child: SizedBox(
-                      height: 300,
+                      height: 310,
                       width: MediaQuery.of(context).size.width,
                       child: AppBar(
                         backgroundColor: Colors.transparent,
@@ -93,7 +99,7 @@ class _MyProfileState extends State<MyProfile> {
                             children: [
                               SizedBox(
                                   height:
-                                      MediaQuery.of(context).size.height / 8.1),
+                                      MediaQuery.of(context).size.height / 9.5),
                               CircleAvatar(
                                 // backgroundColor: Colors.blue[200],
                                 radius: 55,
@@ -105,11 +111,25 @@ class _MyProfileState extends State<MyProfile> {
                               ),
                               _text(widget.name, 22, true, Colors.white),
                               const SizedBox(
-                                height: 8,
+                                height: 3,
                               ),
                               _text(widget.familyname, 12, true, Colors.white),
                               const SizedBox(
-                                height: 5,
+                                height: 10,
+                              ),
+                              InkWell(
+                                child: Image.asset(
+                                  "assets/images/makeacall.png",
+                                  height: 30,
+                                ),
+                                onTap: () {
+                                  // initiateWhatsAppCall();
+                                  _launchWhatsapp('+917025106727');
+                                  // launchUrl(whatsApp);
+                                },
+                              ),
+                              const SizedBox(
+                                height: 10,
                               ),
                             ],
                           ),
@@ -217,6 +237,32 @@ class _MyProfileState extends State<MyProfile> {
         ),
       ),
     );
+  }
+
+  void initiateWhatsAppCall() async {
+    String url = "whatsapp://call?phone=+919539871760";
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=+919539871760&text=Hi,How are you");
+    if (await canLaunch(url)) {
+      await launchUrl(whatsappAndroid);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  _launchWhatsapp(String? number) async {
+    var whatsapp = number;
+    // var whatsappAndroid = Uri.parse("whatsapp://call?phone=$whatsapp");
+    var whatsappAndroid =
+        Uri.parse("whatsapp://send?phone=$whatsapp&text=Hi,How are you");
+    await launchUrl(whatsappAndroid);
+    // else {
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text("WhatsApp is not installed on the device"),
+    //     ),
+    //   );
+    // }
   }
 
   _profieview(ProfileModel profileModel) {

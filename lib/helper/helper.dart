@@ -90,7 +90,18 @@ class Helper {
                     backgroundImage: AssetImage(image.toString()),
                     radius: 35,
                     backgroundColor: Colors.grey,
+                    // child: Image.asset(
+                    //   "assets/images/rose.png",
+                    //   height: 35,
+                    // ),
                   ),
+                  // Positioned(
+                  //     top: 36,
+                  //     left: 25,
+                  //     child: Image.asset(
+                  //       "assets/images/rose.png",
+                  //       height: 35,
+                  //     )),
                   amI != true
                       ? const SizedBox.shrink()
                       : Positioned(

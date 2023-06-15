@@ -44,7 +44,7 @@ dependencies:
   firebase_messaging: ^14.0.3
   firebase_core: null
   flutter_local_notifications: ^12.0.3
-  url_launcher: ^6.1.1
+  url_launcher: ^6.1.11
   
   # zoomable_image: ^1.2.0
   flutter:
@@ -110,6 +110,7 @@ flutter:
     - assets/images/gallery.png
     - assets/images/couplering.png
     - assets/images/deathring.png
+    - assets/images/makeacall.png
     - assets/images/usercicle.png
     - assets/images/gallery/g1.png
     - assets/images/gallery/g2.png
@@ -120,6 +121,7 @@ flutter:
     - assets/images/gallery/g7.png
     - assets/images/gallery/g8.png
     - assets/images/gallery/g9.png
+    - assets/images/rose.png
     
     
     - assets/images/profiles/profile1.png
